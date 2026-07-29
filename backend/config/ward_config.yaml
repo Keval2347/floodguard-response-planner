@@ -1,0 +1,94 @@
+# =====================================================================
+# JalNiti configuration.
+#
+# EVERY ASSUMPTION THE SYSTEM MAKES LIVES IN THIS FILE, not in code.
+# If a number looks made up, it probably is -- it is flagged below.
+# =====================================================================
+
+ward:
+  # Passed verbatim to osmnx.graph_from_place(). It must be a string that
+  # Nominatim can geocode. Test yours at https://nominatim.openstreetmap.org/
+  place_name: "Navrangpura, Ahmedabad, Gujarat, India"
+  short_name: "navrangpura"          # used for cache filenames
+  # Projected CRS for metric work (metres). EPSG:32643 = UTM zone 43N,
+  # which covers Gujarat. Do NOT compute distances in EPSG:4326 degrees.
+  metric_crs: "EPSG:32643"
+
+data_sources:
+  osm:
+    # Which OSM highway types count as "street segments" we might flood.
+    # 'drive' keeps motorable roads and drops footpaths/cycleways.
+    network_type: "drive"
+    # Waterways used for the distance-to-water feature (step b).
+    water_tags:
+      waterway: ["river", "stream", "canal", "drain", "ditch"]
+      natural: ["water"]
+      landuse: ["reservoir"]
+  dem:
+    # SRTM 30m global DEM. Band name is 'elevation' (metres above sea level).
+    ee_image_id: "USGS/SRTMGL1_003"
+    band: "elevation"
+    scale_m: 30
+    # Buffer the ward boundary before clipping so slope at the edge is valid.
+    buffer_m: 500
+  rainfall:
+    # IMD gridded historical rainfall: 0.25 x 0.25 degrees, 1901-2024.
+    # ASSUMPTION: 10 monsoon years is enough history for a ward-scale model.
+    # Widen this if your ground-truth CSV covers older events.
+    history_start: "2015-06-01"
+    history_end: "2024-10-31"
+    # api.imd.gov.in path fragments for the live/nowcast feed.
+    live_district: "Ahmedabad"
+
+# ---------------------------------------------------------------------
+# SIMULATED pump-truck fleet (module 2).
+#
+# ASSUMPTION -- IMPORTANT: no Indian municipal corporation publishes a live
+# feed of its pump-truck fleet (verified). Everything below is invented so
+# the optimizer has something to solve. Replace with real AMC data if an
+# RTI response ever gives it to you, and say so in your report.
+# ---------------------------------------------------------------------
+fleet:
+  truck_count: 10                 # chosen by the team
+  avg_speed_kmph: 25              # ASSUMPTION: urban Ahmedabad monsoon traffic
+  # Minutes a truck spends actually pumping one flooded segment.
+  # ASSUMPTION: flat service time; refine per-segment if you get real data.
+  service_time_min: 30
+  # Planning horizon: the optimizer only assigns work it can finish in this
+  # many minutes from the start of the event.
+  shift_minutes: 240
+  # ASSUMPTION: 3 depots, coordinates picked near real AMC infrastructure in
+  # / around Navrangpura. VERIFY AND REPLACE these lat/lons before your demo.
+  depots:
+    - id: "D1"
+      name: "Navrangpura AMC Ward Office (assumed)"
+      lat: 23.0365
+      lon: 72.5610
+      trucks: 4
+    - id: "D2"
+      name: "Ashram Road depot (assumed)"
+      lat: 23.0305
+      lon: 72.5720
+      trucks: 3
+    - id: "D3"
+      name: "Gujarat University side depot (assumed)"
+      lat: 23.0425
+      lon: 72.5455
+      trucks: 3
+
+paths:
+  # Relative to backend/. Both are gitignored.
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  models_dir: "data/models"
+  # Ground truth you supply. Schema (step c expects exactly these columns):
+  #   location,lat,lon,flooded,date
+  # flooded is yes/no (or 1/0). Sources: RTI reply, news archive mining,
+  # or resident interviews. See README.
+  ground_truth_csv: "config/ground_truth.csv"
+
+cache:
+  # How long a cached download stays fresh. Static things (OSM, DEM) get a
+  # long TTL; live rainfall gets a short one.
+  ttl_days_static: 30
+  ttl_hours_live: 1
