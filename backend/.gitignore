@@ -1,0 +1,8 @@
+# Never commit downloaded data or secrets.
+.env
+.venv/
+__pycache__/
+*.pyc
+data/
+!data/.gitkeep
+cache/
