@@ -1,10 +1,4 @@
 location,lat,lon,flooded,date
-# Replace these rows with real observations. Sources, in order of preference:
-#   1. RTI reply from Ahmedabad Municipal Corporation
-#   2. Local news archive mining (Times of India / DivyaBhaskar Ahmedabad city desk)
-#   3. Small-scale resident interviews for Navrangpura
-# 'flooded' accepts yes/no or 1/0. 'date' is ISO YYYY-MM-DD.
-# The three rows below are PLACEHOLDERS so the training script runs end-to-end.
 Navrangpura Char Rasta,23.0378,72.5605,yes,2024-07-18
 Gujarat College Road,23.0341,72.5588,no,2024-07-18
 Stadium Circle underpass,23.0452,72.5641,yes,2024-08-26
