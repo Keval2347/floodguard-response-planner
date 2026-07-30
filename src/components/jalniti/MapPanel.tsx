@@ -1,5 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 
+import type { Depot } from "@/lib/jalniti/data";
+import type { RoutePath } from "@/lib/jalniti/live.functions";
 import type { Assignment, ScoredSegment } from "@/lib/jalniti/model";
 
 // Leaflet touches `window` at import time, so it can only load after hydration.
@@ -7,7 +9,9 @@ const WardMap = lazy(() => import("./WardMap"));
 
 interface Props {
   segments: ScoredSegment[];
+  depots: Depot[];
   assignments: Assignment[];
+  routes: RoutePath[];
   selectedId: string | null;
   onSelect: (id: string) => void;
   showRoutes: boolean;

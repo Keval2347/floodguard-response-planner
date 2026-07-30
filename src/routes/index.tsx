@@ -1,6 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Droplets, Truck, TriangleAlert, Waves, MapPin, Info } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { useQuery } from "@tanstack/react-query";
+import { Droplets, Truck, TriangleAlert, Waves, MapPin, Info, Database, RefreshCw } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -11,8 +13,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
-import { BAND_META, DEPOTS, RAIN_SERIES, WARD } from "@/lib/jalniti/data";
-import { DEFAULT_SCENARIO, allocate, scoreSegments, type ScenarioOverrides } from "@/lib/jalniti/model";
+import { BAND_META, SOURCES, WARD, type WardData } from "@/lib/jalniti/data";
+import { getRoutes, getWardData } from "@/lib/jalniti/live.functions";
+import { allocate, defaultScenario, scoreSegments, type ScenarioOverrides } from "@/lib/jalniti/model";
 import MapPanel from "@/components/jalniti/MapPanel";
 
 export const Route = createFileRoute("/")({
@@ -22,27 +25,74 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Per-street waterlogging risk, pump-truck allocation and what-if planning for Navrangpura ward, Ahmedabad.",
+          "Live OSM street geometry, SRTM elevation, OSRM routing and observed rainfall driving per-street waterlogging risk and pump-truck allocation for Navrangpura ward, Ahmedabad.",
       },
       { property: "og:title", content: "JalNiti — Ward Flood Response Console" },
       {
         property: "og:description",
         content:
-          "Street-level flood risk, truck allocation and scenario planning for one Ahmedabad ward.",
+          "Real-data street-level flood risk, road-routed truck allocation and scenario planning for one Ahmedabad ward.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Dashboard,
 });
 
 function Dashboard() {
-  const [scenario, setScenario] = useState<ScenarioOverrides>(DEFAULT_SCENARIO);
+  const fetchWard = useServerFn(getWardData);
+  const fetchRoutes = useServerFn(getRoutes);
+
+  const wardQuery = useQuery({
+    queryKey: ["ward-data"],
+    queryFn: () => fetchWard() as Promise<WardData>,
+    staleTime: 30 * 60_000,
+    retry: 1,
+  });
+  const ward = wardQuery.data;
+
+  const [scenario, setScenario] = useState<ScenarioOverrides>(() => defaultScenario(undefined));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showRoutes, setShowRoutes] = useState(true);
+  const [initialised, setInitialised] = useState(false);
 
-  const scored = useMemo(() => scoreSegments(scenario), [scenario]);
-  const plan = useMemo(() => allocate(scored, scenario), [scored, scenario]);
+  // Once real data lands, start from the actual forecast + full fleet.
+  useEffect(() => {
+    if (ward && !initialised) {
+      setScenario(defaultScenario(ward));
+      setInitialised(true);
+    }
+  }, [ward, initialised]);
+
+  const scored = useMemo(() => (ward ? scoreSegments(ward, scenario) : []), [ward, scenario]);
+  const plan = useMemo(
+    () =>
+      ward
+        ? allocate(ward, scored, scenario)
+        : { assignments: [], unserved: [], coveredExposure: 0, totalExposure: 0 },
+    [ward, scored, scenario],
+  );
   const selected = scored.find((s) => s.id === selectedId) ?? null;
+
+  // Road-following routes for the current assignments (OSRM, server-cached).
+  const pairs = useMemo(
+    () =>
+      plan.assignments.slice(0, 20).map((a) => ({
+        key: `${a.truck}|${a.segment.id}`,
+        from: a.fromPoint,
+        to: a.segment.mid,
+      })),
+    [plan.assignments],
+  );
+
+  const routesQuery = useQuery({
+    queryKey: ["routes", pairs.map((p) => `${p.from}-${p.to}`).join("|")],
+    queryFn: () => fetchRoutes({ data: { pairs } }),
+    enabled: pairs.length > 0 && showRoutes,
+    staleTime: 60 * 60_000,
+  });
+  const routes = (routesQuery.data ?? []).map((r, i) => ({ ...r, key: pairs[i]?.key ?? r.key }));
 
   const counts = scored.reduce<Record<string, number>>((acc, s) => {
     acc[s.band] = (acc[s.band] ?? 0) + 1;
@@ -53,8 +103,9 @@ function Dashboard() {
     ? Math.round((plan.coveredExposure / plan.totalExposure) * 100)
     : 0;
 
-  const set = (patch: Partial<ScenarioOverrides>) =>
-    setScenario((s) => ({ ...s, ...patch }));
+  const fleetTotal = (ward?.depots ?? []).reduce((n, d) => n + d.trucks, 0) || 10;
+
+  const set = (patch: Partial<ScenarioOverrides>) => setScenario((s) => ({ ...s, ...patch }));
 
   const toggleIn = (key: "drainsCleared" | "closed", id: string) =>
     setScenario((s) => ({
@@ -74,13 +125,13 @@ function Dashboard() {
               JalNiti <span className="text-muted-foreground">· Ward Flood Response Console</span>
             </h1>
             <p className="text-xs text-muted-foreground">
-              {WARD.name}, {WARD.city} — decision support, not flood prediction
+              {WARD.name}, {WARD.city} — live OSM · SRTM · OSRM · rainfall feeds
             </p>
           </div>
         </div>
 
         <div className="ml-auto flex items-center gap-5 text-sm">
-          <Stat icon={<Droplets className="size-4" />} label="Forecast rain" value={`${scenario.rainMm} mm`} />
+          <Stat icon={<Droplets className="size-4" />} label="Scenario rain" value={`${scenario.rainMm} mm`} />
           <Stat
             icon={<TriangleAlert className="size-4" />}
             label="Critical + high"
@@ -91,15 +142,37 @@ function Dashboard() {
         </div>
       </header>
 
+      {wardQuery.isError && (
+        <div className="flex items-center gap-3 border-b border-destructive/40 bg-destructive/10 px-5 py-2 text-xs text-destructive">
+          <TriangleAlert className="size-4 shrink-0" />
+          <span className="flex-1">
+            Live data fetch failed: {(wardQuery.error as Error).message}. The public OSM / DEM
+            endpoints rate-limit; retry in a moment.
+          </span>
+          <Button size="sm" variant="outline" className="h-7" onClick={() => wardQuery.refetch()}>
+            Retry
+          </Button>
+        </div>
+      )}
+
       <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
         <div className="relative min-h-[320px] flex-1">
-          <MapPanel
-            segments={scored}
-            assignments={plan.assignments}
-            selectedId={selectedId}
-            onSelect={setSelectedId}
-            showRoutes={showRoutes}
-          />
+          {wardQuery.isPending ? (
+            <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-muted text-sm text-muted-foreground">
+              <RefreshCw className="size-5 animate-spin" />
+              Fetching real ward data — OSM streets, SRTM elevation, OSRM travel times, rainfall…
+            </div>
+          ) : (
+            <MapPanel
+              segments={scored}
+              depots={ward?.depots ?? []}
+              assignments={plan.assignments}
+              routes={routes}
+              selectedId={selectedId}
+              onSelect={setSelectedId}
+              showRoutes={showRoutes}
+            />
+          )}
 
           <Card className="absolute bottom-4 left-4 z-[500] gap-2 p-3 text-xs shadow-lg">
             <p className="font-medium">Waterlogging risk</p>
@@ -117,7 +190,9 @@ function Dashboard() {
             <Separator className="my-1" />
             <label className="flex items-center gap-2">
               <Switch checked={showRoutes} onCheckedChange={setShowRoutes} />
-              <span className="text-muted-foreground">Show truck routes</span>
+              <span className="text-muted-foreground">
+                Road routes {routesQuery.isFetching ? "(routing…)" : ""}
+              </span>
             </label>
           </Card>
 
@@ -130,11 +205,21 @@ function Dashboard() {
                 </Button>
               </div>
               <RiskBadge band={selected.band} risk={selected.risk} />
-              <Row k="Elevation" v={`${selected.elevation_m} m`} />
+              <Row k="Road class (OSM)" v={selected.highway} />
+              <Row k="Segment length" v={`${selected.length_m} m`} />
+              <Row k="Elevation (SRTM)" v={`${selected.elevation_m} m`} />
               <Row k="Slope" v={`${selected.slope_pct} %`} />
               <Row k="Distance to water" v={`${selected.dist_to_water_m} m`} />
               <Row k="Road density" v={`${selected.road_density} km/km²`} />
               <Row k="Exposure score" v={`${selected.exposure}`} />
+              <a
+                className="text-[10px] text-muted-foreground underline"
+                href={`https://www.openstreetmap.org/way/${selected.osm_id}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                OSM way #{selected.osm_id}
+              </a>
               <Separator className="my-1" />
               <div className="flex gap-2">
                 <Button
@@ -160,17 +245,18 @@ function Dashboard() {
 
         <aside className="flex w-full shrink-0 flex-col border-t border-border bg-card lg:w-[400px] lg:border-l lg:border-t-0">
           <Tabs defaultValue="risk" className="flex min-h-0 flex-1 flex-col gap-0">
-            <TabsList className="m-3 grid grid-cols-3">
+            <TabsList className="m-3 grid grid-cols-4">
               <TabsTrigger value="risk">Risk</TabsTrigger>
               <TabsTrigger value="plan">Allocation</TabsTrigger>
               <TabsTrigger value="whatif">What-if</TabsTrigger>
+              <TabsTrigger value="data">Data</TabsTrigger>
             </TabsList>
 
             {/* ---- Module 1: per-street risk ---- */}
             <TabsContent value="risk" className="min-h-0 flex-1">
               <ScrollArea className="h-full px-3 pb-4">
                 <p className="pb-2 text-xs text-muted-foreground">
-                  {scored.length} street segments, ranked by predicted waterlogging risk at{" "}
+                  {scored.length} real OSM street segments, ranked by predicted waterlogging risk at{" "}
                   {scenario.rainMm} mm/24h.
                 </p>
                 <div className="space-y-1.5">
@@ -194,7 +280,7 @@ function Dashboard() {
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-sm font-medium">{s.name}</span>
                         <span className="block text-xs text-muted-foreground">
-                          {s.dist_to_water_m} m to water · {s.slope_pct}% slope
+                          {s.dist_to_water_m} m to water · {s.slope_pct}% slope · {s.elevation_m} m
                         </span>
                       </span>
                       <span className="shrink-0 text-sm font-semibold tabular-nums">
@@ -214,31 +300,36 @@ function Dashboard() {
                     {plan.assignments.length} assignments · {plan.unserved.length} unserved
                   </p>
                   <p className="text-muted-foreground">
-                    Covers {coverage}% of exposed population within a {scenario.shiftMinutes}-minute
-                    shift. Greedy placeholder for the OR-Tools solver.
+                    Covers {coverage}% of exposed road-length within a {scenario.shiftMinutes}-minute
+                    shift. Travel times are OSRM road-network durations; greedy placeholder for the
+                    OR-Tools solver.
                   </p>
                 </Card>
 
                 <div className="space-y-1.5">
-                  {plan.assignments.map((a) => (
-                    <div
-                      key={`${a.truck}-${a.segment.id}`}
-                      className="rounded-md border border-border px-3 py-2"
-                      onMouseEnter={() => setSelectedId(a.segment.id)}
-                    >
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="font-mono text-xs font-semibold">{a.truck}</span>
-                        <Badge variant="secondary" className="text-[10px]">
-                          arrive T+{a.arriveMin} min
-                        </Badge>
+                  {plan.assignments.map((a) => {
+                    const r = routes.find((x) => x.key === `${a.truck}|${a.segment.id}`);
+                    return (
+                      <div
+                        key={`${a.truck}-${a.segment.id}`}
+                        className="rounded-md border border-border px-3 py-2"
+                        onMouseEnter={() => setSelectedId(a.segment.id)}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="font-mono text-xs font-semibold">{a.truck}</span>
+                          <Badge variant="secondary" className="text-[10px]">
+                            arrive T+{a.arriveMin} min
+                          </Badge>
+                        </div>
+                        <p className="truncate text-sm">{a.segment.name}</p>
+                        <p className="text-xs text-muted-foreground">
+                          from {a.depot.name} · {a.travelMin} min by road
+                          {r ? ` · ${r.distanceKm} km` : ""} · risk{" "}
+                          {(a.segment.risk * 100).toFixed(0)}%
+                        </p>
                       </div>
-                      <p className="truncate text-sm">{a.segment.name}</p>
-                      <p className="text-xs text-muted-foreground">
-                        from {a.depot.name} · {a.travelMin} min travel · risk{" "}
-                        {(a.segment.risk * 100).toFixed(0)}%
-                      </p>
-                    </div>
-                  ))}
+                    );
+                  })}
 
                   {plan.unserved.length > 0 && (
                     <>
@@ -267,9 +358,13 @@ function Dashboard() {
               <ScrollArea className="h-full px-3 pb-4">
                 <div className="space-y-5">
                   <Field
-                    label="Forecast rainfall"
+                    label="Rainfall scenario"
                     value={`${scenario.rainMm} mm / 24 h`}
-                    hint="IMD's grid is ~27 km, so the whole ward shares one rainfall value."
+                    hint={
+                      ward
+                        ? `Live feed: ${ward.observedMm} mm observed in the last 24 h, ${ward.forecastMm} mm forecast for the next 24 h.`
+                        : "Loading the live rainfall feed…"
+                    }
                   >
                     <Slider
                       min={10}
@@ -282,12 +377,12 @@ function Dashboard() {
 
                   <Field
                     label="Trucks available"
-                    value={`${scenario.trucksAvailable} of ${DEPOTS.reduce((n, d) => n + d.trucks, 0)}`}
-                    hint="Simulated fleet — no Indian municipality publishes a live feed."
+                    value={`${scenario.trucksAvailable} of ${fleetTotal}`}
+                    hint="Fleet size is the project assumption — no Indian municipality publishes a live vehicle feed."
                   >
                     <Slider
                       min={0}
-                      max={DEPOTS.reduce((n, d) => n + d.trucks, 0)}
+                      max={fleetTotal}
                       step={1}
                       value={[scenario.trucksAvailable]}
                       onValueChange={([v]) => set({ trucksAvailable: v })}
@@ -334,32 +429,93 @@ function Dashboard() {
                   </div>
 
                   <Card className="gap-2 p-3">
-                    <p className="text-sm font-medium">Rainfall, last 12 h (IMD nowcast)</p>
-                    <div className="flex h-16 items-end gap-1">
-                      {RAIN_SERIES.map((r) => (
-                        <div key={r.hour} className="flex flex-1 flex-col items-center gap-1">
-                          <div
-                            className="w-full rounded-t-sm bg-primary/70"
-                            style={{ height: `${(r.mm / 14) * 56}px` }}
-                            title={`${r.hour} — ${r.mm} mm`}
-                          />
+                    <p className="text-sm font-medium">Observed rainfall, last 12 h</p>
+                    {ward && ward.rainSeries.length > 0 ? (
+                      <>
+                        <div className="flex h-16 items-end gap-1">
+                          {ward.rainSeries.map((r) => {
+                            const peak = Math.max(1, ...ward.rainSeries.map((x) => x.mm));
+                            return (
+                              <div key={r.hour} className="flex flex-1 flex-col items-center gap-1">
+                                <div
+                                  className="w-full rounded-t-sm bg-primary/70"
+                                  style={{ height: `${Math.max(2, (r.mm / peak) * 56)}px` }}
+                                  title={`${r.hour} — ${r.mm} mm`}
+                                />
+                              </div>
+                            );
+                          })}
                         </div>
-                      ))}
-                    </div>
-                    <p className="text-[10px] text-muted-foreground">
-                      {RAIN_SERIES[0].hour} → {RAIN_SERIES[RAIN_SERIES.length - 1].hour}
-                    </p>
+                        <p className="text-[10px] text-muted-foreground">
+                          {ward.rainSeries[0].hour} → {ward.rainSeries[ward.rainSeries.length - 1].hour} IST
+                        </p>
+                      </>
+                    ) : (
+                      <p className="text-xs text-muted-foreground">Rainfall feed loading…</p>
+                    )}
                   </Card>
 
-                  <Button variant="outline" className="w-full" onClick={() => setScenario(DEFAULT_SCENARIO)}>
-                    Reset scenario
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => setScenario(defaultScenario(ward))}
+                  >
+                    Reset to live forecast
                   </Button>
+                </div>
+              </ScrollArea>
+            </TabsContent>
+
+            {/* ---- Provenance ---- */}
+            <TabsContent value="data" className="min-h-0 flex-1">
+              <ScrollArea className="h-full px-3 pb-4">
+                <div className="space-y-3">
+                  <Card className="gap-1 p-3 text-xs">
+                    <p className="flex items-center gap-2 text-sm font-medium">
+                      <Database className="size-4" /> Live fetch
+                    </p>
+                    {ward ? (
+                      <>
+                        <p className="text-muted-foreground">
+                          {new Date(ward.fetchedAt).toLocaleString()} · cached 3 h server-side
+                        </p>
+                        <ul className="list-disc pl-4 text-muted-foreground">
+                          {ward.notes.map((n) => (
+                            <li key={n}>{n}</li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : (
+                      <p className="text-muted-foreground">Fetching…</p>
+                    )}
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="mt-2 h-7 w-full text-xs"
+                      onClick={() => wardQuery.refetch()}
+                    >
+                      Refresh feeds
+                    </Button>
+                  </Card>
+
+                  {SOURCES.map((s) => (
+                    <Card key={s.label} className="gap-1 p-3 text-xs">
+                      <a
+                        className="text-sm font-medium underline underline-offset-2"
+                        href={s.url}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {s.label}
+                      </a>
+                      <p className="text-muted-foreground">{s.detail}</p>
+                    </Card>
+                  ))}
 
                   <p className="flex gap-2 rounded-md bg-muted p-3 text-xs text-muted-foreground">
                     <Info className="mt-0.5 size-4 shrink-0" />
-                    All figures on this screen are synthetic demo data. The React UI calls the same
-                    logic the Python backend implements, so wiring FastAPI in later only swaps the
-                    data source.
+                    Remaining assumptions: depot truck counts, 30 min pumping time per street and the
+                    30% de-silting benefit. Everything else on this screen is measured data.
                   </p>
                 </div>
               </ScrollArea>
