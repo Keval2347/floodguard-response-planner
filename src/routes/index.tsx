@@ -204,7 +204,33 @@ function Dashboard() {
         </div>
 
         <div className="ml-auto flex items-center gap-5 text-sm">
-          <Stat icon={<Droplets className="size-4" />} label="Scenario rain" value={`${scenario.rainMm} mm`} />
+          <div className="flex items-center gap-2">
+            <span
+              className={`size-2 rounded-full ${
+                rain?.raining ? "animate-pulse bg-[#1f6f8b]" : "bg-muted-foreground/50"
+              }`}
+            />
+            <span className="leading-tight">
+              <span className="block text-[10px] uppercase tracking-wide text-muted-foreground">
+                Rain right now
+              </span>
+              <span className="block text-sm font-semibold tabular-nums">
+                {rain
+                  ? rain.raining
+                    ? `${rain.nowMmPerHr} mm/h`
+                    : "Dry"
+                  : "…"}
+                <span className="ml-1 text-[10px] font-normal text-muted-foreground">
+                  {rain ? `updated ${secondsAgo}s ago` : ""}
+                </span>
+              </span>
+            </span>
+          </div>
+          <Stat
+            icon={<Droplets className="size-4" />}
+            label={followLive ? "Live 24 h load" : "Scenario rain"}
+            value={`${scenario.rainMm} mm`}
+          />
           <Stat
             icon={<TriangleAlert className="size-4" />}
             label="Critical + high"
@@ -212,7 +238,18 @@ function Dashboard() {
           />
           <Stat icon={<Truck className="size-4" />} label="Trucks" value={`${scenario.trucksAvailable}`} />
           <Stat icon={<MapPin className="size-4" />} label="Coverage" value={`${coverage}%`} />
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-8"
+            onClick={refreshFeeds}
+            disabled={refreshing}
+          >
+            <RefreshCw className={`size-3.5 ${refreshing ? "animate-spin" : ""}`} />
+            {refreshing ? "Refreshing" : "Refresh"}
+          </Button>
         </div>
+
       </header>
 
       {wardQuery.isError && (
