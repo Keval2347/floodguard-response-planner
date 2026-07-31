@@ -15,7 +15,10 @@ interface Props {
   selectedId: string | null;
   onSelect: (id: string) => void;
   showRoutes: boolean;
+  clearedIds: string[];
+  closedIds: string[];
 }
+
 
 export default function MapPanel(props: Props) {
   const [mounted, setMounted] = useState(false);
