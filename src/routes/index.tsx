@@ -43,27 +43,70 @@ export const Route = createFileRoute("/")({
 function Dashboard() {
   const fetchWard = useServerFn(getWardData);
   const fetchRoutes = useServerFn(getRoutes);
+  const fetchRain = useServerFn(getRainNow);
+  const queryClient = useQueryClient();
 
   const wardQuery = useQuery({
     queryKey: ["ward-data"],
-    queryFn: () => fetchWard() as Promise<WardData>,
+    queryFn: () => fetchWard({ data: {} }) as Promise<WardData>,
     staleTime: 30 * 60_000,
     retry: 1,
   });
   const ward = wardQuery.data;
 
+  /**
+   * Real-time weather. Open-Meteo's `current` block is refreshed every ~15 min;
+   * we poll it once a minute (even in a background tab) so "is it raining right
+   * now" on screen matches what is happening outside.
+   */
+  const rainQuery = useQuery({
+    queryKey: ["rain-now"],
+    queryFn: () => fetchRain(),
+    refetchInterval: 60_000,
+    refetchIntervalInBackground: true,
+    refetchOnWindowFocus: true,
+    staleTime: 30_000,
+  });
+  const rain = rainQuery.data;
+
   const [scenario, setScenario] = useState<ScenarioOverrides>(() => defaultScenario(undefined));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showRoutes, setShowRoutes] = useState(true);
   const [initialised, setInitialised] = useState(false);
+  /** When true the rainfall input tracks the live feed instead of the slider. */
+  const [followLive, setFollowLive] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [tick, setTick] = useState(Date.now());
 
-  // Once real data lands, start from the actual forecast + full fleet.
+  // Ticking clock so "updated Ns ago" actually counts up on screen.
+  useEffect(() => {
+    const t = setInterval(() => setTick(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  /**
+   * Live 24 h rainfall load driving the risk map: what has already fallen in
+   * the last 24 h plus what the nowcast expects in the next hour. When the rain
+   * stops, this falls back down and the map recolours by itself.
+   */
+  const liveRainMm = rain
+    ? Math.max(0, Math.round((rain.observedMm + rain.next60Mm) * 10) / 10)
+    : undefined;
+
+  // Once real data lands, start from the actual observed rainfall + full fleet.
   useEffect(() => {
     if (ward && !initialised) {
       setScenario(defaultScenario(ward));
       setInitialised(true);
     }
   }, [ward, initialised]);
+
+  // Live mode: every poll pushes the measured rainfall into the risk model.
+  useEffect(() => {
+    if (followLive && liveRainMm !== undefined) {
+      setScenario((s) => (s.rainMm === liveRainMm ? s : { ...s, rainMm: liveRainMm }));
+    }
+  }, [followLive, liveRainMm]);
 
   const scored = useMemo(() => (ward ? scoreSegments(ward, scenario) : []), [ward, scenario]);
   const plan = useMemo(
@@ -74,6 +117,18 @@ function Dashboard() {
     [ward, scored, scenario],
   );
   const selected = scored.find((s) => s.id === selectedId) ?? null;
+
+  /**
+   * De-silting list, ordered by the *baseline* risk so a street does not jump
+   * out from under the cursor the moment you toggle it.
+   */
+  const desiltCandidates = useMemo(
+    () =>
+      [...scored]
+        .sort((a, b) => b.base_risk - a.base_risk || a.id.localeCompare(b.id))
+        .slice(0, 10),
+    [scored],
+  );
 
   // Road-following routes for the current assignments (OSRM, server-cached).
   const pairs = useMemo(
@@ -112,6 +167,24 @@ function Dashboard() {
       ...s,
       [key]: s[key].includes(id) ? s[key].filter((x) => x !== id) : [...s[key], id],
     }));
+
+  /** Real refresh: bypasses the server-side cache and re-hits every upstream. */
+  const refreshFeeds = async () => {
+    setRefreshing(true);
+    try {
+      const fresh = (await fetchWard({ data: { refresh: true } })) as WardData;
+      queryClient.setQueryData(["ward-data"], fresh);
+      await queryClient.invalidateQueries({ queryKey: ["rain-now"] });
+      await queryClient.invalidateQueries({ queryKey: ["routes"] });
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  const secondsAgo = rain
+    ? Math.max(0, Math.round((tick - new Date(rain.fetchedAt).getTime()) / 1000))
+    : 0;
+
 
   return (
     <div className="flex h-screen flex-col bg-background text-foreground">
