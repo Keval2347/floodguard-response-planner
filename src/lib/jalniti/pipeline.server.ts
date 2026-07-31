@@ -17,6 +17,7 @@
 
 import { haversineM, midOf, pathLengthM, type LatLon } from "./geo";
 import { DEPOTS, WARD, type StreetSegment, type WardData } from "./data";
+import snapshot from "./navrangpura.snapshot.json";
 
 const OVERPASS = [
   "https://overpass-api.de/api/interpreter",
@@ -246,8 +247,7 @@ export async function buildWardData(opts: { allowSnapshot?: boolean } = {}): Pro
     return await buildLiveWardData();
   } catch (err) {
     if (!allowSnapshot) throw err;
-    const snap = (await import("./navrangpura.snapshot.json", { with: { type: "json" } }))
-      .default as unknown as WardData;
+    const snap = snapshot as unknown as WardData;
     const notes = [
       ...snap.notes,
       `Live refresh unavailable (${(err as Error).message}) — using the cached OSM/SRTM/OSRM capture from ${new Date(snap.fetchedAt).toLocaleString("en-IN")}`,
