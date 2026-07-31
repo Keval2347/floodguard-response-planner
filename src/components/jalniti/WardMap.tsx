@@ -13,6 +13,10 @@ interface Props {
   selectedId: string | null;
   onSelect: (id: string) => void;
   showRoutes: boolean;
+  /** Segments whose drains were de-silted in the what-if scenario. */
+  clearedIds: string[];
+  /** Segments closed to traffic — excluded from the plan. */
+  closedIds: string[];
 }
 
 export default function WardMap({
@@ -23,6 +27,8 @@ export default function WardMap({
   selectedId,
   onSelect,
   showRoutes,
+  clearedIds,
+  closedIds,
 }: Props) {
   const routeFor = (a: Assignment) => routes.find((r) => r.key === `${a.truck}|${a.segment.id}`);
 
@@ -44,21 +50,24 @@ export default function WardMap({
           const r = routeFor(a);
           if (!r) return null;
           const active = a.segment.id === selectedId;
+          const current = a.leg === 0;
           return (
             <Polyline
               key={`r-${a.truck}-${a.segment.id}`}
               positions={r.path}
               pathOptions={{
-                color: "#1f6f8b",
-                weight: active ? 5 : 2.5,
-                opacity: active ? 0.95 : 0.5,
+                color: current ? "#1f6f8b" : "#7b5ea7",
+                weight: active ? 5 : current ? 3 : 2.5,
+                opacity: active ? 0.95 : current ? 0.65 : 0.55,
+                dashArray: current ? undefined : "2 8",
                 lineCap: "round",
               }}
             >
               <Tooltip sticky>
                 {a.truck} → {a.segment.name}
                 <br />
-                {r.distanceKm} km by road · {Math.round(r.durationMin)} min
+                {current ? "current leg" : `next suggested leg #${a.leg + 1}`} · {r.distanceKm} km ·{" "}
+                {Math.round(r.durationMin)} min
               </Tooltip>
             </Polyline>
           );
@@ -66,15 +75,18 @@ export default function WardMap({
 
       {segments.map((s) => {
         const active = s.id === selectedId;
+        const cleared = clearedIds.includes(s.id);
+        const closed = closedIds.includes(s.id);
         return (
           <Polyline
             key={s.id}
             positions={s.path}
             eventHandlers={{ click: () => onSelect(s.id) }}
             pathOptions={{
-              color: BAND_META[s.band].color,
+              color: closed ? "#6b7280" : BAND_META[s.band].color,
               weight: active ? 10 : 6,
-              opacity: active ? 1 : 0.85,
+              opacity: closed ? 0.55 : active ? 1 : 0.85,
+              dashArray: closed ? "6 6" : cleared ? "12 5" : undefined,
               lineCap: "round",
             }}
           >
@@ -82,6 +94,18 @@ export default function WardMap({
               <span className="font-medium">{s.name}</span>
               <br />
               risk {(s.risk * 100).toFixed(0)}% · {BAND_META[s.band].label}
+              {cleared && (
+                <>
+                  <br />
+                  drain de-silted (−30% risk)
+                </>
+              )}
+              {closed && (
+                <>
+                  <br />
+                  closed to traffic — not pumped
+                </>
+              )}
             </Tooltip>
           </Polyline>
         );

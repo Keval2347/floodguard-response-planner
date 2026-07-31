@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Droplets, Truck, TriangleAlert, Waves, MapPin, Info, Database, RefreshCw } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -14,7 +14,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
 import { BAND_META, SOURCES, WARD, type WardData } from "@/lib/jalniti/data";
-import { getRoutes, getWardData } from "@/lib/jalniti/live.functions";
+import { getRainNow, getRoutes, getWardData } from "@/lib/jalniti/live.functions";
 import { allocate, defaultScenario, scoreSegments, type ScenarioOverrides } from "@/lib/jalniti/model";
 import MapPanel from "@/components/jalniti/MapPanel";
 
@@ -43,27 +43,70 @@ export const Route = createFileRoute("/")({
 function Dashboard() {
   const fetchWard = useServerFn(getWardData);
   const fetchRoutes = useServerFn(getRoutes);
+  const fetchRain = useServerFn(getRainNow);
+  const queryClient = useQueryClient();
 
   const wardQuery = useQuery({
     queryKey: ["ward-data"],
-    queryFn: () => fetchWard() as Promise<WardData>,
+    queryFn: () => fetchWard({ data: {} }) as Promise<WardData>,
     staleTime: 30 * 60_000,
     retry: 1,
   });
   const ward = wardQuery.data;
 
+  /**
+   * Real-time weather. Open-Meteo's `current` block is refreshed every ~15 min;
+   * we poll it once a minute (even in a background tab) so "is it raining right
+   * now" on screen matches what is happening outside.
+   */
+  const rainQuery = useQuery({
+    queryKey: ["rain-now"],
+    queryFn: () => fetchRain(),
+    refetchInterval: 60_000,
+    refetchIntervalInBackground: true,
+    refetchOnWindowFocus: true,
+    staleTime: 30_000,
+  });
+  const rain = rainQuery.data;
+
   const [scenario, setScenario] = useState<ScenarioOverrides>(() => defaultScenario(undefined));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showRoutes, setShowRoutes] = useState(true);
   const [initialised, setInitialised] = useState(false);
+  /** When true the rainfall input tracks the live feed instead of the slider. */
+  const [followLive, setFollowLive] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [tick, setTick] = useState(Date.now());
 
-  // Once real data lands, start from the actual forecast + full fleet.
+  // Ticking clock so "updated Ns ago" actually counts up on screen.
+  useEffect(() => {
+    const t = setInterval(() => setTick(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  /**
+   * Live 24 h rainfall load driving the risk map: what has already fallen in
+   * the last 24 h plus what the nowcast expects in the next hour. When the rain
+   * stops, this falls back down and the map recolours by itself.
+   */
+  const liveRainMm = rain
+    ? Math.max(0, Math.round((rain.observedMm + rain.next60Mm) * 10) / 10)
+    : undefined;
+
+  // Once real data lands, start from the actual observed rainfall + full fleet.
   useEffect(() => {
     if (ward && !initialised) {
       setScenario(defaultScenario(ward));
       setInitialised(true);
     }
   }, [ward, initialised]);
+
+  // Live mode: every poll pushes the measured rainfall into the risk model.
+  useEffect(() => {
+    if (followLive && liveRainMm !== undefined) {
+      setScenario((s) => (s.rainMm === liveRainMm ? s : { ...s, rainMm: liveRainMm }));
+    }
+  }, [followLive, liveRainMm]);
 
   const scored = useMemo(() => (ward ? scoreSegments(ward, scenario) : []), [ward, scenario]);
   const plan = useMemo(
@@ -74,6 +117,18 @@ function Dashboard() {
     [ward, scored, scenario],
   );
   const selected = scored.find((s) => s.id === selectedId) ?? null;
+
+  /**
+   * De-silting list, ordered by the *baseline* risk so a street does not jump
+   * out from under the cursor the moment you toggle it.
+   */
+  const desiltCandidates = useMemo(
+    () =>
+      [...scored]
+        .sort((a, b) => b.base_risk - a.base_risk || a.id.localeCompare(b.id))
+        .slice(0, 10),
+    [scored],
+  );
 
   // Road-following routes for the current assignments (OSRM, server-cached).
   const pairs = useMemo(
@@ -113,6 +168,24 @@ function Dashboard() {
       [key]: s[key].includes(id) ? s[key].filter((x) => x !== id) : [...s[key], id],
     }));
 
+  /** Real refresh: bypasses the server-side cache and re-hits every upstream. */
+  const refreshFeeds = async () => {
+    setRefreshing(true);
+    try {
+      const fresh = (await fetchWard({ data: { refresh: true } })) as WardData;
+      queryClient.setQueryData(["ward-data"], fresh);
+      await queryClient.invalidateQueries({ queryKey: ["rain-now"] });
+      await queryClient.invalidateQueries({ queryKey: ["routes"] });
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  const secondsAgo = rain
+    ? Math.max(0, Math.round((tick - new Date(rain.fetchedAt).getTime()) / 1000))
+    : 0;
+
+
   return (
     <div className="flex h-screen flex-col bg-background text-foreground">
       <header className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-2 border-b border-border bg-card px-5 py-3">
@@ -131,7 +204,33 @@ function Dashboard() {
         </div>
 
         <div className="ml-auto flex items-center gap-5 text-sm">
-          <Stat icon={<Droplets className="size-4" />} label="Scenario rain" value={`${scenario.rainMm} mm`} />
+          <div className="flex items-center gap-2">
+            <span
+              className={`size-2 rounded-full ${
+                rain?.raining ? "animate-pulse bg-[#1f6f8b]" : "bg-muted-foreground/50"
+              }`}
+            />
+            <span className="leading-tight">
+              <span className="block text-[10px] uppercase tracking-wide text-muted-foreground">
+                Rain right now
+              </span>
+              <span className="block text-sm font-semibold tabular-nums">
+                {rain
+                  ? rain.raining
+                    ? `${rain.nowMmPerHr} mm/h`
+                    : "Dry"
+                  : "…"}
+                <span className="ml-1 text-[10px] font-normal text-muted-foreground">
+                  {rain ? `updated ${secondsAgo}s ago` : ""}
+                </span>
+              </span>
+            </span>
+          </div>
+          <Stat
+            icon={<Droplets className="size-4" />}
+            label={followLive ? "Live 24 h load" : "Scenario rain"}
+            value={`${scenario.rainMm} mm`}
+          />
           <Stat
             icon={<TriangleAlert className="size-4" />}
             label="Critical + high"
@@ -139,7 +238,18 @@ function Dashboard() {
           />
           <Stat icon={<Truck className="size-4" />} label="Trucks" value={`${scenario.trucksAvailable}`} />
           <Stat icon={<MapPin className="size-4" />} label="Coverage" value={`${coverage}%`} />
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-8"
+            onClick={refreshFeeds}
+            disabled={refreshing}
+          >
+            <RefreshCw className={`size-3.5 ${refreshing ? "animate-spin" : ""}`} />
+            {refreshing ? "Refreshing" : "Refresh"}
+          </Button>
         </div>
+
       </header>
 
       {wardQuery.isError && (
@@ -149,7 +259,7 @@ function Dashboard() {
             Live data fetch failed: {(wardQuery.error as Error).message}. The public OSM / DEM
             endpoints rate-limit; retry in a moment.
           </span>
-          <Button size="sm" variant="outline" className="h-7" onClick={() => wardQuery.refetch()}>
+          <Button size="sm" variant="outline" className="h-7" onClick={refreshFeeds}>
             Retry
           </Button>
         </div>
@@ -171,6 +281,8 @@ function Dashboard() {
               selectedId={selectedId}
               onSelect={setSelectedId}
               showRoutes={showRoutes}
+              clearedIds={scenario.drainsCleared}
+              closedIds={scenario.closed}
             />
           )}
 
@@ -194,6 +306,24 @@ function Dashboard() {
                 Road routes {routesQuery.isFetching ? "(routing…)" : ""}
               </span>
             </label>
+            {showRoutes && (
+              <div className="space-y-1 pt-1">
+                <div className="flex items-center gap-2">
+                  <span className="h-[3px] w-6 rounded-full bg-[#1f6f8b]" />
+                  <span className="text-muted-foreground">Current leg</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span
+                    className="h-[3px] w-6 rounded-full"
+                    style={{
+                      backgroundImage:
+                        "repeating-linear-gradient(to right, #7b5ea7 0 3px, transparent 3px 7px)",
+                    }}
+                  />
+                  <span className="text-muted-foreground">Next suggested leg</span>
+                </div>
+              </div>
+            )}
           </Card>
 
           {selected && (
@@ -357,21 +487,65 @@ function Dashboard() {
             <TabsContent value="whatif" className="min-h-0 flex-1">
               <ScrollArea className="h-full px-3 pb-4">
                 <div className="space-y-5">
+                  <Card className="gap-2 p-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="text-sm font-medium">Live rainfall feed</p>
+                      <Badge variant={rain?.raining ? "default" : "secondary"} className="text-[10px]">
+                        {rain ? (rain.raining ? "Raining now" : "No rain now") : "…"}
+                      </Badge>
+                    </div>
+                    <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-xs text-muted-foreground">
+                      <span>Rate now</span>
+                      <span className="text-right tabular-nums text-foreground">
+                        {rain ? `${rain.nowMmPerHr} mm/h` : "—"}
+                      </span>
+                      <span>Last 60 min</span>
+                      <span className="text-right tabular-nums text-foreground">
+                        {rain ? `${rain.last60Mm} mm` : "—"}
+                      </span>
+                      <span>Next 60 min (nowcast)</span>
+                      <span className="text-right tabular-nums text-foreground">
+                        {rain ? `${rain.next60Mm} mm` : "—"}
+                      </span>
+                      <span>Last 24 h observed</span>
+                      <span className="text-right tabular-nums text-foreground">
+                        {rain ? `${rain.observedMm} mm` : "—"}
+                      </span>
+                      <span>Next 24 h forecast</span>
+                      <span className="text-right tabular-nums text-foreground">
+                        {rain ? `${rain.forecastMm} mm` : "—"}
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-muted-foreground">
+                      Station time {rain?.observedAt || "—"} IST · polled every 60 s · last poll{" "}
+                      {secondsAgo}s ago{rainQuery.isFetching ? " · updating…" : ""}
+                    </p>
+                  </Card>
+
                   <Field
-                    label="Rainfall scenario"
+                    label="Rainfall driving the map"
                     value={`${scenario.rainMm} mm / 24 h`}
                     hint={
-                      ward
-                        ? `Live feed: ${ward.observedMm} mm observed in the last 24 h, ${ward.forecastMm} mm forecast for the next 24 h.`
-                        : "Loading the live rainfall feed…"
+                      followLive
+                        ? "Following the live feed: observed last 24 h + the next hour's nowcast. When the rain stops, the map recolours on the next poll."
+                        : "Manual what-if value. Turn 'Follow live feed' back on to return to measured rainfall."
                     }
                   >
+                    <label className="flex items-center gap-2 pb-1 text-xs">
+                      <Switch checked={followLive} onCheckedChange={setFollowLive} />
+                      <span className="text-muted-foreground">
+                        Follow live feed{liveRainMm !== undefined ? ` (${liveRainMm} mm)` : ""}
+                      </span>
+                    </label>
                     <Slider
-                      min={10}
+                      min={0}
                       max={200}
-                      step={5}
+                      step={1}
                       value={[scenario.rainMm]}
-                      onValueChange={([v]) => set({ rainMm: v })}
+                      onValueChange={([v]) => {
+                        setFollowLive(false);
+                        set({ rainMm: v });
+                      }}
                     />
                   </Field>
 
@@ -410,31 +584,65 @@ function Dashboard() {
                       pick from the top-risk list.
                     </p>
                     <div className="space-y-1">
-                      {scored.slice(0, 8).map((s) => (
-                        <label
-                          key={s.id}
-                          className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm hover:bg-accent/60"
+                      {desiltCandidates.map((s) => {
+                        const on = scenario.drainsCleared.includes(s.id);
+                        const before = Math.round(Math.min(0.99, (s.risk / (on ? 0.7 : 1))) * 100);
+                        const after = Math.round(s.risk * 100 * (on ? 1 : 0.7));
+                        return (
+                          <label
+                            key={s.id}
+                            className={`flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm ${
+                              on ? "bg-accent" : "hover:bg-accent/60"
+                            }`}
+                          >
+                            <Switch
+                              checked={on}
+                              onCheckedChange={() => toggleIn("drainsCleared", s.id)}
+                            />
+                            <span className="min-w-0 flex-1 truncate">{s.name}</span>
+                            <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
+                              {on ? (
+                                <>
+                                  <span className="line-through">{before}%</span>{" "}
+                                  <span className="font-semibold text-foreground">
+                                    {Math.round(s.risk * 100)}%
+                                  </span>
+                                </>
+                              ) : (
+                                <>
+                                  {Math.round(s.risk * 100)}% → {after}%
+                                </>
+                              )}
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                    <div className="flex items-center justify-between pt-2 text-xs text-muted-foreground">
+                      <span>
+                        {scenario.drainsCleared.length} segment
+                        {scenario.drainsCleared.length === 1 ? "" : "s"} de-silted (dashed on the map)
+                      </span>
+                      {scenario.drainsCleared.length > 0 && (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 px-2 text-xs"
+                          onClick={() => set({ drainsCleared: [] })}
                         >
-                          <Switch
-                            checked={scenario.drainsCleared.includes(s.id)}
-                            onCheckedChange={() => toggleIn("drainsCleared", s.id)}
-                          />
-                          <span className="min-w-0 flex-1 truncate">{s.name}</span>
-                          <span className="text-xs tabular-nums text-muted-foreground">
-                            {(s.risk * 100).toFixed(0)}%
-                          </span>
-                        </label>
-                      ))}
+                          Clear all
+                        </Button>
+                      )}
                     </div>
                   </div>
 
                   <Card className="gap-2 p-3">
                     <p className="text-sm font-medium">Observed rainfall, last 12 h</p>
-                    {ward && ward.rainSeries.length > 0 ? (
+                    {rain && rain.rainSeries.length > 0 ? (
                       <>
                         <div className="flex h-16 items-end gap-1">
-                          {ward.rainSeries.map((r) => {
-                            const peak = Math.max(1, ...ward.rainSeries.map((x) => x.mm));
+                          {rain.rainSeries.map((r) => {
+                            const peak = Math.max(1, ...rain.rainSeries.map((x) => x.mm));
                             return (
                               <div key={r.hour} className="flex flex-1 flex-col items-center gap-1">
                                 <div
@@ -447,7 +655,7 @@ function Dashboard() {
                           })}
                         </div>
                         <p className="text-[10px] text-muted-foreground">
-                          {ward.rainSeries[0].hour} → {ward.rainSeries[ward.rainSeries.length - 1].hour} IST
+                          {rain.rainSeries[0].hour} → {rain.rainSeries[rain.rainSeries.length - 1].hour} IST
                         </p>
                       </>
                     ) : (
@@ -458,9 +666,12 @@ function Dashboard() {
                   <Button
                     variant="outline"
                     className="w-full"
-                    onClick={() => setScenario(defaultScenario(ward))}
+                    onClick={() => {
+                      setScenario({ ...defaultScenario(ward), rainMm: liveRainMm ?? scenario.rainMm });
+                      setFollowLive(true);
+                    }}
                   >
-                    Reset to live forecast
+                    Reset to the live feed
                   </Button>
                 </div>
               </ScrollArea>
@@ -492,9 +703,10 @@ function Dashboard() {
                       size="sm"
                       variant="outline"
                       className="mt-2 h-7 w-full text-xs"
-                      onClick={() => wardQuery.refetch()}
+                      onClick={refreshFeeds}
+                      disabled={refreshing}
                     >
-                      Refresh feeds
+                      {refreshing ? "Refreshing…" : "Refresh feeds"}
                     </Button>
                   </Card>
 

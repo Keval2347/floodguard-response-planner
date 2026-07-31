@@ -4,9 +4,33 @@ import type { WardData } from "./data";
 import type { LatLon } from "./geo";
 
 /** Real Navrangpura data: OSM streets, SRTM elevation, OSRM times, rainfall. */
-export const getWardData = createServerFn({ method: "GET" }).handler(async (): Promise<WardData> => {
-  const { buildWardData } = await import("./pipeline.server");
-  return buildWardData();
+export const getWardData = createServerFn({ method: "POST" })
+  .inputValidator((input?: { refresh?: boolean }) => ({ refresh: Boolean(input?.refresh) }))
+  .handler(async ({ data }): Promise<WardData> => {
+    const { buildWardData } = await import("./pipeline.server");
+    return buildWardData({ refresh: data.refresh });
+  });
+
+export interface RainNowDTO {
+  nowMmPerHr: number;
+  raining: boolean;
+  last60Mm: number;
+  next60Mm: number;
+  observedMm: number;
+  forecastMm: number;
+  rainSeries: { hour: string; mm: number }[];
+  nowcast: { time: string; mm: number }[];
+  observedAt: string;
+  fetchedAt: string;
+}
+
+/**
+ * Live rainfall only — small and fast, so the dashboard can poll it every
+ * minute without re-running the whole OSM/DEM/OSRM pipeline.
+ */
+export const getRainNow = createServerFn({ method: "GET" }).handler(async (): Promise<RainNowDTO> => {
+  const { fetchRainNow } = await import("./pipeline.server");
+  return fetchRainNow();
 });
 
 export interface RoutePath {
