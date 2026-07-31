@@ -20,8 +20,11 @@ import { DEPOTS, WARD, type StreetSegment, type WardData } from "./data";
 
 const OVERPASS = [
   "https://overpass-api.de/api/interpreter",
+  "https://overpass.private.coffee/api/interpreter",
+  "https://overpass.osm.ch/api/interpreter",
   "https://overpass.kumi.systems/api/interpreter",
 ];
+
 const OSRM = "https://router.project-osrm.org";
 const TOPO = "https://api.opentopodata.org/v1";
 const METEO = "https://api.open-meteo.com/v1/forecast";
@@ -75,7 +78,7 @@ const ROADS_QUERY = (bbox: string) =>
 const WATER_QUERY = (bbox: string) =>
   `[out:json][timeout:90];(way["waterway"](${bbox});way["natural"="water"](${bbox}););out geom;`;
 
-async function overpass(query: string, attempts = 4): Promise<OverpassWay[]> {
+async function overpass(query: string, attempts = 8): Promise<OverpassWay[]> {
   let lastErr: unknown;
   for (let i = 0; i < attempts; i++) {
     const endpoint = OVERPASS[i % OVERPASS.length];
@@ -85,11 +88,12 @@ async function overpass(query: string, attempts = 4): Promise<OverpassWay[]> {
         headers: { "content-type": "application/x-www-form-urlencoded" },
         body: `data=${encodeURIComponent(query)}`,
       });
-      if (Array.isArray(data.elements)) return data.elements as OverpassWay[];
-      throw new Error("Overpass returned no elements");
+      const els = data.elements;
+      if (Array.isArray(els) && els.length > 0) return els as OverpassWay[];
+      throw new Error(`Overpass returned no elements (${endpoint})`);
     } catch (err) {
       lastErr = err;
-      await new Promise((r) => setTimeout(r, 2500 * (i + 1)));
+      await new Promise((r) => setTimeout(r, 4000 + 2000 * i));
     }
   }
   throw lastErr instanceof Error ? lastErr : new Error("Overpass unavailable");
@@ -100,7 +104,7 @@ async function fetchOsm(): Promise<OverpassWay[]> {
   const roads = await overpass(ROADS_QUERY(bbox));
   let waters: OverpassWay[] = [];
   try {
-    waters = await overpass(WATER_QUERY(bbox), 2);
+    waters = await overpass(WATER_QUERY(bbox), 4);
   } catch {
     /* the ward still scores without the waterway layer; noted in the UI */
   }
@@ -226,8 +230,48 @@ function roadDensity(centre: LatLon, roadEdges: { a: LatLon; b: LatLon; len: num
   return Math.round((metres / 1000 / areaKm2) * 10) / 10;
 }
 
-export async function buildWardData(): Promise<WardData> {
+/**
+ * Real ward data.
+ *
+ * The free community endpoints (Overpass, OpenTopoData) rate-limit shared
+ * cloud IPs with HTTP 429, which used to leave the dashboard stuck on
+ * "Fetching…". So: try live first, and if any upstream refuses, fall back to
+ * the committed snapshot — which is itself REAL data captured from the same
+ * endpoints by scripts/build-snapshot.ts. Rainfall is always refreshed live
+ * (Open-Meteo has no such limit), so the snapshot never shows stale weather.
+ */
+export async function buildWardData(opts: { allowSnapshot?: boolean } = {}): Promise<WardData> {
+  const { allowSnapshot = true } = opts;
+  try {
+    return await buildLiveWardData();
+  } catch (err) {
+    if (!allowSnapshot) throw err;
+    const snap = (await import("./navrangpura.snapshot.json", { with: { type: "json" } }))
+      .default as unknown as WardData;
+    const notes = [
+      ...snap.notes,
+      `Live refresh unavailable (${(err as Error).message}) — using the cached OSM/SRTM/OSRM capture from ${new Date(snap.fetchedAt).toLocaleString("en-IN")}`,
+    ];
+    let rain = {
+      rainSeries: snap.rainSeries,
+      observedMm: snap.observedMm,
+      forecastMm: snap.forecastMm,
+    };
+    try {
+      rain = await fetchRain();
+      notes.push(
+        `Rainfall refreshed live: ${rain.observedMm} mm observed in the last 24 h, ${rain.forecastMm} mm forecast for the next 24 h`,
+      );
+    } catch {
+      notes.push("Rainfall feed unavailable — snapshot rainfall shown");
+    }
+    return { ...snap, ...rain, notes };
+  }
+}
+
+async function buildLiveWardData(): Promise<WardData> {
   return cached("ward", 3 * 3600_000, async (): Promise<WardData> => {
+
     const notes: string[] = [];
     const ways = await fetchOsm();
 
