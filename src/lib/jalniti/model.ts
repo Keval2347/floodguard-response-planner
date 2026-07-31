@@ -82,6 +82,8 @@ export interface Assignment {
   /** Matrix index the truck departed from — used to draw the real route. */
   fromIndex: number;
   fromPoint: LatLon;
+  /** 0 = the leg the truck is driving now, 1+ = the next suggested legs. */
+  leg: number;
 }
 
 export interface AllocationResult {
@@ -111,6 +113,7 @@ export function allocate(
     freeAt: number;
     idx: number;
     point: LatLon;
+    legs: number;
   }[] = [];
 
   let budget = o.trucksAvailable;
@@ -122,6 +125,7 @@ export function allocate(
         freeAt: 0,
         idx: di,
         point: [d.lat, d.lon],
+        legs: 0,
       });
     }
   });
@@ -162,7 +166,9 @@ export function allocate(
       arriveMin: Math.round(bestArrive),
       fromIndex: best.idx,
       fromPoint: best.point,
+      leg: best.legs,
     });
+    best.legs += 1;
     best.freeAt = bestArrive + SERVICE_MIN;
     best.idx = seg.matrixIndex;
     best.point = seg.mid;
@@ -173,3 +179,4 @@ export function allocate(
 
   return { assignments, unserved, coveredExposure, totalExposure };
 }
+
