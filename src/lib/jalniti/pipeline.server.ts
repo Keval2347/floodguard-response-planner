@@ -244,7 +244,13 @@ function roadDensity(centre: LatLon, roadEdges: { a: LatLon; b: LatLon; len: num
 export async function buildWardData(opts: { allowSnapshot?: boolean } = {}): Promise<WardData> {
   const { allowSnapshot = true } = opts;
   try {
-    return await buildLiveWardData();
+    // Hard budget: never leave the dashboard spinning on a rate-limited mirror.
+    return await Promise.race([
+      buildLiveWardData(),
+      new Promise<WardData>((_, rej) =>
+        setTimeout(() => rej(new Error("live upstreams did not answer within 20 s")), 20000),
+      ),
+    ]);
   } catch (err) {
     if (!allowSnapshot) throw err;
     const snap = snapshot as unknown as WardData;
