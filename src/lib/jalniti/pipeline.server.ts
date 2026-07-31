@@ -143,29 +143,100 @@ async function fetchElevations(points: LatLon[]): Promise<{ values: number[]; so
 
 /* --------------------------------------------------------------- weather */
 
-async function fetchRain() {
-  const [lat, lon] = WARD.center;
-  const data = await getJson(
-    `${METEO}?latitude=${lat}&longitude=${lon}&hourly=precipitation&past_days=2&forecast_days=2&timezone=Asia%2FKolkata`,
-  );
-  const times: string[] = data.hourly.time;
-  const mm: number[] = data.hourly.precipitation;
-  const now = Date.now();
-  let nowIdx = times.findIndex((t) => new Date(`${t}+05:30`).getTime() > now);
-  if (nowIdx < 0) nowIdx = times.length - 1;
-
-  const rainSeries = times
-    .slice(Math.max(0, nowIdx - 12), nowIdx)
-    .map((t, i) => ({ hour: t.slice(11, 16), mm: Number(mm[Math.max(0, nowIdx - 12) + i] ?? 0) }));
-
-  const observedMm =
-    Math.round(mm.slice(Math.max(0, nowIdx - 24), nowIdx).reduce((a, b) => a + (b ?? 0), 0) * 10) /
-    10;
-  const forecastMm =
-    Math.round(mm.slice(nowIdx, nowIdx + 24).reduce((a, b) => a + (b ?? 0), 0) * 10) / 10;
-
-  return { rainSeries, observedMm, forecastMm };
+export interface RainNow {
+  /** Rain rate right now, mm/h (Open-Meteo `current.precipitation`). */
+  nowMmPerHr: number;
+  /** True only if it is actually raining at this minute. */
+  raining: boolean;
+  /** Rain measured in the last 60 minutes, mm (15-min buckets). */
+  last60Mm: number;
+  /** Nowcast for the next 60 minutes, mm (15-min buckets). */
+  next60Mm: number;
+  /** Observed total, last 24 h. */
+  observedMm: number;
+  /** Forecast total, next 24 h. */
+  forecastMm: number;
+  /** Hourly observed rainfall for the last 12 h. */
+  rainSeries: { hour: string; mm: number }[];
+  /** 15-minute nowcast buckets for the next 2 h. */
+  nowcast: { time: string; mm: number }[];
+  /** Station/model timestamp of the `current` block, IST. */
+  observedAt: string;
+  /** When this server actually called the weather API. */
+  fetchedAt: string;
 }
+
+/**
+ * Real-time rainfall for the ward centroid.
+ *
+ * Uses Open-Meteo's `current` block (updated every ~15 min from the same
+ * radar/observation assimilation IMD feeds into) plus the 15-minute nowcast,
+ * so "is it raining right now" is answered by an observation, not by a 24 h
+ * forecast total. Cached for only 60 s so the dashboard can poll it live.
+ */
+export async function fetchRainNow(): Promise<RainNow> {
+  return cached("rain-now", 60_000, async () => {
+    const [lat, lon] = WARD.center;
+    const data = await getJson(
+      `${METEO}?latitude=${lat}&longitude=${lon}` +
+        `&current=precipitation,rain` +
+        `&minutely_15=precipitation` +
+        `&hourly=precipitation&past_days=2&forecast_days=2&timezone=Asia%2FKolkata`,
+      undefined,
+      15000,
+    );
+
+    const times: string[] = data.hourly.time;
+    const mm: number[] = data.hourly.precipitation;
+    const now = Date.now();
+    const ist = (t: string) => new Date(`${t}+05:30`).getTime();
+    let nowIdx = times.findIndex((t) => ist(t) > now);
+    if (nowIdx < 0) nowIdx = times.length - 1;
+    const from = Math.max(0, nowIdx - 12);
+
+    const rainSeries = times
+      .slice(from, nowIdx)
+      .map((t, i) => ({ hour: t.slice(11, 16), mm: Number(mm[from + i] ?? 0) }));
+
+    const sum = (xs: (number | null)[]) =>
+      Math.round(xs.reduce((a: number, b) => a + (b ?? 0), 0) * 10) / 10;
+
+    const observedMm = sum(mm.slice(Math.max(0, nowIdx - 24), nowIdx));
+    const forecastMm = sum(mm.slice(nowIdx, nowIdx + 24));
+
+    // 15-minute buckets around "now" → the last hour and the next hour.
+    const qTimes: string[] = data.minutely_15?.time ?? [];
+    const qMm: number[] = data.minutely_15?.precipitation ?? [];
+    let qIdx = qTimes.findIndex((t) => ist(t) > now);
+    if (qIdx < 0) qIdx = qTimes.length;
+    const last60Mm = sum(qMm.slice(Math.max(0, qIdx - 4), qIdx));
+    const next60Mm = sum(qMm.slice(qIdx, qIdx + 4));
+    const nowcast = qTimes
+      .slice(qIdx, qIdx + 8)
+      .map((t, i) => ({ time: t.slice(11, 16), mm: Number(qMm[qIdx + i] ?? 0) }));
+
+    const nowMmPerHr = Math.round(Number(data.current?.precipitation ?? 0) * 10) / 10;
+
+    return {
+      nowMmPerHr,
+      raining: nowMmPerHr > 0 || last60Mm > 0.1,
+      last60Mm,
+      next60Mm,
+      observedMm,
+      forecastMm,
+      rainSeries,
+      nowcast,
+      observedAt: String(data.current?.time ?? "").replace("T", " "),
+      fetchedAt: new Date().toISOString(),
+    };
+  });
+}
+
+async function fetchRain() {
+  const r = await fetchRainNow();
+  return { rainSeries: r.rainSeries, observedMm: r.observedMm, forecastMm: r.forecastMm };
+}
+
 
 /* ------------------------------------------------------------------ OSRM */
 
