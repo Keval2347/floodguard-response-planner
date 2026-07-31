@@ -269,11 +269,17 @@ export async function buildWardData(opts: { allowSnapshot?: boolean } = {}): Pro
   }
 }
 
+/** Snapshot capture (scripts/build-snapshot.ts) can pass pre-downloaded OSM ways. */
+let injectedWays: OverpassWay[] | null = null;
+export function useOsmWays(ways: OverpassWay[]) {
+  injectedWays = ways;
+}
+
 async function buildLiveWardData(): Promise<WardData> {
   return cached("ward", 3 * 3600_000, async (): Promise<WardData> => {
-
     const notes: string[] = [];
-    const ways = await fetchOsm();
+    const ways = injectedWays ?? (await fetchOsm());
+
 
     const roads = ways.filter((w) => w.tags?.highway && (w.geometry?.length ?? 0) > 1);
     const waters = ways.filter(
