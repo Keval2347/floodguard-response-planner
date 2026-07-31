@@ -312,9 +312,18 @@ function roadDensity(centre: LatLon, roadEdges: { a: LatLon; b: LatLon; len: num
  * endpoints by scripts/build-snapshot.ts. Rainfall is always refreshed live
  * (Open-Meteo has no such limit), so the snapshot never shows stale weather.
  */
-export async function buildWardData(opts: { allowSnapshot?: boolean } = {}): Promise<WardData> {
-  const { allowSnapshot = true } = opts;
+export async function buildWardData(
+  opts: { allowSnapshot?: boolean; refresh?: boolean } = {},
+): Promise<WardData> {
+  const { allowSnapshot = true, refresh = false } = opts;
+  if (refresh) {
+    // "Refresh feeds" must actually re-hit the upstreams, not replay the
+    // 3 h in-process cache.
+    store.delete("ward");
+    store.delete("rain-now");
+  }
   try {
+
     // Hard budget: never leave the dashboard spinning on a rate-limited mirror.
     return await Promise.race([
       buildLiveWardData(),
