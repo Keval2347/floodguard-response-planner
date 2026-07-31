@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Droplets, Truck, TriangleAlert, Waves, MapPin, Info, Database, RefreshCw } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -14,7 +14,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
 import { BAND_META, SOURCES, WARD, type WardData } from "@/lib/jalniti/data";
-import { getRoutes, getWardData } from "@/lib/jalniti/live.functions";
+import { getRainNow, getRoutes, getWardData } from "@/lib/jalniti/live.functions";
 import { allocate, defaultScenario, scoreSegments, type ScenarioOverrides } from "@/lib/jalniti/model";
 import MapPanel from "@/components/jalniti/MapPanel";
 
@@ -244,6 +244,8 @@ function Dashboard() {
               selectedId={selectedId}
               onSelect={setSelectedId}
               showRoutes={showRoutes}
+              clearedIds={scenario.drainsCleared}
+              closedIds={scenario.closed}
             />
           )}
 
