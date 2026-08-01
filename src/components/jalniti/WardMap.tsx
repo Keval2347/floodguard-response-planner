@@ -36,6 +36,15 @@ export default function WardMap({
   hospitals,
   showHospitals,
 }: Props) {
+  // Only the worst handful get a permanent label — a tagged map has to stay
+  // readable. Everything else is a small dot with a hover tooltip.
+  const tagged = new Set(
+    hospitals
+      .filter((h) => h.status === "cut-off" || h.status === "at-risk")
+      .slice(0, 10)
+      .map((h) => h.id),
+  );
+
   const routeFor = (a: Assignment) => routes.find((r) => r.key === `${a.truck}|${a.segment.id}`);
 
   return (
@@ -133,7 +142,7 @@ export default function WardMap({
                 fillOpacity: urgent ? 1 : 0.75,
               }}
             >
-              {urgent && (
+              {tagged.has(h.id) && (
                 <Tooltip
                   permanent
                   direction="right"

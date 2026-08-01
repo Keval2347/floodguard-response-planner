@@ -145,11 +145,14 @@
 
 /* Small, legible hospital tags on the ward map (urgent facilities only). */
 .leaflet-tooltip.jalniti-hospital-tag {
-  background: hsl(var(--card, 0 0% 100%));
+  background: rgb(255 255 255 / 0.92);
   border: 1px solid #b42318;
   color: #7a1710;
-  font-size: 10px;
+  font-size: 10px !important;
   font-weight: 600;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   line-height: 1.1;
   padding: 1px 4px;
   border-radius: 3px;
