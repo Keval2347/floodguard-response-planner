@@ -357,7 +357,8 @@ function Dashboard() {
             <label className="flex items-center gap-2">
               <Switch checked={showHospitals} onCheckedChange={setShowHospitals} />
               <span className="text-muted-foreground">
-                Hospitals ({hospitalRisk.length}) · {urgent.length} tagged urgent
+                Hospitals ({hospitalRisk.length}) · {urgent.length} at risk,{" "}
+                {Math.min(10, urgent.length)} labelled
               </span>
             </label>
             <Separator className="my-1" />
@@ -490,7 +491,7 @@ function Dashboard() {
             {/* ---- Hospitals exposed by the current risk map ---- */}
             <TabsContent value="hospitals" className="min-h-0 flex-1">
               <ScrollArea className="h-full px-3 pb-4">
-                <Card className="mb-3 gap-1 p-3 text-xs">
+                <Card className="mb-3 w-full gap-1 overflow-hidden p-3 text-xs break-words">
                   <p className="flex items-center gap-2 text-sm font-medium">
                     <Cross className="size-4" /> {hospitalRisk.length} hospitals in Ahmedabad
                   </p>
@@ -512,7 +513,10 @@ function Dashboard() {
 
                 <div className="space-y-1.5">
                   {(urgent.length > 0 ? urgent : inWard.slice(0, 25)).map((h) => (
-                    <div key={h.id} className="rounded-md border border-border px-3 py-2">
+                    <div
+                      key={h.id}
+                      className="w-full overflow-hidden rounded-md border border-border px-3 py-2 break-words"
+                    >
                       <div className="flex items-start justify-between gap-2">
                         <span className="min-w-0 flex-1 truncate text-sm font-medium">{h.name}</span>
                         <span
