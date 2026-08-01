@@ -2,7 +2,17 @@ import { useEffect, useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Droplets, Truck, TriangleAlert, Waves, MapPin, Info, Database, RefreshCw } from "lucide-react";
+import {
+  Droplets,
+  Truck,
+  TriangleAlert,
+  Waves,
+  MapPin,
+  Info,
+  Database,
+  RefreshCw,
+  Cross,
+} from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,8 +24,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
 import { BAND_META, SOURCES, WARD, type WardData } from "@/lib/jalniti/data";
-import { getRainNow, getRoutes, getWardData } from "@/lib/jalniti/live.functions";
-import { allocate, defaultScenario, scoreSegments, type ScenarioOverrides } from "@/lib/jalniti/model";
+import { getHospitals, getRainNow, getRoutes, getWardData } from "@/lib/jalniti/live.functions";
+import { assessHospitals, STATUS_META, urgentHospitals } from "@/lib/jalniti/hospitals";
+import {
+  allocate,
+  defaultScenario,
+  scoreSegments,
+  type AllocationResult,
+  type ScenarioOverrides,
+} from "@/lib/jalniti/model";
 import MapPanel from "@/components/jalniti/MapPanel";
 
 export const Route = createFileRoute("/")({
@@ -44,6 +61,7 @@ function Dashboard() {
   const fetchWard = useServerFn(getWardData);
   const fetchRoutes = useServerFn(getRoutes);
   const fetchRain = useServerFn(getRainNow);
+  const fetchHospitals = useServerFn(getHospitals);
   const queryClient = useQueryClient();
 
   const wardQuery = useQuery({
@@ -69,6 +87,14 @@ function Dashboard() {
   });
   const rain = rainQuery.data;
 
+  /** Real OSM hospitals for the whole city; the list itself changes rarely. */
+  const hospitalQuery = useQuery({
+    queryKey: ["hospitals"],
+    queryFn: () => fetchHospitals({ data: {} }),
+    staleTime: 12 * 3600_000,
+  });
+
+  const [showHospitals, setShowHospitals] = useState(true);
   const [scenario, setScenario] = useState<ScenarioOverrides>(() => defaultScenario(undefined));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showRoutes, setShowRoutes] = useState(true);
@@ -113,10 +139,33 @@ function Dashboard() {
     () =>
       ward
         ? allocate(ward, scored, scenario)
-        : { assignments: [], unserved: [], coveredExposure: 0, totalExposure: 0 },
+        : ({
+            assignments: [],
+            unserved: [],
+            coveredExposure: 0,
+            totalExposure: 0,
+            greedyExposure: 0,
+            improvements: 0,
+            method: "waiting for ward data",
+          } satisfies AllocationResult),
     [ward, scored, scenario],
   );
   const selected = scored.find((s) => s.id === selectedId) ?? null;
+
+  /**
+   * Hospitals joined to the live risk map: a facility is only tagged when a
+   * scored OSM road within 600 m is high or critical, so the flag always has a
+   * named street behind it.
+   */
+  const hospitalRisk = useMemo(
+    () => assessHospitals(hospitalQuery.data?.hospitals ?? [], scored, WARD.center),
+    [hospitalQuery.data, scored],
+  );
+  const urgent = useMemo(() => urgentHospitals(hospitalRisk), [hospitalRisk]);
+  const inWard = useMemo(
+    () => hospitalRisk.filter((h) => h.status !== "unknown"),
+    [hospitalRisk],
+  );
 
   /**
    * De-silting list, ordered by the *baseline* risk so a street does not jump
@@ -283,6 +332,8 @@ function Dashboard() {
               showRoutes={showRoutes}
               clearedIds={scenario.drainsCleared}
               closedIds={scenario.closed}
+              hospitals={hospitalRisk}
+              showHospitals={showHospitals}
             />
           )}
 
@@ -299,6 +350,16 @@ function Dashboard() {
                 </span>
               </div>
             ))}
+            <p className="text-[10px] text-muted-foreground">
+              Green = safe to drive at the current rainfall.
+            </p>
+            <Separator className="my-1" />
+            <label className="flex items-center gap-2">
+              <Switch checked={showHospitals} onCheckedChange={setShowHospitals} />
+              <span className="text-muted-foreground">
+                Hospitals ({hospitalRisk.length}) · {urgent.length} tagged urgent
+              </span>
+            </label>
             <Separator className="my-1" />
             <label className="flex items-center gap-2">
               <Switch checked={showRoutes} onCheckedChange={setShowRoutes} />
@@ -375,8 +436,9 @@ function Dashboard() {
 
         <aside className="flex w-full shrink-0 flex-col border-t border-border bg-card lg:w-[400px] lg:border-l lg:border-t-0">
           <Tabs defaultValue="risk" className="flex min-h-0 flex-1 flex-col gap-0">
-            <TabsList className="m-3 grid grid-cols-4">
+            <TabsList className="m-3 grid grid-cols-5">
               <TabsTrigger value="risk">Risk</TabsTrigger>
+              <TabsTrigger value="hospitals">Care</TabsTrigger>
               <TabsTrigger value="plan">Allocation</TabsTrigger>
               <TabsTrigger value="whatif">What-if</TabsTrigger>
               <TabsTrigger value="data">Data</TabsTrigger>
@@ -386,8 +448,11 @@ function Dashboard() {
             <TabsContent value="risk" className="min-h-0 flex-1">
               <ScrollArea className="h-full px-3 pb-4">
                 <p className="pb-2 text-xs text-muted-foreground">
-                  {scored.length} real OSM street segments, ranked by predicted waterlogging risk at{" "}
-                  {scenario.rainMm} mm/24h.
+                  {scored.length} real OSM street segments, ranked by a waterlogging{" "}
+                  <strong>risk index</strong> (0–100) at {scenario.rainMm} mm/24h. The index is a
+                  weighted score of measured terrain and network features — distance to water,
+                  slope, elevation and road density — not a validated probability. Read it as
+                  "pump this street before that one", never as "this street will flood".
                 </p>
                 <div className="space-y-1.5">
                   {scored.map((s, i) => (
@@ -422,6 +487,67 @@ function Dashboard() {
               </ScrollArea>
             </TabsContent>
 
+            {/* ---- Hospitals exposed by the current risk map ---- */}
+            <TabsContent value="hospitals" className="min-h-0 flex-1">
+              <ScrollArea className="h-full px-3 pb-4">
+                <Card className="mb-3 gap-1 p-3 text-xs">
+                  <p className="flex items-center gap-2 text-sm font-medium">
+                    <Cross className="size-4" /> {hospitalRisk.length} hospitals in Ahmedabad
+                  </p>
+                  <p className="text-muted-foreground">
+                    {hospitalQuery.data?.note ?? "Loading OpenStreetMap hospital register…"}
+                  </p>
+                  <p className="text-muted-foreground">
+                    {inWard.length} sit within 600 m of a scored street in this ward — only those can
+                    be assessed. {urgent.length} are tagged on the map right now.
+                  </p>
+                </Card>
+
+                {urgent.length === 0 && (
+                  <p className="pb-3 text-xs text-muted-foreground">
+                    No hospital currently has a high or critical approach road at{" "}
+                    {scenario.rainMm} mm/24h.
+                  </p>
+                )}
+
+                <div className="space-y-1.5">
+                  {(urgent.length > 0 ? urgent : inWard.slice(0, 25)).map((h) => (
+                    <div key={h.id} className="rounded-md border border-border px-3 py-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="min-w-0 flex-1 truncate text-sm font-medium">{h.name}</span>
+                        <span
+                          className="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium text-white"
+                          style={{ backgroundColor: STATUS_META[h.status].color }}
+                        >
+                          {STATUS_META[h.status].label}
+                        </span>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        {h.worstRoad ? `worst approach: ${h.worstRoad} · ` : ""}
+                        {h.approachRoads} scored approach road
+                        {h.approachRoads === 1 ? "" : "s"}
+                        {h.emergency ? " · emergency dept" : ""}
+                        {h.beds ? ` · ${h.beds} beds` : ""}
+                      </p>
+                      <p className="text-[10px] text-muted-foreground">
+                        {STATUS_META[h.status].note}{" "}
+                        <a
+                          className="underline"
+                          href={`https://www.openstreetmap.org/${
+                            h.id.startsWith("W") ? "way" : h.id.startsWith("R") ? "relation" : "node"
+                          }/${h.id.slice(1)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          OSM {h.id}
+                        </a>
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
+            </TabsContent>
+
             {/* ---- Module 2: pump-truck allocation ---- */}
             <TabsContent value="plan" className="min-h-0 flex-1">
               <ScrollArea className="h-full px-3 pb-4">
@@ -431,8 +557,14 @@ function Dashboard() {
                   </p>
                   <p className="text-muted-foreground">
                     Covers {coverage}% of exposed road-length within a {scenario.shiftMinutes}-minute
-                    shift. Travel times are OSRM road-network durations; greedy placeholder for the
-                    OR-Tools solver.
+                    shift, using OSRM road-network durations.
+                  </p>
+                  <p className="text-muted-foreground">
+                    Solver: {plan.method}. {plan.improvements} improving moves accepted;{" "}
+                    {plan.greedyExposure > 0
+                      ? `${Math.max(0, Math.round(((plan.coveredExposure - plan.greedyExposure) / plan.greedyExposure) * 100))}% more exposure covered than nearest-truck greedy`
+                      : "greedy baseline covered nothing"}
+                    .
                   </p>
                 </Card>
 

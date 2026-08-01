@@ -2,6 +2,7 @@ import { MapContainer, TileLayer, Polyline, CircleMarker, Tooltip } from "react-
 import "leaflet/dist/leaflet.css";
 
 import { BAND_META, WARD, type Depot } from "@/lib/jalniti/data";
+import { STATUS_META, type HospitalRisk } from "@/lib/jalniti/hospitals";
 import type { RoutePath } from "@/lib/jalniti/live.functions";
 import type { Assignment, ScoredSegment } from "@/lib/jalniti/model";
 
@@ -17,6 +18,9 @@ interface Props {
   clearedIds: string[];
   /** Segments closed to traffic — excluded from the plan. */
   closedIds: string[];
+  /** Real OSM hospitals, joined to the scored approach roads. */
+  hospitals: HospitalRisk[];
+  showHospitals: boolean;
 }
 
 export default function WardMap({
@@ -29,6 +33,8 @@ export default function WardMap({
   showRoutes,
   clearedIds,
   closedIds,
+  hospitals,
+  showHospitals,
 }: Props) {
   const routeFor = (a: Assignment) => routes.find((r) => r.key === `${a.truck}|${a.segment.id}`);
 
@@ -110,6 +116,45 @@ export default function WardMap({
           </Polyline>
         );
       })}
+
+      {showHospitals &&
+        hospitals.map((h) => {
+          const meta = STATUS_META[h.status];
+          const urgent = h.status === "cut-off" || h.status === "at-risk";
+          return (
+            <CircleMarker
+              key={h.id}
+              center={[h.lat, h.lon]}
+              radius={urgent ? 6 : 3}
+              pathOptions={{
+                color: urgent ? "#7a1710" : "#ffffff",
+                weight: urgent ? 2 : 1,
+                fillColor: meta.color,
+                fillOpacity: urgent ? 1 : 0.75,
+              }}
+            >
+              {urgent && (
+                <Tooltip
+                  permanent
+                  direction="right"
+                  offset={[6, 0]}
+                  className="jalniti-hospital-tag"
+                >
+                  {h.name}
+                </Tooltip>
+              )}
+              <Tooltip direction="top" sticky>
+                <span className="font-medium">{h.name}</span>
+                <br />
+                {meta.label}
+                {h.worstRoad ? ` · worst approach: ${h.worstRoad}` : ""}
+                <br />
+                {h.emergency ? "emergency dept · " : ""}
+                {h.beds ? `${h.beds} beds · ` : ""}OSM {h.id}
+              </Tooltip>
+            </CircleMarker>
+          );
+        })}
 
       {depots.map((d) => (
         <CircleMarker
