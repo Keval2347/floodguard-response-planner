@@ -1,0 +1,7396 @@
+{
+ "fetchedAt": "2026-08-01",
+ "source": "OpenStreetMap Overpass API \u2014 amenity=hospital, Ahmedabad bbox 22.90\u201323.20N, 72.40\u201372.75E",
+ "hospitals": [
+  {
+   "id": "N11900380051",
+   "name": "ADORN AESTHETIC CLINIC",
+   "lat": 23.022604,
+   "lon": 72.550954,
+   "emergency": true,
+   "beds": null,
+   "operator": "Dr Harsh Amin",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N11900351768",
+   "name": "ADORN Cosmetic Clinic",
+   "lat": 23.02556,
+   "lon": 72.527325,
+   "emergency": true,
+   "beds": null,
+   "operator": "Dr Harsh Amin",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753753",
+   "name": "Aaditya Spine Hospital",
+   "lat": 23.005886,
+   "lon": 72.591715,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975498331",
+   "name": "Aadya Eye and Ent Hospital",
+   "lat": 23.061914,
+   "lon": 72.639809,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986605752",
+   "name": "Aagman Maternity and Gynec Hospital",
+   "lat": 23.043659,
+   "lon": 72.650261,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970101822",
+   "name": "Aakshardeep Eye Hospital",
+   "lat": 23.032478,
+   "lon": 72.524557,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4572892513",
+   "name": "Aalisha Clinic",
+   "lat": 23.085886,
+   "lon": 72.563823,
+   "emergency": false,
+   "beds": null,
+   "operator": "Dr Rajesh B. Patel",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973933641",
+   "name": "Aalok Hospital, Ahmedabad",
+   "lat": 23.048131,
+   "lon": 72.571666,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973933682",
+   "name": "Aarambh Heart and Medical Hospital",
+   "lat": 23.059145,
+   "lon": 72.555871,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6263502186",
+   "name": "Aarna Hospital",
+   "lat": 22.995052,
+   "lon": 72.602316,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982092220",
+   "name": "Aarna Medical Hospital",
+   "lat": 23.039512,
+   "lon": 72.638864,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969931781",
+   "name": "Aarna Super Speciality Hospital",
+   "lat": 23.014477,
+   "lon": 72.559718,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975865066",
+   "name": "Aarogyam Speciality Hospital",
+   "lat": 23.046954,
+   "lon": 72.555615,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7867052424",
+   "name": "Aarohi General Hospital",
+   "lat": 23.1777,
+   "lon": 72.746797,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970467886",
+   "name": "Aarti Surgical Nursing Home",
+   "lat": 22.99601,
+   "lon": 72.612172,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977128103",
+   "name": "Aash Arthoscopy Centre",
+   "lat": 23.01766,
+   "lon": 72.560572,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979129057",
+   "name": "Aash Surgical Hospital",
+   "lat": 23.047245,
+   "lon": 72.562484,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988048676",
+   "name": "Aashirwad Surgical Hospital and Nursing Home",
+   "lat": 23.083907,
+   "lon": 72.591188,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7867000264",
+   "name": "Aashka Multispeciality Hospitals",
+   "lat": 23.185786,
+   "lon": 72.62179,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975854570",
+   "name": "Aashwi E.N.T.Hospital",
+   "lat": 23.037118,
+   "lon": 72.529008,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6990595051",
+   "name": "Aastha Eye Care Centre",
+   "lat": 23.069661,
+   "lon": 72.542869,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977983456",
+   "name": "Aastha Eye Hospital",
+   "lat": 23.025572,
+   "lon": 72.527575,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932581",
+   "name": "Aastha Hospital, Ahmedabad",
+   "lat": 22.997948,
+   "lon": 72.610908,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973933681",
+   "name": "Aastha Orthopaedic Hospital, Ahmedabad",
+   "lat": 23.029637,
+   "lon": 72.474257,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727795",
+   "name": "Aatman Hospital",
+   "lat": 22.983673,
+   "lon": 72.60018,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979632818",
+   "name": "Aayush Surgical Hospital",
+   "lat": 23.046232,
+   "lon": 72.533747,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727756",
+   "name": "Abhinav Hospital",
+   "lat": 22.966448,
+   "lon": 72.615995,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988713380",
+   "name": "Abhisek Maternity and Nursing Home",
+   "lat": 23.015793,
+   "lon": 72.524338,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970969227",
+   "name": "Abhishek Hospital and Heart Centre",
+   "lat": 22.999536,
+   "lon": 72.607945,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864133831",
+   "name": "Adarsh Hospital",
+   "lat": 23.034111,
+   "lon": 72.465343,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982581436",
+   "name": "Adarsh Hospital, Ahmedabad",
+   "lat": 23.047685,
+   "lon": 72.566329,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058608",
+   "name": "Adhvait Psychiatry Hospital",
+   "lat": 23.038118,
+   "lon": 72.576487,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986736364",
+   "name": "Adinath Hospital, Ahmedabad",
+   "lat": 23.054805,
+   "lon": 72.596436,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979534905",
+   "name": "Aditya Eye Hospital, Ahmedabad",
+   "lat": 23.04996,
+   "lon": 72.534828,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979483953",
+   "name": "Aditya Hospital, Ahmedabad",
+   "lat": 23.004325,
+   "lon": 72.552075,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6980252908",
+   "name": "Aditya Multi-Speciality Hospital",
+   "lat": 23.063282,
+   "lon": 72.531522,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978383380",
+   "name": "Adwait Ent Hospital",
+   "lat": 23.040075,
+   "lon": 72.577794,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N1781762768",
+   "name": "Ahmedabad Institute Of Medical Services (Aims)",
+   "lat": 23.003322,
+   "lon": 72.563952,
+   "emergency": true,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971973786",
+   "name": "Ahmedabad Medical Centre",
+   "lat": 22.995712,
+   "lon": 72.611897,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6987246245",
+   "name": "Akshar Eye Hospital",
+   "lat": 23.065052,
+   "lon": 72.642667,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727785",
+   "name": "Akshar Hospital",
+   "lat": 22.98106,
+   "lon": 72.610699,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982092221",
+   "name": "Akshar Krupa Hospital",
+   "lat": 23.05443,
+   "lon": 72.595873,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970805021",
+   "name": "Akshar Surgical Hospital, Maninagar",
+   "lat": 22.995072,
+   "lon": 72.607544,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970228163",
+   "name": "Akshardeep Orthopaedic Hospital, Shahibaug",
+   "lat": 23.053947,
+   "lon": 72.595518,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972593094",
+   "name": "Akshay Heart and Medical Hospital",
+   "lat": 23.031141,
+   "lon": 72.527164,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958949",
+   "name": "Akshay Heart and Medical Hospital",
+   "lat": 23.031185,
+   "lon": 72.527143,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727781",
+   "name": "Aman Multi Speciality Hospital",
+   "lat": 22.9605,
+   "lon": 72.608201,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981982797",
+   "name": "Amardeep Multispeciality Children Hospital",
+   "lat": 23.020207,
+   "lon": 72.564267,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4330126136",
+   "name": "Amba Health Centre & Hospital",
+   "lat": 23.176427,
+   "lon": 72.575341,
+   "emergency": true,
+   "beds": null,
+   "operator": "Shree Simandhar Swami Aradhana Trust",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6993975134",
+   "name": "Amdawad Eye Laser Hospitals Pvt Ltd",
+   "lat": 23.027216,
+   "lon": 72.545413,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7157714219",
+   "name": "Amena Khatun General Hospital",
+   "lat": 22.992811,
+   "lon": 72.519188,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970724583",
+   "name": "Ami-Sagar Hospital",
+   "lat": 23.068663,
+   "lon": 72.566734,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969999192",
+   "name": "Amijeet Maternity Hospital",
+   "lat": 23.073132,
+   "lon": 72.559581,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970732298",
+   "name": "Amijyot Eye Hospital",
+   "lat": 23.007419,
+   "lon": 72.558972,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978978091",
+   "name": "Amrut Arogyadham Medical Hospital",
+   "lat": 23.110546,
+   "lon": 72.584973,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6980252878",
+   "name": "Amruta Hospital and Heart Centre",
+   "lat": 23.082678,
+   "lon": 72.589694,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727799",
+   "name": "Anand Children Hospital",
+   "lat": 22.976966,
+   "lon": 72.600954,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981886630",
+   "name": "Anand Children Hospital Neonatal Intensive Care",
+   "lat": 23.048777,
+   "lon": 72.605993,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6993703101",
+   "name": "Anand Eye Hospital,(Dr. Rohit Desai)",
+   "lat": 23.051925,
+   "lon": 72.560481,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970030047",
+   "name": "Anand Hospital and Multispeciality",
+   "lat": 23.045974,
+   "lon": 72.640602,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970443663",
+   "name": "Anand Multi Speciality Hospital, Ahmedabad",
+   "lat": 23.05512,
+   "lon": 72.59756,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970826977",
+   "name": "Anand Surgical Hospital Ltd.",
+   "lat": 23.054989,
+   "lon": 72.630925,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958947",
+   "name": "Aneri CHildren Hospital",
+   "lat": 23.069467,
+   "lon": 72.543113,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976113859",
+   "name": "Aneri Children Hospital",
+   "lat": 23.069429,
+   "lon": 72.543103,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983629350",
+   "name": "Aneri Surgical and Neuro Surgical Hospital",
+   "lat": 23.001642,
+   "lon": 72.548167,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979967498",
+   "name": "Aniket Ent Hospital",
+   "lat": 22.992633,
+   "lon": 72.632124,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973949907",
+   "name": "Ankur Superspeciality Hospital",
+   "lat": 23.05853,
+   "lon": 72.556252,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986625078",
+   "name": "Ano Care Hospital",
+   "lat": 23.037788,
+   "lon": 72.644003,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979632808",
+   "name": "Anoop Children Hospital",
+   "lat": 22.992688,
+   "lon": 72.632125,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058637",
+   "name": "Ansh Multispeciality Hospital",
+   "lat": 23.114667,
+   "lon": 72.580661,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932576",
+   "name": "Ansuya General Hospital",
+   "lat": 22.990626,
+   "lon": 72.612531,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970544615",
+   "name": "Apex Heart Institute",
+   "lat": 23.045744,
+   "lon": 72.513931,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W551913407",
+   "name": "Apollo Hospitals International Limited",
+   "lat": 23.109985,
+   "lon": 72.626146,
+   "emergency": false,
+   "beds": null,
+   "operator": "Apollo Hospitals",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727782",
+   "name": "Apoorva Women's Hospital",
+   "lat": 22.978794,
+   "lon": 72.60977,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976136430",
+   "name": "Archit Orthopaedic Hospital",
+   "lat": 23.007098,
+   "lon": 72.556798,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968419937",
+   "name": "Arihant Fracture and Orthopedic Hospital",
+   "lat": 23.013309,
+   "lon": 72.545561,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977547385",
+   "name": "Arihant Heart And Medical Hospital",
+   "lat": 23.053857,
+   "lon": 72.595623,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590271",
+   "name": "Aroma Womens Hospital",
+   "lat": 23.054461,
+   "lon": 72.53364,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970590541",
+   "name": "Arpan Newborncare Centre",
+   "lat": 23.041102,
+   "lon": 72.547432,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6980978805",
+   "name": "Arpan Orthopedic and Trauma Hospital",
+   "lat": 23.002457,
+   "lon": 72.595257,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974588378",
+   "name": "Arthro Care Hospital",
+   "lat": 23.040505,
+   "lon": 72.521186,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753717",
+   "name": "Artificial Eye Surgery",
+   "lat": 23.002052,
+   "lon": 72.607654,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727760",
+   "name": "Ashirvad Hospital",
+   "lat": 22.979475,
+   "lon": 72.601175,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981998855",
+   "name": "Ashirwad Children and Eye Hospital",
+   "lat": 22.997899,
+   "lon": 72.607921,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986602483",
+   "name": "Ashirwad Hospital, Ahmedabad",
+   "lat": 22.987342,
+   "lon": 72.611577,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058652",
+   "name": "Ashirwad Maternity and Nursing Home",
+   "lat": 23.056258,
+   "lon": 72.620709,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977128122",
+   "name": "Ashirwad Surgical Hospital, C.T.M",
+   "lat": 22.999799,
+   "lon": 72.635904,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982092223",
+   "name": "Ashish Orthopaedic Hospital, Ahmedabad",
+   "lat": 23.036933,
+   "lon": 72.52731,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978935663",
+   "name": "Astha Orthopedic and Spine Hospital",
+   "lat": 23.066289,
+   "lon": 72.562949,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982051126",
+   "name": "Auro Ent Hospital",
+   "lat": 23.057812,
+   "lon": 72.570146,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6991208200",
+   "name": "Auroma Ent Hospital",
+   "lat": 23.059803,
+   "lon": 72.535795,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982197140",
+   "name": "Austmangal Surgical Hospital",
+   "lat": 23.054519,
+   "lon": 72.595823,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972593093",
+   "name": "Avataran Eye Hospital and Oculoplasty Clinic",
+   "lat": 23.037181,
+   "lon": 72.522199,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753701",
+   "name": "Avishkar Multi Speciality, ICU and Trauma Centre",
+   "lat": 22.988104,
+   "lon": 72.611857,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958961",
+   "name": "Ayushman Medical Hospital",
+   "lat": 23.02373,
+   "lon": 72.639185,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982001505",
+   "name": "Ayushman Medical Hospital and Dignosis Center",
+   "lat": 23.023712,
+   "lon": 72.639149,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982197104",
+   "name": "B.J. Medical College Hospital",
+   "lat": 23.052658,
+   "lon": 72.602826,
+   "emergency": false,
+   "beds": null,
+   "operator": "government",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6993902494",
+   "name": "BSNL Exchange",
+   "lat": 22.999893,
+   "lon": 72.546824,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982527814",
+   "name": "Babul E.N.T. Hospital",
+   "lat": 23.024601,
+   "lon": 72.544957,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975868242",
+   "name": "Babycare Children Hospital and Neonatal Centre",
+   "lat": 22.993399,
+   "lon": 72.629155,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058642",
+   "name": "Bachardas Lashkari Hospital",
+   "lat": 23.035637,
+   "lon": 72.588423,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4572893586",
+   "name": "BalMukund Hospital",
+   "lat": 23.093207,
+   "lon": 72.559284,
+   "emergency": false,
+   "beds": null,
+   "operator": "Dr Gajjar",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727772",
+   "name": "Balaji Speciality Hospital",
+   "lat": 22.978245,
+   "lon": 72.611169,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970462555",
+   "name": "Baps Yogiji Maharaj Hospital",
+   "lat": 23.046201,
+   "lon": 72.588786,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976489889",
+   "name": "Bavishi Eye Hospital, Ahmedabad",
+   "lat": 23.021803,
+   "lon": 72.541327,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969601219",
+   "name": "Bavishi Hospital",
+   "lat": 23.013348,
+   "lon": 72.56411,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6993387967",
+   "name": "Bhadra Clinic Hospital",
+   "lat": 23.047306,
+   "lon": 72.558664,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753709",
+   "name": "Bhanu Jit Maternity and Nursing Home",
+   "lat": 23.005749,
+   "lon": 72.595118,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590235",
+   "name": "Bhavasar Eye Hospital and Maternity Nursing Home",
+   "lat": 23.008651,
+   "lon": 72.54852,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973933652",
+   "name": "Bodycare Orthopaedic and Trauma Hospital",
+   "lat": 23.054227,
+   "lon": 72.572051,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979326720",
+   "name": "Bodyline Hospitals",
+   "lat": 23.009941,
+   "lon": 72.554567,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983631097",
+   "name": "Bopal Eye Care Centre",
+   "lat": 23.028834,
+   "lon": 72.477904,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975089038",
+   "name": "Bopal Multispeciality Hospital",
+   "lat": 23.031542,
+   "lon": 72.471769,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979320336",
+   "name": "Brain and Spine Hospital",
+   "lat": 23.040268,
+   "lon": 72.565927,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864133843",
+   "name": "Brinda Women's Hospital",
+   "lat": 23.040586,
+   "lon": 72.526451,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932520",
+   "name": "Centre For Sight, Ahmedabad",
+   "lat": 23.03288,
+   "lon": 72.55546,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753703",
+   "name": "Chanchalba Maternity Hospital",
+   "lat": 22.999585,
+   "lon": 72.600316,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970872877",
+   "name": "Chandandwar Hospital",
+   "lat": 23.047538,
+   "lon": 72.526511,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058617",
+   "name": "Chandkheda Orthopedic & Surgical Hospital",
+   "lat": 23.113705,
+   "lon": 72.583096,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968717525",
+   "name": "Chandrabhan Hospital and Gynac Institute",
+   "lat": 23.04995,
+   "lon": 72.53385,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970923829",
+   "name": "Chandramani Hospital",
+   "lat": 23.048827,
+   "lon": 72.594821,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970930475",
+   "name": "Chaturbhai Mavawala Kidney Hospital and Laparoscopic",
+   "lat": 23.036626,
+   "lon": 72.569909,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983723687",
+   "name": "Cheers Interventional Pain Management Hospital",
+   "lat": 23.040305,
+   "lon": 72.554312,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058657",
+   "name": "Chepirog Hospital",
+   "lat": 23.001026,
+   "lon": 72.576899,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970150307",
+   "name": "Chetna Maternity Home",
+   "lat": 23.046753,
+   "lon": 72.569567,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977886679",
+   "name": "Chhabra Eye Hospital",
+   "lat": 23.025921,
+   "lon": 72.526843,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753714",
+   "name": "Chhapan Hospital",
+   "lat": 23.02645,
+   "lon": 72.591737,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753743",
+   "name": "Chhipa Welfare Trust Hospital",
+   "lat": 23.015985,
+   "lon": 72.587351,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979940473",
+   "name": "Chikhalkar Hospital and Iccu",
+   "lat": 23.056165,
+   "lon": 72.54939,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753697",
+   "name": "Child Care Surgical Hospital",
+   "lat": 22.997459,
+   "lon": 72.610435,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6987068296",
+   "name": "Chintan Orthopaedic Hospital",
+   "lat": 23.007242,
+   "lon": 72.536297,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753736",
+   "name": "Chinubhai Baronet Hospital",
+   "lat": 23.024842,
+   "lon": 72.598982,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727797",
+   "name": "Chiranjeev Children Hospital",
+   "lat": 22.955252,
+   "lon": 72.612341,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727759",
+   "name": "Chiranjeevi Hospital",
+   "lat": 22.975087,
+   "lon": 72.601692,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978371845",
+   "name": "Chirayu Orthopaedic and Spine Hospital",
+   "lat": 23.007044,
+   "lon": 72.565817,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6990824177",
+   "name": "Chirayu Surgical Hospital",
+   "lat": 23.06339,
+   "lon": 72.641211,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970365464",
+   "name": "Chitrakut Surgical Hospital",
+   "lat": 23.035232,
+   "lon": 72.625464,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958958",
+   "name": "Civil Hospital",
+   "lat": 23.052297,
+   "lon": 72.604384,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727784",
+   "name": "Clear Vision Eye Hospital",
+   "lat": 22.978672,
+   "lon": 72.608642,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058660",
+   "name": "Clear Vision Eye Hospital",
+   "lat": 23.045993,
+   "lon": 72.589386,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970683370",
+   "name": "Clear Vision Eye Hospital (Unit 2)",
+   "lat": 23.026235,
+   "lon": 72.525222,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932552",
+   "name": "Clear Vision Eye Hospital (Unit 3)",
+   "lat": 23.000197,
+   "lon": 72.604851,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6989177897",
+   "name": "Clear Vision Eye Hospital( Unit 1)",
+   "lat": 23.003008,
+   "lon": 72.555146,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982006635",
+   "name": "College of Dental Sciences and Research Hospital",
+   "lat": 23.034726,
+   "lon": 72.435679,
+   "emergency": false,
+   "beds": null,
+   "operator": "government",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W316004546",
+   "name": "Columbia Asia Hospital",
+   "lat": 23.058054,
+   "lon": 72.512418,
+   "emergency": true,
+   "beds": null,
+   "operator": "Columbia Asia",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W1153428084",
+   "name": "Community Health Centre, Chandkheda",
+   "lat": 23.113312,
+   "lon": 72.575807,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968417889",
+   "name": "Cornea Foundation Hospital",
+   "lat": 23.046128,
+   "lon": 72.536449,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958965",
+   "name": "Cornea Foundation Hospital",
+   "lat": 23.046155,
+   "lon": 72.536403,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969753319",
+   "name": "Cutis Cosmetic Plastic Surgery Centre",
+   "lat": 23.058902,
+   "lon": 72.537851,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W733071768",
+   "name": "Danilimda A.M.C Hospital",
+   "lat": 22.992373,
+   "lon": 72.583973,
+   "emergency": false,
+   "beds": null,
+   "operator": "Ahmedabad Municipal Corporation",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975641054",
+   "name": "Deep Urosurgical Hospital",
+   "lat": 23.045486,
+   "lon": 72.562307,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W487512858",
+   "name": "Deep Urosurgical Hospital",
+   "lat": 23.040047,
+   "lon": 72.562646,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975593892",
+   "name": "Dev Hospital, Vasna",
+   "lat": 23.006013,
+   "lon": 72.544785,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753759",
+   "name": "Devam Hospital",
+   "lat": 23.000081,
+   "lon": 72.608487,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983633938",
+   "name": "Devam Orthopaedic Hospital",
+   "lat": 23.059024,
+   "lon": 72.537867,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058606",
+   "name": "Devarshi Super Speciality Hospital",
+   "lat": 23.122105,
+   "lon": 72.582052,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973933658",
+   "name": "Devasya Kidney and Multi speciality Hospital, Ahmedabad",
+   "lat": 23.057573,
+   "lon": 72.570363,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986602477",
+   "name": "Devasya Superspeciality Kidney Institute and Research Centre",
+   "lat": 23.026989,
+   "lon": 72.47736,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590251",
+   "name": "Devi Hospital",
+   "lat": 23.055959,
+   "lon": 72.539723,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864133820",
+   "name": "Devi Hospital",
+   "lat": 23.031015,
+   "lon": 72.525791,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974791050",
+   "name": "Dhruvi ENT Hospital",
+   "lat": 23.087219,
+   "lon": 72.592289,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970994343",
+   "name": "Dhwani Children Hospital",
+   "lat": 23.022287,
+   "lon": 72.594167,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6990743054",
+   "name": "Dhwani General Hospital Nursing Home and Maternity Home",
+   "lat": 23.014733,
+   "lon": 72.644916,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968859256",
+   "name": "Dhwani General Hospital, Nursing Home and Materity Home",
+   "lat": 23.01465,
+   "lon": 72.64489,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727777",
+   "name": "Dirdhau Hospital",
+   "lat": 22.982085,
+   "lon": 72.603242,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727741",
+   "name": "Dirgayu Orthopedic Hospital",
+   "lat": 22.976884,
+   "lon": 72.601006,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976062877",
+   "name": "Diva Eye Institute Hospital",
+   "lat": 23.01826,
+   "lon": 72.556889,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10882768855",
+   "name": "Diva Women's Hospital",
+   "lat": 23.049247,
+   "lon": 72.521985,
+   "emergency": true,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753735",
+   "name": "Divya Children's Hospital",
+   "lat": 23.023421,
+   "lon": 72.597732,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974382565",
+   "name": "Divya Jeevan Medical Hospital",
+   "lat": 23.012717,
+   "lon": 72.638903,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976113864",
+   "name": "Divya Jyot Eye Hospital",
+   "lat": 23.083846,
+   "lon": 72.591181,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727746",
+   "name": "Doctor Bhatt's Hospital",
+   "lat": 22.971831,
+   "lon": 72.604727,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932530",
+   "name": "Dr Ajay Praful Munshi Surgical Nursing Home",
+   "lat": 23.001224,
+   "lon": 72.560187,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975015289",
+   "name": "Dr Chirag M Desai Eye Care",
+   "lat": 23.008875,
+   "lon": 72.562326,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982581431",
+   "name": "Dr Dipak C Shah E N T Hospital",
+   "lat": 22.995652,
+   "lon": 72.612109,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6989221492",
+   "name": "Dr J J Vora Memorial General Hospital",
+   "lat": 23.040701,
+   "lon": 72.568957,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970443687",
+   "name": "Dr Rupesh Shah Killol Children Hospital",
+   "lat": 23.039609,
+   "lon": 72.565949,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970425348",
+   "name": "Dr Sanjay Gandhi Hospital",
+   "lat": 23.02741,
+   "lon": 72.541141,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971973794",
+   "name": "Dr Sunil Shah's Eye Hospital",
+   "lat": 22.996868,
+   "lon": 72.603747,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983651326",
+   "name": "Dr, Nayan V Shah Surgical Hospital",
+   "lat": 22.98093,
+   "lon": 72.598748,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983623776",
+   "name": "Dr. Atul H Kansara `S (E.N.T) Hospital",
+   "lat": 23.010174,
+   "lon": 72.562197,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975868149",
+   "name": "Dr. Devendra Kanaiyalal Hospital and Nursing Home",
+   "lat": 23.016268,
+   "lon": 72.568153,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970732343",
+   "name": "Dr. Dilip Modi Hospital",
+   "lat": 23.028568,
+   "lon": 72.571422,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727780",
+   "name": "Dr. K.B. Bhagatariya Hospital",
+   "lat": 22.972368,
+   "lon": 72.587256,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973933650",
+   "name": "Dr. Manish Ravals Hospital",
+   "lat": 23.054287,
+   "lon": 72.57202,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978708394",
+   "name": "Dr. Manoj Tank E.N.T. Hospital",
+   "lat": 23.023249,
+   "lon": 72.571951,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727763",
+   "name": "Dr. Pandya's Maternity Nursing Home",
+   "lat": 22.98578,
+   "lon": 72.602495,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W1324432333",
+   "name": "Dr. Parth Amin (ENT Surgeon) Shaleen Hospital",
+   "lat": 23.07554,
+   "lon": 72.517638,
+   "emergency": true,
+   "beds": null,
+   "operator": "Dr. Parth Amin (ENT Specialist)",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979632888",
+   "name": "Dr. Rajiv Thakores Hospital",
+   "lat": 23.017662,
+   "lon": 72.553909,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753704",
+   "name": "Dr. Ramanlal Hospital",
+   "lat": 22.998028,
+   "lon": 72.600585,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988066542",
+   "name": "Dr. Sejal Desai Eye Hospital",
+   "lat": 23.001629,
+   "lon": 72.547945,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727788",
+   "name": "Dr. Shah's Maternity and Nursing Home",
+   "lat": 22.984085,
+   "lon": 72.602604,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977175156",
+   "name": "Dr. Shailesh Shah Surgical Hospital and End. Clinic",
+   "lat": 23.009586,
+   "lon": 72.598833,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975868232",
+   "name": "Dr. Shurti Ent Hospital",
+   "lat": 22.998006,
+   "lon": 72.609791,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753739",
+   "name": "Dr. Tanumati Shah Hospital",
+   "lat": 23.029011,
+   "lon": 72.592461,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6987467519",
+   "name": "Dr. Trivedis Arthroscopy Clinic And Hospital",
+   "lat": 23.024953,
+   "lon": 72.547251,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978571652",
+   "name": "Dr.Anil V.Patel Eye Hospital",
+   "lat": 23.067149,
+   "lon": 72.566613,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970981040",
+   "name": "Dr.Atul Shah Eye Hospital",
+   "lat": 23.061092,
+   "lon": 72.535484,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978625512",
+   "name": "Dr.Joshi Maternity And Gynec Hospital",
+   "lat": 23.018864,
+   "lon": 72.560654,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W1153422123",
+   "name": "Dr.Maulik Patwa",
+   "lat": 23.017313,
+   "lon": 72.555711,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978633948",
+   "name": "Dr.Nagoris Institute Hospital",
+   "lat": 23.026378,
+   "lon": 72.52608,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986625079",
+   "name": "Dr.Saurabh Shah Orthopaedic Hospital",
+   "lat": 23.066355,
+   "lon": 72.562922,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978658096",
+   "name": "Dr.Soneji Hospital",
+   "lat": 23.001742,
+   "lon": 72.591741,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058616",
+   "name": "ESIC Hospital",
+   "lat": 23.053458,
+   "lon": 72.589815,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4977778522",
+   "name": "ESIS HOSPITAL",
+   "lat": 22.999168,
+   "lon": 72.616665,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4746799624",
+   "name": "Excel Eye Care",
+   "lat": 23.030076,
+   "lon": 72.528789,
+   "emergency": false,
+   "beds": null,
+   "operator": "Dr Jayesh Vazirani",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976113865",
+   "name": "Eye Care Hospital Pvt. Ltd.",
+   "lat": 23.024145,
+   "lon": 72.549848,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978692867",
+   "name": "Eye Research Centre And Retina Foundation",
+   "lat": 23.055714,
+   "lon": 72.590778,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727766",
+   "name": "Eye Sight Vision Care Hospital",
+   "lat": 22.978896,
+   "lon": 72.610165,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058609",
+   "name": "Faiz Hospital",
+   "lat": 22.996289,
+   "lon": 72.579446,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N3727529631",
+   "name": "GCS Medical College Hospital and Research Centre",
+   "lat": 23.038927,
+   "lon": 72.610723,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970983906",
+   "name": "Gandhi Uro Care",
+   "lat": 23.016528,
+   "lon": 72.566335,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975593887",
+   "name": "Gayathri Hospital, Ahmedabad",
+   "lat": 23.101819,
+   "lon": 72.665951,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6990990485",
+   "name": "Gayatri Childrens Hospital",
+   "lat": 23.067159,
+   "lon": 72.562998,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981446717",
+   "name": "Gayatri Heart And Medical Hospital, Bhimjipura",
+   "lat": 23.06028,
+   "lon": 72.564758,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058628",
+   "name": "Gcs Hospital",
+   "lat": 23.046573,
+   "lon": 72.6083,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N3500454471",
+   "name": "Geeta Maternity Hospital",
+   "lat": 23.083605,
+   "lon": 72.590121,
+   "emergency": false,
+   "beds": null,
+   "operator": "Geeta Agarwal, Ashok Agarwal",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975868159",
+   "name": "Gheewala Hospital",
+   "lat": 23.015213,
+   "lon": 72.563816,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6993884689",
+   "name": "Giriraj Orthopaedic Hospital",
+   "lat": 23.009493,
+   "lon": 72.598879,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970512563",
+   "name": "Gitanjali Children Hospital",
+   "lat": 23.073818,
+   "lon": 72.659586,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977984314",
+   "name": "Gmers Medical College Hospital",
+   "lat": 23.082762,
+   "lon": 72.524609,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4488020552",
+   "name": "Government Dental College and Hospital",
+   "lat": 23.049914,
+   "lon": 72.604565,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W584631612",
+   "name": "Government Hospital Ghodasar",
+   "lat": 22.991319,
+   "lon": 72.616402,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982197122",
+   "name": "Government Spine Institute Hospital",
+   "lat": 23.050011,
+   "lon": 72.60803,
+   "emergency": false,
+   "beds": null,
+   "operator": "government",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986279344",
+   "name": "Government hospital Adalaj",
+   "lat": 23.167703,
+   "lon": 72.585774,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "centre"
+  },
+  {
+   "id": "N6975489450",
+   "name": "Gujarat Hospital, Ahmedabad",
+   "lat": 23.004575,
+   "lon": 72.638627,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4488016247",
+   "name": "Gujarat Institute Of Nursing Education And Research , Asarwa ,Ahemedabad",
+   "lat": 23.049645,
+   "lon": 72.607159,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988713370",
+   "name": "Gujarat Institute Of Psnchological Sciences Hospit",
+   "lat": 23.01855,
+   "lon": 72.536278,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6990786215",
+   "name": "Gujarat Research And Medical Institute Hospital",
+   "lat": 23.086953,
+   "lon": 72.628334,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058651",
+   "name": "Gujarat State Police Welfare Hospital",
+   "lat": 23.055335,
+   "lon": 72.590092,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988349685",
+   "name": "Gujrat Child Care Hospital",
+   "lat": 23.013659,
+   "lon": 72.530388,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6993882537",
+   "name": "Gujrat Diagnostic Center and Pathology Laboratory",
+   "lat": 23.016489,
+   "lon": 72.566523,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958946",
+   "name": "GuruKrupa Hospital",
+   "lat": 23.060468,
+   "lon": 72.535215,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974916862",
+   "name": "Gurukrupa Hospital, Ahmedabad",
+   "lat": 23.06044,
+   "lon": 72.535204,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753721",
+   "name": "Gurunanak Hospital",
+   "lat": 22.984428,
+   "lon": 72.616878,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970462648",
+   "name": "Gynaecare Women's Hospital",
+   "lat": 23.013438,
+   "lon": 72.526519,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981694438",
+   "name": "HCG Cancer Centre",
+   "lat": 23.0705,
+   "lon": 72.522729,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981984553",
+   "name": "HCG Multi Specialty Hospital",
+   "lat": 23.028862,
+   "lon": 72.564295,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6980252896",
+   "name": "Hari Krishna Uro Surgical Hospital",
+   "lat": 23.038101,
+   "lon": 72.643989,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590229",
+   "name": "Hari Urosurgical Hospital and Andrology Centre",
+   "lat": 23.038125,
+   "lon": 72.559185,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975629568",
+   "name": "Hariom Multispeciality Hospital",
+   "lat": 22.999875,
+   "lon": 72.65753,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727754",
+   "name": "Harsh Hospital",
+   "lat": 22.951507,
+   "lon": 72.624441,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973933651",
+   "name": "Harsh Neurosurgical Hospital",
+   "lat": 23.05416,
+   "lon": 72.57203,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975868154",
+   "name": "Harsiddh Hospital",
+   "lat": 23.079662,
+   "lon": 72.574033,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753722",
+   "name": "Hazrat Amina BIbi Hospital",
+   "lat": 22.994775,
+   "lon": 72.588467,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982092139",
+   "name": "Hcg Medi-Surge Hospitals Private Limited",
+   "lat": 23.028881,
+   "lon": 72.564308,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N1349429248",
+   "name": "Health Center",
+   "lat": 23.103941,
+   "lon": 72.567937,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6990705581",
+   "name": "Het Childcare Hospital",
+   "lat": 23.002822,
+   "lon": 72.618344,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970544855",
+   "name": "Het Eye Care",
+   "lat": 23.008555,
+   "lon": 72.562507,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753738",
+   "name": "Hindu Muslim Ekta Trust Hospital",
+   "lat": 23.012988,
+   "lon": 72.587951,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7935280842",
+   "name": "Hope Hospital",
+   "lat": 22.985509,
+   "lon": 72.493561,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864133778",
+   "name": "Hridaan Hospital & Pharmacy",
+   "lat": 23.094347,
+   "lon": 72.546903,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10038497023",
+   "name": "INDU MEDICARE",
+   "lat": 23.045192,
+   "lon": 72.467527,
+   "emergency": false,
+   "beds": null,
+   "operator": "RUSHIK BHAGIYA",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727775",
+   "name": "Indira Women's Care and Multi Speciality Hospital",
+   "lat": 22.948094,
+   "lon": 72.598012,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058656",
+   "name": "Indus Hospital",
+   "lat": 23.092043,
+   "lon": 72.591111,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W487512848",
+   "name": "Infocus Diagnostics",
+   "lat": 23.039396,
+   "lon": 72.56268,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979632882",
+   "name": "J J Hospital, Ahmedabad",
+   "lat": 23.07313,
+   "lon": 72.536844,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983409961",
+   "name": "J.Chirag Surgical Hospital",
+   "lat": 23.046312,
+   "lon": 72.562407,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986434686",
+   "name": "Jagdish Orthopadic Hospital",
+   "lat": 23.020984,
+   "lon": 72.543645,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968717622",
+   "name": "Jagmohan Hospital, Ahmedabad",
+   "lat": 23.038314,
+   "lon": 72.567755,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058658",
+   "name": "Jain Hospital",
+   "lat": 23.052103,
+   "lon": 72.595334,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590272",
+   "name": "Jain Hospital And Icu, Ahmedabad",
+   "lat": 23.047049,
+   "lon": 72.533298,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988439005",
+   "name": "Jain Hospital and Icu, Jivraj Park",
+   "lat": 23.005828,
+   "lon": 72.532932,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979224512",
+   "name": "Jainee Surgical Hospital",
+   "lat": 23.080328,
+   "lon": 72.566661,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981802923",
+   "name": "Jaju Plastic Surgery Center",
+   "lat": 23.042128,
+   "lon": 72.55927,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981550649",
+   "name": "Jalaram Hospital, Ahmedabad",
+   "lat": 23.027785,
+   "lon": 72.521821,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986605760",
+   "name": "Jaliyan Orthopaedic Hospital",
+   "lat": 23.022686,
+   "lon": 72.569733,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W843003308",
+   "name": "Janam Hospital",
+   "lat": 23.012996,
+   "lon": 72.530448,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753758",
+   "name": "Janani Women and Children Hospital",
+   "lat": 22.964468,
+   "lon": 72.590532,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971034528",
+   "name": "Jankalyan Hospital, Ahmedabad",
+   "lat": 23.001335,
+   "lon": 72.590504,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753693",
+   "name": "Jankalyan Janaseva Hospital",
+   "lat": 22.963407,
+   "lon": 72.591265,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981636783",
+   "name": "Jariwala Women's Hospital",
+   "lat": 23.054721,
+   "lon": 72.596429,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981004951",
+   "name": "Jarmarwala Hospital",
+   "lat": 23.019925,
+   "lon": 72.545877,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753732",
+   "name": "Jatan Children Hospital",
+   "lat": 23.019026,
+   "lon": 72.593349,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970688331",
+   "name": "Jatan Children Hospital, Ahmedabad",
+   "lat": 23.066463,
+   "lon": 72.562808,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978995190",
+   "name": "Jay Orthopaedic Hospital",
+   "lat": 23.052096,
+   "lon": 72.600238,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753745",
+   "name": "Jay Orthopedic Hospital",
+   "lat": 23.02691,
+   "lon": 72.587214,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982092173",
+   "name": "Jay Umiya Hospital",
+   "lat": 23.072889,
+   "lon": 72.55908,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590276",
+   "name": "Jaydeep Hospital, Ahmedabad",
+   "lat": 23.047425,
+   "lon": 72.550559,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6991261574",
+   "name": "Jayshri Medical Hospital",
+   "lat": 23.004881,
+   "lon": 72.63672,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974296173",
+   "name": "Jeel Children Hospital And Neonatal and Vaccination Center",
+   "lat": 23.054931,
+   "lon": 72.600819,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968717606",
+   "name": "Jeevandeep Hospital, Sardanagar",
+   "lat": 23.085673,
+   "lon": 72.633547,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970446765",
+   "name": "Jeevandeep Hospital, Shashibaug",
+   "lat": 23.049414,
+   "lon": 72.590677,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970893337",
+   "name": "Jhanvi Fracture and Orthopaedic Hospital",
+   "lat": 22.988069,
+   "lon": 72.605309,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970401154",
+   "name": "Jivansudha Heart and Medical Hospital",
+   "lat": 23.0487,
+   "lon": 72.605991,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N440305869",
+   "name": "Jivraj Mehta Hospital",
+   "lat": 23.008582,
+   "lon": 72.54325,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W317784181",
+   "name": "Jivraj Mehta Hospital",
+   "lat": 23.008284,
+   "lon": 72.543412,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979537048",
+   "name": "Joitiba General Hospital, Ahmedabad",
+   "lat": 22.978619,
+   "lon": 72.611884,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727762",
+   "name": "Jyoti Eye Care Hospital",
+   "lat": 22.983163,
+   "lon": 72.602816,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932525",
+   "name": "Jyoti Eye Hospital- Phaco Laser Centre",
+   "lat": 23.012184,
+   "lon": 72.558998,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932502",
+   "name": "Jyoti Maternity Hospital",
+   "lat": 23.022188,
+   "lon": 72.538524,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10839117487",
+   "name": "KD Blossom",
+   "lat": 23.135475,
+   "lon": 72.541562,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590253",
+   "name": "Kaizen Hospital",
+   "lat": 23.046976,
+   "lon": 72.543685,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968861329",
+   "name": "Kakadiya Hospital",
+   "lat": 23.040106,
+   "lon": 72.630285,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982028883",
+   "name": "Kalptaru Hospital",
+   "lat": 23.049363,
+   "lon": 72.594506,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958956",
+   "name": "Kalptaru Hospital",
+   "lat": 23.049305,
+   "lon": 72.594469,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968404884",
+   "name": "Kalrav Children Hospital, Ahmedabad",
+   "lat": 23.050199,
+   "lon": 72.537495,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988042721",
+   "name": "Kalrav Maternity Hospital and Sonography Centre",
+   "lat": 23.040527,
+   "lon": 72.658389,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970555031",
+   "name": "Kalrav Nenotal And Children Hospital",
+   "lat": 23.038997,
+   "lon": 72.636578,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058626",
+   "name": "Kamal Hospital",
+   "lat": 23.059688,
+   "lon": 72.61811,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971973795",
+   "name": "Kamal Hospital, Ahmedabad",
+   "lat": 22.994715,
+   "lon": 72.611983,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979134750",
+   "name": "Kanchi Orthopaedic Hospital",
+   "lat": 23.010948,
+   "lon": 72.546568,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979173508",
+   "name": "Kanoria Hospital And Research Centre, Gandhinagar",
+   "lat": 23.099379,
+   "lon": 72.628559,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975510816",
+   "name": "Karnavati Hospital Pvt. Ltd.",
+   "lat": 23.021702,
+   "lon": 72.572517,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975657008",
+   "name": "Karnavati Super Speciality Hospital",
+   "lat": 23.060466,
+   "lon": 72.639811,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727743",
+   "name": "Kashiba General Hospital",
+   "lat": 22.953285,
+   "lon": 72.615888,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6991207885",
+   "name": "Kavit Urosurgical Hospital",
+   "lat": 23.039635,
+   "lon": 72.565941,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970732333",
+   "name": "Khara Fracture and Orthopaedic Hospital",
+   "lat": 23.082695,
+   "lon": 72.588706,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974599099",
+   "name": "Kheteswar Medical Educational and Research Centre Hospital",
+   "lat": 23.047178,
+   "lon": 72.565428,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976100898",
+   "name": "Khush Eye Hospital",
+   "lat": 23.018629,
+   "lon": 72.558453,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972593085",
+   "name": "Kidney And Urology Hospital",
+   "lat": 23.049229,
+   "lon": 72.533429,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958957",
+   "name": "Kidney Hospital",
+   "lat": 23.04949,
+   "lon": 72.607491,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4488014610",
+   "name": "Kidny hospital , asarwa",
+   "lat": 23.049413,
+   "lon": 72.607485,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6993868949",
+   "name": "Killol Children Hospital",
+   "lat": 23.052028,
+   "lon": 72.564172,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753706",
+   "name": "Kilu ENT Hospital",
+   "lat": 22.997006,
+   "lon": 72.606372,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974913360",
+   "name": "Kothari Hospital, Ahmedabad",
+   "lat": 23.085556,
+   "lon": 72.630544,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932554",
+   "name": "Kothari Onco Surgical Hospital",
+   "lat": 22.996194,
+   "lon": 72.603863,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727771",
+   "name": "Krishna General Hospital",
+   "lat": 22.93826,
+   "lon": 72.614834,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058636",
+   "name": "Krishna Hospital",
+   "lat": 23.040232,
+   "lon": 72.577715,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978023117",
+   "name": "Krishna Hospital and ICCU",
+   "lat": 23.067208,
+   "lon": 72.56319,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058612",
+   "name": "Krishna Maternity and Nursing Home",
+   "lat": 23.045083,
+   "lon": 72.581598,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977883522",
+   "name": "Krishna Shalby Hospital",
+   "lat": 23.023929,
+   "lon": 72.441471,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979514449",
+   "name": "Krupanidhi Hospital",
+   "lat": 23.015297,
+   "lon": 72.563877,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981560332",
+   "name": "Kruti Orthopedic Hospital",
+   "lat": 23.046425,
+   "lon": 72.570951,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973933666",
+   "name": "Kumud Heart Hospital and Medical Nursing Home, Ahmedabad",
+   "lat": 23.060619,
+   "lon": 72.557895,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968376270",
+   "name": "Kunal Medical Hospital, Ahmedabad",
+   "lat": 22.998254,
+   "lon": 72.625063,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753726",
+   "name": "Kushi Women Hospital",
+   "lat": 23.000266,
+   "lon": 72.608195,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6987724528",
+   "name": "Kuvar Ba General Hospital",
+   "lat": 23.011487,
+   "lon": 72.649104,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753699",
+   "name": "LM Referral Hospital",
+   "lat": 23.018949,
+   "lon": 72.597401,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973949902",
+   "name": "Lady Care Womens Hospital Child Care",
+   "lat": 23.053844,
+   "lon": 72.547689,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W326731569",
+   "name": "Lallubhai Gordhanbhai Municipal General Hospital",
+   "lat": 22.999395,
+   "lon": 72.60466,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727757",
+   "name": "Lambha Skin Hospital",
+   "lat": 22.933913,
+   "lon": 72.576058,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971973801",
+   "name": "Lavingia Orthopedic Hospital",
+   "lat": 22.992281,
+   "lon": 72.605919,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974947589",
+   "name": "Laxmi Heart and Medical Hospital",
+   "lat": 23.028309,
+   "lon": 72.477552,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970724571",
+   "name": "Lekhadia Hospital",
+   "lat": 23.004215,
+   "lon": 72.555762,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7867000265",
+   "name": "Life Apollo Hospitals",
+   "lat": 23.192604,
+   "lon": 72.638554,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864133797",
+   "name": "Life Care Hospital",
+   "lat": 23.032409,
+   "lon": 72.459589,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970292851",
+   "name": "Life Care Institute Of Medical Sciences Research Hospital",
+   "lat": 23.047453,
+   "lon": 72.561642,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969601214",
+   "name": "Lifecare Emergency Centre",
+   "lat": 23.033319,
+   "lon": 72.578987,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986591574",
+   "name": "Lions Karnavati Shantaben Vishnubhai Patel Eye Hospital",
+   "lat": 23.12249,
+   "lon": 72.504529,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W1153424460",
+   "name": "Lions Karnavati Shantaben Vishnubhai Patel Eye Hospital",
+   "lat": 23.122576,
+   "lon": 72.504565,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753733",
+   "name": "Little Flower Neonatal and Pediatric Super Speciality Hospital",
+   "lat": 22.993645,
+   "lon": 72.607322,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971034574",
+   "name": "Livewell Pain & Spine Hospital",
+   "lat": 23.045626,
+   "lon": 72.542079,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058641",
+   "name": "Lokhandwala General Hospital",
+   "lat": 23.0347,
+   "lon": 72.595183,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978384976",
+   "name": "Long Life Hospital, Ahmedabad",
+   "lat": 23.013039,
+   "lon": 72.563785,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058646",
+   "name": "Lotus Multispeciality Hospital",
+   "lat": 23.104446,
+   "lon": 72.602558,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6990726309",
+   "name": "Madhuram Surgical Hospital",
+   "lat": 23.032873,
+   "lon": 72.628405,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058623",
+   "name": "Maheshwari Children Hospital",
+   "lat": 23.040355,
+   "lon": 72.579504,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982092157",
+   "name": "Mahin Lifecare Services Pvt.Ltd",
+   "lat": 22.99316,
+   "lon": 72.525652,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7935280844",
+   "name": "Mamata Hospital",
+   "lat": 22.984511,
+   "lon": 72.49893,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978398222",
+   "name": "Mamta Children Hospital, Ahmedabad",
+   "lat": 23.023991,
+   "lon": 72.531369,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7935280859",
+   "name": "Mamta Hospital",
+   "lat": 22.980982,
+   "lon": 72.501192,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753698",
+   "name": "Mamta Maternity Home",
+   "lat": 23.023497,
+   "lon": 72.594624,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975737981",
+   "name": "Maniar Hospital",
+   "lat": 23.032895,
+   "lon": 72.555304,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975823750",
+   "name": "Manish Eye Hospital - Ahmedabad",
+   "lat": 23.002113,
+   "lon": 72.550557,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971973800",
+   "name": "Manoramya Children Hospital and Neonatal Centre",
+   "lat": 22.995633,
+   "lon": 72.60391,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973933659",
+   "name": "Manshi Multispeciality Hospital",
+   "lat": 23.067063,
+   "lon": 72.562161,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970407444",
+   "name": "Marengo CIMS Hospital",
+   "lat": 23.070027,
+   "lon": 72.517397,
+   "emergency": false,
+   "beds": null,
+   "operator": "Marengo",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970133731",
+   "name": "Maruti Orthopedic Hospital, Nava Vadaj",
+   "lat": 23.067424,
+   "lon": 72.56111,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753720",
+   "name": "Maryam Hospital",
+   "lat": 22.981501,
+   "lon": 72.588856,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975842889",
+   "name": "Matoshree Hospital, Ahmedabad",
+   "lat": 23.00068,
+   "lon": 72.546536,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727736",
+   "name": "Matru Chhaya Hospital",
+   "lat": 22.954141,
+   "lon": 72.612253,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975839535",
+   "name": "Matru Hospital, Ahmedabad",
+   "lat": 23.030215,
+   "lon": 72.622926,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973933671",
+   "name": "Matruchhaya Children Hospital",
+   "lat": 23.058424,
+   "lon": 72.559499,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969601197",
+   "name": "Matrupooja Eye Hospital",
+   "lat": 22.974579,
+   "lon": 72.602409,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4449201990",
+   "name": "May Flower Womens Hospital Pvt. Ltd.",
+   "lat": 23.045577,
+   "lon": 72.541905,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753742",
+   "name": "Maya Maternity Hospital",
+   "lat": 22.994933,
+   "lon": 72.607517,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753741",
+   "name": "Mediclaim Hospital",
+   "lat": 22.964661,
+   "lon": 72.593436,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727747",
+   "name": "Medicure Hospital",
+   "lat": 22.970483,
+   "lon": 72.59312,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N761305685",
+   "name": "Medilink Hospital, Ahmedabad",
+   "lat": 23.017391,
+   "lon": 72.53044,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969601213",
+   "name": "Mehta Hospital, Siddhachal",
+   "lat": 23.047633,
+   "lon": 72.525886,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983477494",
+   "name": "Memon Ent Hospital",
+   "lat": 23.027227,
+   "lon": 72.586138,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970343514",
+   "name": "Metalia Hospital and ICCU, Diamond Market",
+   "lat": 23.036182,
+   "lon": 72.629794,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590270",
+   "name": "Milan Orthopaedic and Fracture Hospital",
+   "lat": 23.046219,
+   "lon": 72.533865,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058635",
+   "name": "Military Hospital",
+   "lat": 23.058909,
+   "lon": 72.601892,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958959",
+   "name": "Military Hospital",
+   "lat": 23.059041,
+   "lon": 72.601975,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969864002",
+   "name": "Minal Infertility Clinic and Nursing Home",
+   "lat": 23.051949,
+   "lon": 72.5608,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753727",
+   "name": "Mithakhali Stavya Hospital",
+   "lat": 22.996951,
+   "lon": 72.601663,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975130062",
+   "name": "Mother's Maternity and Nursing Home",
+   "lat": 23.052687,
+   "lon": 72.549178,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6980840228",
+   "name": "Motherhood Womens and Child Care Hospital",
+   "lat": 23.074528,
+   "lon": 72.512507,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058627",
+   "name": "Mumtaz Hospital",
+   "lat": 22.996623,
+   "lon": 72.578589,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058603",
+   "name": "Munciapl Prasuti Hospital",
+   "lat": 23.037605,
+   "lon": 72.579885,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753740",
+   "name": "Munsipal Hospital",
+   "lat": 23.009168,
+   "lon": 72.585876,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753700",
+   "name": "Mysorewala Surgical Hospital",
+   "lat": 23.021085,
+   "lon": 72.590077,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983317583",
+   "name": "Nadkarni's 21St Century Hospitals Pvt Ltd",
+   "lat": 22.997996,
+   "lon": 72.63552,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975165923",
+   "name": "Nanavati Maternity Hospital",
+   "lat": 23.003407,
+   "lon": 72.518924,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968395410",
+   "name": "Nandan Maternity Home",
+   "lat": 23.052184,
+   "lon": 72.533901,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983724286",
+   "name": "Narang Eye Hospital, Munohwa By Pass Chowk",
+   "lat": 23.048208,
+   "lon": 72.601645,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W318490585",
+   "name": "Narayana Hrudayalaya Hospital",
+   "lat": 23.022641,
+   "lon": 72.623558,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970460848",
+   "name": "Naresh Hospital",
+   "lat": 23.003417,
+   "lon": 72.518633,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753729",
+   "name": "Narol ICU and Multi Speciality Hospital",
+   "lat": 22.964669,
+   "lon": 72.590372,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753737",
+   "name": "Navdeep Hospital",
+   "lat": 23.003436,
+   "lon": 72.596416,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058601",
+   "name": "Navjivan Hospital",
+   "lat": 23.114943,
+   "lon": 72.581545,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983272102",
+   "name": "Navjivan Maternity and Orthopaedic Hospital, Ahmedabad",
+   "lat": 23.054358,
+   "lon": 72.642873,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970793021",
+   "name": "Navjivan Orthopaedic and Maternity Hospital",
+   "lat": 23.053692,
+   "lon": 72.642707,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7935280841",
+   "name": "Navjivan hospital",
+   "lat": 22.985971,
+   "lon": 72.500866,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969893727",
+   "name": "Navjyot Eye Hospital, Ahmedabad",
+   "lat": 23.057505,
+   "lon": 72.570357,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983477457",
+   "name": "Navkalp Children Hospital",
+   "lat": 23.005981,
+   "lon": 72.559936,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974971519",
+   "name": "Navkar Children Hospital, Ahmedabad",
+   "lat": 23.016274,
+   "lon": 72.529815,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970468038",
+   "name": "Navkar Ear Nose Throat Hospital",
+   "lat": 23.008396,
+   "lon": 72.561315,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977637653",
+   "name": "Navkar Hospital",
+   "lat": 23.012909,
+   "lon": 72.545772,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988306349",
+   "name": "Navkar Plastic Surgery Hospital",
+   "lat": 23.014419,
+   "lon": 72.56292,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969886484",
+   "name": "Navkar Surgical Hospital",
+   "lat": 23.048699,
+   "lon": 72.566513,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970854205",
+   "name": "Navneet Memorial Hospital",
+   "lat": 23.030963,
+   "lon": 72.561022,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058615",
+   "name": "Navodaya Hospital for Neonates and Children",
+   "lat": 23.111209,
+   "lon": 72.584708,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975631040",
+   "name": "Neelkamal Hospital Pvt Ltd (Pooja Hospital)",
+   "lat": 23.083897,
+   "lon": 72.591249,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6991109755",
+   "name": "Neha Children Hospitals and Neonatal Centre",
+   "lat": 23.003165,
+   "lon": 72.595221,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972593091",
+   "name": "Neil Hospital, Ahmedabad",
+   "lat": 23.052994,
+   "lon": 72.530575,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973933676",
+   "name": "Neo Children Hospital",
+   "lat": 23.064321,
+   "lon": 72.55002,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970537843",
+   "name": "Netra Jyoti Eye and Ent Hospital",
+   "lat": 23.109338,
+   "lon": 72.588505,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979376762",
+   "name": "Netra Raksha Hospital, Thakkarbapa Nagar",
+   "lat": 23.039226,
+   "lon": 72.638306,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6990838192",
+   "name": "Netralaya-The Eye Associates",
+   "lat": 23.019301,
+   "lon": 72.557246,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986605757",
+   "name": "Netram Care Eye Hospital",
+   "lat": 23.062087,
+   "lon": 72.530581,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058634",
+   "name": "Neuron Neuro Surgical Hospital",
+   "lat": 23.037853,
+   "lon": 72.576397,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058653",
+   "name": "New Life Hospital",
+   "lat": 22.995486,
+   "lon": 72.579059,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727767",
+   "name": "New Shraddha Hospital",
+   "lat": 22.97979,
+   "lon": 72.596942,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590201",
+   "name": "Nidhi Eye Hospital, Ahmedabad",
+   "lat": 23.061941,
+   "lon": 72.551807,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W487512941",
+   "name": "Nidhi Hospital, Ahmedabad",
+   "lat": 23.040091,
+   "lon": 72.561397,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932555",
+   "name": "Nilkanth Hospital",
+   "lat": 22.991475,
+   "lon": 72.611707,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6989050324",
+   "name": "Nishant E N T Hospital",
+   "lat": 23.016879,
+   "lon": 72.566781,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970331911",
+   "name": "Niyati Ent Hospital",
+   "lat": 23.020119,
+   "lon": 72.561516,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970724581",
+   "name": "Odhav Orthopaedic Hospital",
+   "lat": 23.012369,
+   "lon": 72.645031,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979376698",
+   "name": "Om Children Hospital",
+   "lat": 23.062074,
+   "lon": 72.530696,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970426107",
+   "name": "Om Pediatric and Neonatal Criticare Hospital",
+   "lat": 23.099728,
+   "lon": 72.591475,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7867000299",
+   "name": "Om Prasuti Gruha Hospital",
+   "lat": 23.161689,
+   "lon": 72.587112,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590275",
+   "name": "P.N.Desai Eye Hospital",
+   "lat": 23.049742,
+   "lon": 72.531753,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981984751",
+   "name": "Palak Eye Hospital",
+   "lat": 22.994931,
+   "lon": 72.60688,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981883350",
+   "name": "Palak Hospital, Ahmedabad",
+   "lat": 22.998948,
+   "lon": 72.625189,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981476944",
+   "name": "Pallav J M Desai Memorial Hospital (Better Health Pvt.Ltd.)",
+   "lat": 22.994762,
+   "lon": 72.614101,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590220",
+   "name": "Panchal Urology Centre, Ahmedabad",
+   "lat": 23.043723,
+   "lon": 72.550162,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970569366",
+   "name": "Panchshil Hospital",
+   "lat": 23.084335,
+   "lon": 72.591975,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058661",
+   "name": "Param Multispeciality Hospital",
+   "lat": 23.104739,
+   "lon": 72.597616,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958940",
+   "name": "Paras Hospital",
+   "lat": 23.03421,
+   "lon": 72.580437,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753752",
+   "name": "Parijat Children Hospital",
+   "lat": 23.029395,
+   "lon": 72.590563,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753734",
+   "name": "Parikh Orthopedic Hospital",
+   "lat": 22.996403,
+   "lon": 72.608657,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058619",
+   "name": "Parimal Hospital",
+   "lat": 23.095857,
+   "lon": 72.59583,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932493",
+   "name": "Parimal Hospital, Ahmedabad",
+   "lat": 22.999773,
+   "lon": 72.609062,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970525741",
+   "name": "Parimal Multispeciality Hospital",
+   "lat": 23.017267,
+   "lon": 72.557703,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977562756",
+   "name": "Parth Eye Hospital, Ahmedabad",
+   "lat": 23.004809,
+   "lon": 72.590133,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982197139",
+   "name": "Parth Eye Hospital, Isanpur",
+   "lat": 22.979893,
+   "lon": 72.59976,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981412703",
+   "name": "Parth Hospital, Ahmedabad",
+   "lat": 23.083783,
+   "lon": 72.588912,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981478241",
+   "name": "Parth Surgical Hospital, Ahmedabad",
+   "lat": 23.002996,
+   "lon": 72.554422,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975823755",
+   "name": "Parvati Jadav Hospital",
+   "lat": 23.076341,
+   "lon": 72.65447,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981922067",
+   "name": "Patel E.N.T Hospital",
+   "lat": 23.047793,
+   "lon": 72.571206,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981152500",
+   "name": "Pearl Eye Hospital",
+   "lat": 23.009843,
+   "lon": 72.580603,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986285730",
+   "name": "Peshant House Hospital",
+   "lat": 23.012758,
+   "lon": 72.567096,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958937",
+   "name": "Pinakin Dala Hospital",
+   "lat": 23.029444,
+   "lon": 72.593315,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753719",
+   "name": "Pinakin Dalal Hospital",
+   "lat": 23.029419,
+   "lon": 72.593316,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4650625621",
+   "name": "Planet Women Fertility and Counseling",
+   "lat": 23.024931,
+   "lon": 72.543408,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976136409",
+   "name": "Polio Foundation",
+   "lat": 23.004712,
+   "lon": 72.53749,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932536",
+   "name": "Pooja Hospital, Ahmedabad",
+   "lat": 23.056214,
+   "lon": 72.620771,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969611589",
+   "name": "Poojan Children Hospital And Neonatal Care Centre",
+   "lat": 23.072936,
+   "lon": 72.559149,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986103052",
+   "name": "Prabhujyot Inst. Of G.I. Endoscopy and Laproscop",
+   "lat": 23.010025,
+   "lon": 72.546544,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727774",
+   "name": "Pramukh Hospital and Research Centre",
+   "lat": 22.938287,
+   "lon": 72.614982,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978995195",
+   "name": "Pramukh Neurosurgical Hosptial",
+   "lat": 23.041179,
+   "lon": 72.562171,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978708767",
+   "name": "Prasad Hospital, Ahmedabad",
+   "lat": 23.049649,
+   "lon": 72.657349,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968418270",
+   "name": "Prathna Surgical And Medical Hospital",
+   "lat": 23.056598,
+   "lon": 72.64116,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727787",
+   "name": "Prerana Gynec and Maternity Hospital",
+   "lat": 22.974803,
+   "lon": 72.602266,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970427669",
+   "name": "Priyal Hospital",
+   "lat": 23.06055,
+   "lon": 72.664423,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970711353",
+   "name": "Pulse Iccu and Hospital",
+   "lat": 23.060458,
+   "lon": 72.566667,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058655",
+   "name": "Puneet Maternity Nursing Home",
+   "lat": 23.051416,
+   "lon": 72.596142,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058605",
+   "name": "Pushp Hospital and Maternity Home",
+   "lat": 23.114332,
+   "lon": 72.578769,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975854571",
+   "name": "Pushpa Children Hospital and Neonatal Care",
+   "lat": 23.106778,
+   "lon": 72.598075,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977866283",
+   "name": "Pushpam Hospital, Ahmedabad",
+   "lat": 23.102994,
+   "lon": 72.569728,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6987886544",
+   "name": "Rachana Hospital",
+   "lat": 23.048929,
+   "lon": 72.601685,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6991317932",
+   "name": "Radha Krishna Hospital",
+   "lat": 23.048918,
+   "lon": 72.604185,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N9221706976",
+   "name": "Radhe Hospital",
+   "lat": 23.181785,
+   "lon": 72.628082,
+   "emergency": false,
+   "beds": null,
+   "operator": "Radhe",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6990600365",
+   "name": "Raghukul Ortho Hospital",
+   "lat": 23.039593,
+   "lon": 72.635415,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981810684",
+   "name": "Raghuvir Eye Hospital",
+   "lat": 22.994792,
+   "lon": 72.607466,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981405297",
+   "name": "Rainbow Super Speciality Children's Hospital",
+   "lat": 23.04609,
+   "lon": 72.528625,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976120285",
+   "name": "Raj Ent Hospital",
+   "lat": 23.051994,
+   "lon": 72.564098,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6989164263",
+   "name": "Raj Maternity Home",
+   "lat": 22.979024,
+   "lon": 72.610589,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058613",
+   "name": "Rajdip Children Hospital",
+   "lat": 23.08992,
+   "lon": 72.590307,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988340023",
+   "name": "Rajni Women's Hospital and Research Centre",
+   "lat": 22.991433,
+   "lon": 72.633829,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6990678339",
+   "name": "Rajput Eye Hospital",
+   "lat": 23.012963,
+   "lon": 72.638872,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590284",
+   "name": "Rajvee Ortho Spine and Child Neuro Hospital",
+   "lat": 23.045579,
+   "lon": 72.541822,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982197103",
+   "name": "Raksha Hospital Pvt Ltd",
+   "lat": 23.036039,
+   "lon": 72.517472,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058597",
+   "name": "Rameshwar Multi Speciality Hospital",
+   "lat": 23.058278,
+   "lon": 72.622202,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978775436",
+   "name": "Rangam Multispeciality Hospital",
+   "lat": 23.009919,
+   "lon": 72.645095,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932535",
+   "name": "Ratan Hospital",
+   "lat": 23.000933,
+   "lon": 72.595249,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727748",
+   "name": "Ratan Hospital",
+   "lat": 22.977063,
+   "lon": 72.592925,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969761669",
+   "name": "Rathi Hospital",
+   "lat": 23.0228,
+   "lon": 72.5261,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958951",
+   "name": "Rathi Hospital",
+   "lat": 23.022855,
+   "lon": 72.5261,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970767778",
+   "name": "Ratnam Eye Hospital",
+   "lat": 23.00829,
+   "lon": 72.559509,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982001606",
+   "name": "Ravi Surgical Hospital, Ahmedabad",
+   "lat": 22.998084,
+   "lon": 72.609856,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727738",
+   "name": "Remedy Hospital",
+   "lat": 22.983088,
+   "lon": 72.600519,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983634254",
+   "name": "Reshambhai Fertility Hospital",
+   "lat": 23.053907,
+   "lon": 72.596437,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970466463",
+   "name": "Rhythm Cardio Pulmonory Care Centre and Medical Hospital",
+   "lat": 23.052119,
+   "lon": 72.560805,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058644",
+   "name": "Rhythm Heart and Medical Hospital",
+   "lat": 23.113388,
+   "lon": 72.583182,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973949892",
+   "name": "Riddhi Maternity Home",
+   "lat": 23.058455,
+   "lon": 72.555526,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981937281",
+   "name": "Rosemaarry Womens Hospital",
+   "lat": 23.031819,
+   "lon": 72.526009,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958948",
+   "name": "Rosemary Womens Hospital",
+   "lat": 23.031865,
+   "lon": 72.525999,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727761",
+   "name": "Roshan General Hospital",
+   "lat": 22.963029,
+   "lon": 72.61044,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982197141",
+   "name": "Rudraksh Hospital",
+   "lat": 23.062634,
+   "lon": 72.643695,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981988318",
+   "name": "Rugved Multispeciality Hospital",
+   "lat": 23.050432,
+   "lon": 72.646853,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982024115",
+   "name": "Rugveda Practur and Orthopaedic Hospital, Ahmedabad",
+   "lat": 23.002155,
+   "lon": 72.546721,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981988165",
+   "name": "Rukshmani Government Hospital",
+   "lat": 22.999481,
+   "lon": 72.619726,
+   "emergency": false,
+   "beds": null,
+   "operator": "government",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4977793222",
+   "name": "Rukshmani Hospital",
+   "lat": 22.999275,
+   "lon": 72.619305,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981636786",
+   "name": "Rukshmani Medical Hospital",
+   "lat": 23.003179,
+   "lon": 72.633476,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975608462",
+   "name": "Rukshmani Surgical Hospital",
+   "lat": 23.051825,
+   "lon": 72.641606,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978978566",
+   "name": "Rushabh Medi-Surge Hospital Pvt Ltd",
+   "lat": 23.012598,
+   "lon": 72.51782,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975868164",
+   "name": "Rushabh Uro Hospital",
+   "lat": 23.046184,
+   "lon": 72.533758,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988494095",
+   "name": "Rushil Cancer And Endocrine Care",
+   "lat": 23.021305,
+   "lon": 72.543519,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4585303203",
+   "name": "S G Hospital Chandlodiya",
+   "lat": 23.084891,
+   "lon": 72.551224,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7935280849",
+   "name": "SHREY HOSPITAL",
+   "lat": 22.9836,
+   "lon": 72.49847,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W551631340",
+   "name": "SMS Multi-Speciality Hospital",
+   "lat": 23.11704,
+   "lon": 72.607824,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W693889233",
+   "name": "SMVS Hospital",
+   "lat": 23.177446,
+   "lon": 72.641005,
+   "emergency": true,
+   "beds": null,
+   "operator": "SMVS Sanstha",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N3500459652",
+   "name": "Sabarmati Development Society Sanchalit Sheth Shri Pukhraj Raichand General Hospital",
+   "lat": 23.082963,
+   "lon": 72.590696,
+   "emergency": true,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753757",
+   "name": "Safal Children Hospital",
+   "lat": 23.001267,
+   "lon": 72.587772,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727793",
+   "name": "Safal Hospital",
+   "lat": 22.957118,
+   "lon": 72.611815,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977886470",
+   "name": "Sagar Hospital, Ahmedabad",
+   "lat": 23.00639,
+   "lon": 72.533577,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058625",
+   "name": "Sagar Multi Speciality Hospital",
+   "lat": 23.048956,
+   "lon": 72.581574,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970554098",
+   "name": "Sagar Orthopaedic Hospital, Bapunagar",
+   "lat": 23.036241,
+   "lon": 72.630339,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975737976",
+   "name": "Sahjanand Eye Care Hospital",
+   "lat": 23.040342,
+   "lon": 72.553247,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981793062",
+   "name": "Sahjanand Orthopaedic Hospital",
+   "lat": 23.012629,
+   "lon": 72.51789,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6991241711",
+   "name": "Sahyog General Hospital and Nursing Home",
+   "lat": 22.987033,
+   "lon": 72.473206,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7935280835",
+   "name": "Sahyog Hospital",
+   "lat": 22.987475,
+   "lon": 72.478853,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W1153423556",
+   "name": "Sahyog Hospital",
+   "lat": 22.986899,
+   "lon": 72.473303,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864133781",
+   "name": "Sai Krupa Hospital",
+   "lat": 23.018828,
+   "lon": 72.5135,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981966028",
+   "name": "Sainath Orhtopaedic Hospital",
+   "lat": 23.059215,
+   "lon": 72.536038,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W367203318",
+   "name": "Sal Hospital and Medical Institute",
+   "lat": 23.049456,
+   "lon": 72.524396,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968273217",
+   "name": "Samarpan General Hospital, Ahmedabad",
+   "lat": 23.105301,
+   "lon": 72.525411,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968861334",
+   "name": "Samarpan Maternity And Urosurgical Hospital",
+   "lat": 23.050698,
+   "lon": 72.515707,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969952025",
+   "name": "Samata Hospital Pvt.Ltd",
+   "lat": 23.082704,
+   "lon": 72.546908,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753724",
+   "name": "Sambhav General Hospital",
+   "lat": 23.006527,
+   "lon": 72.583296,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979376705",
+   "name": "Samkit Hospital Icu and Iccu",
+   "lat": 23.005715,
+   "lon": 72.532901,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983683410",
+   "name": "Samved Orthopaedic Hospital, Ahmedabad",
+   "lat": 23.040532,
+   "lon": 72.558198,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981455290",
+   "name": "Sanghavi Hospital Pvt. Ltd.",
+   "lat": 23.006697,
+   "lon": 72.556368,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973949891",
+   "name": "Sanghvi Hospital",
+   "lat": 23.058488,
+   "lon": 72.555472,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976102868",
+   "name": "Sangini Hospital",
+   "lat": 23.025038,
+   "lon": 72.523314,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958950",
+   "name": "Sangini Hospital",
+   "lat": 23.025107,
+   "lon": 72.523301,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6990776817",
+   "name": "Sanjeevani Fracture andAccident Hospital",
+   "lat": 23.048746,
+   "lon": 72.606214,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982092102",
+   "name": "Sanjeevani Hospital, Ahmedabad",
+   "lat": 23.059572,
+   "lon": 72.535645,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981956892",
+   "name": "Sanjivan Heart and Medical Hospital",
+   "lat": 23.08377,
+   "lon": 72.590324,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7867000250",
+   "name": "Sanjivani Babycare Hospital",
+   "lat": 23.179368,
+   "lon": 72.633425,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958943",
+   "name": "Sanjivani Eye Hospital",
+   "lat": 23.046029,
+   "lon": 72.561531,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982070577",
+   "name": "Sanjivani Eye Hospital and Phaco Centre, Ahmedabad",
+   "lat": 23.045989,
+   "lon": 72.561569,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981501666",
+   "name": "Sanjivani Heart And Medical Hospital - Gandhinagar",
+   "lat": 23.192486,
+   "lon": 72.613289,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982092239",
+   "name": "Sanjivani Heart and Medical Hospital (Ahmedabad)",
+   "lat": 23.05782,
+   "lon": 72.570154,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975868087",
+   "name": "Sanjivani Maternity",
+   "lat": 23.013068,
+   "lon": 72.524599,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W257623327",
+   "name": "Sanjivani Super Speciality Hospital",
+   "lat": 23.040219,
+   "lon": 72.528201,
+   "emergency": true,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968861335",
+   "name": "Sankalp Eye Hospital, Ahmedabad",
+   "lat": 23.005292,
+   "lon": 72.53724,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974487736",
+   "name": "Sanket Children Hospial",
+   "lat": 23.007381,
+   "lon": 72.558906,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975627959",
+   "name": "Sanket Children's Speciality Hospital",
+   "lat": 23.037908,
+   "lon": 72.64427,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975643587",
+   "name": "Sannidhya Eye Hospital",
+   "lat": 23.00609,
+   "lon": 72.555782,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971013949",
+   "name": "Sannidhya Hospital",
+   "lat": 23.018302,
+   "lon": 72.562601,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6989202574",
+   "name": "Sannidhya Hospital",
+   "lat": 23.016634,
+   "lon": 72.469625,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975679362",
+   "name": "Sanskar Heart Care And Medical Hospital",
+   "lat": 23.098123,
+   "lon": 72.589113,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988490440",
+   "name": "Saraiya Plastic Surgery And Burns Hospital",
+   "lat": 23.015271,
+   "lon": 72.563827,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976489668",
+   "name": "Saraswati Eye Hospital, Ahmedabad",
+   "lat": 23.063798,
+   "lon": 72.642206,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932551",
+   "name": "Sardar Hosital",
+   "lat": 22.99909,
+   "lon": 72.600916,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981981192",
+   "name": "Sardar Hospital",
+   "lat": 23.038018,
+   "lon": 72.644555,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974774960",
+   "name": "Sarthak Orthopaedic Hospital, Parimal Crosssing",
+   "lat": 23.019441,
+   "lon": 72.558617,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974835665",
+   "name": "Sarvamangal Women Hospital",
+   "lat": 23.013414,
+   "lon": 72.530409,
+   "emergency": false,
+   "beds": null,
+   "operator": "private",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978283068",
+   "name": "Satellite Orthopaedic Hospital And Research Centre Pvt Ltd",
+   "lat": 23.013731,
+   "lon": 72.525363,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970058728",
+   "name": "Satyam Children Hospital",
+   "lat": 23.11487,
+   "lon": 72.583866,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864133836",
+   "name": "Satyam Hospital",
+   "lat": 23.094012,
+   "lon": 72.546777,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976136403",
+   "name": "Satyamev Hospital",
+   "lat": 23.120442,
+   "lon": 72.581544,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970275374",
+   "name": "Saumya Children Hospital and Neonatal Care Center",
+   "lat": 23.021787,
+   "lon": 72.542068,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058639",
+   "name": "Sentara Multispeciality Hospital",
+   "lat": 23.112524,
+   "lon": 72.583451,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982046922",
+   "name": "Setu Surgical Hospital, Ahmedabad",
+   "lat": 23.054092,
+   "lon": 72.642915,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058598",
+   "name": "Sevak Maternity & Surgical Hospital",
+   "lat": 23.096892,
+   "lon": 72.596062,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981819871",
+   "name": "Shachi Women's Hospital",
+   "lat": 23.066349,
+   "lon": 72.583834,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974764947",
+   "name": "Shah Hospital - Vadaj",
+   "lat": 23.052411,
+   "lon": 72.56972,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058610",
+   "name": "Shahpur Medical Hospital",
+   "lat": 23.036011,
+   "lon": 72.578167,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958939",
+   "name": "Shahur Medical Hospital",
+   "lat": 23.036026,
+   "lon": 72.578178,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974747456",
+   "name": "Shail Eye Hospital",
+   "lat": 23.052136,
+   "lon": 72.560999,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W746254979",
+   "name": "Shaishav Children Hospital",
+   "lat": 23.059242,
+   "lon": 72.537269,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969601212",
+   "name": "Shaishav Children Hospital And Neonatal Care Unit",
+   "lat": 23.003435,
+   "lon": 72.518752,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983511178",
+   "name": "Shaishav Children Hospital, Ahmedabad",
+   "lat": 23.05925,
+   "lon": 72.53729,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727755",
+   "name": "Shakur Children Hospital",
+   "lat": 22.979498,
+   "lon": 72.598342,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W150633578",
+   "name": "Shalby Hospital",
+   "lat": 23.019019,
+   "lon": 72.506627,
+   "emergency": true,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973933657",
+   "name": "Shalin Eyecare Hospital, Ahmedabad",
+   "lat": 23.047298,
+   "lon": 72.562203,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969940932",
+   "name": "Shalin Hospital, Ahmedabad",
+   "lat": 23.013038,
+   "lon": 72.545699,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969611594",
+   "name": "Shanti Multi Speciality Hospital",
+   "lat": 23.024174,
+   "lon": 72.529531,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978561277",
+   "name": "Shantilal Parikh Hospital and Check Up Clinic",
+   "lat": 23.037334,
+   "lon": 72.57069,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590282",
+   "name": "Shantnam Eye Care Hospital",
+   "lat": 23.045635,
+   "lon": 72.541996,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978571769",
+   "name": "Sharda Clinic and Hospital",
+   "lat": 23.044234,
+   "lon": 72.604998,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974530664",
+   "name": "Sharda Eye Hospital",
+   "lat": 23.087058,
+   "lon": 72.592097,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590281",
+   "name": "Sharda Eye Hospital Phaco And Laser Centre - Ahmedabad",
+   "lat": 23.0501,
+   "lon": 72.533875,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753749",
+   "name": "Sharda Surgical Hospital",
+   "lat": 22.997027,
+   "lon": 72.609335,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979404752",
+   "name": "Shashwat Hospital and Research Center, Ahmedabad",
+   "lat": 23.058301,
+   "lon": 72.533297,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977560828",
+   "name": "Shaurya Hospital, Ahmedabad",
+   "lat": 23.010969,
+   "lon": 72.562629,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970597384",
+   "name": "Sheth Hospital and Maternity Home",
+   "lat": 23.002311,
+   "lon": 72.554928,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753750",
+   "name": "Sheth Jamnabhai Bhagubhai Trust",
+   "lat": 23.025979,
+   "lon": 72.591901,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970516275",
+   "name": "Shilp E.N.T Clinic and Hospital",
+   "lat": 23.108958,
+   "lon": 72.593041,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932541",
+   "name": "Shilp Orthopaedics And Trauma Centre",
+   "lat": 22.983097,
+   "lon": 72.602871,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983623764",
+   "name": "Shiv Jyoti Eye Hospital",
+   "lat": 23.038816,
+   "lon": 72.633128,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753751",
+   "name": "Shivam Children Hospital and Pediatric Critical Care Centre",
+   "lat": 23.000322,
+   "lon": 72.603742,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979376763",
+   "name": "Shivam Heart and Medical Hospital",
+   "lat": 23.056715,
+   "lon": 72.634133,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058664",
+   "name": "Shivam Hospital",
+   "lat": 23.039992,
+   "lon": 72.57786,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864133810",
+   "name": "Shivam Hospital",
+   "lat": 23.03332,
+   "lon": 72.465897,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986605704",
+   "name": "Shivam Medical Hospital, Sardar Nagar",
+   "lat": 23.080982,
+   "lon": 72.621304,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970039123",
+   "name": "Shivam Orthopaedic and Gynec Hospital",
+   "lat": 23.036311,
+   "lon": 72.532529,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970522371",
+   "name": "Shivam Surgical Hospital",
+   "lat": 23.073027,
+   "lon": 72.652877,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058621",
+   "name": "Shivam Surgical and Dental Hospital",
+   "lat": 23.114583,
+   "lon": 72.582827,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4794228821",
+   "name": "Shivam X-ray & Sonography clinic",
+   "lat": 23.057622,
+   "lon": 72.570077,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983684511",
+   "name": "Shlok Medical and Heart Hospital",
+   "lat": 22.987201,
+   "lon": 72.603419,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727794",
+   "name": "Shraddha Children Hospital",
+   "lat": 22.975758,
+   "lon": 72.602221,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727783",
+   "name": "Shraddha Hospital",
+   "lat": 22.98027,
+   "lon": 72.595008,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058632",
+   "name": "Shraddha Multi Speciality Hospital",
+   "lat": 23.032023,
+   "lon": 72.577351,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958941",
+   "name": "Shraddha Multispecialist Hospital",
+   "lat": 23.032039,
+   "lon": 72.577354,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727792",
+   "name": "Shraddha Orthopaedic Hospital",
+   "lat": 22.981039,
+   "lon": 72.598519,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970462158",
+   "name": "Shraddha Surgical Hospital, Ahmedabad",
+   "lat": 23.048228,
+   "lon": 72.533383,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981277613",
+   "name": "Shree Aman Hospital",
+   "lat": 23.084487,
+   "lon": 72.591416,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968282377",
+   "name": "Shree Bharti Vallabh Hospital",
+   "lat": 23.049587,
+   "lon": 72.592881,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981981259",
+   "name": "Shree Harikrupa Hospital",
+   "lat": 23.020061,
+   "lon": 72.561555,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753702",
+   "name": "Shree Jee Eye and Orthopedic Hospital",
+   "lat": 23.028639,
+   "lon": 72.596633,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979198636",
+   "name": "Shree Mahavir Mutlispeciality Hospital and Icu",
+   "lat": 23.060303,
+   "lon": 72.5355,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727786",
+   "name": "Shree Nathe Hospital",
+   "lat": 22.9812,
+   "lon": 72.602364,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970724547",
+   "name": "Shree Raj Hospital, Ahmedabad",
+   "lat": 23.046185,
+   "lon": 72.532609,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986602457",
+   "name": "Shree Sai Children Hospital",
+   "lat": 23.114606,
+   "lon": 72.583891,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753715",
+   "name": "Shree Shakti General Hospital",
+   "lat": 22.966692,
+   "lon": 72.589349,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753690",
+   "name": "Shree Umiya Multi Speciality Hospital",
+   "lat": 23.019646,
+   "lon": 72.593685,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976523987",
+   "name": "Shreedhar Hospital, Ahmedabad",
+   "lat": 23.000075,
+   "lon": 72.659128,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058629",
+   "name": "Shreeja Krupa Children Hospital",
+   "lat": 23.032378,
+   "lon": 72.577407,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975865082",
+   "name": "Shreejee Hospital",
+   "lat": 22.979135,
+   "lon": 72.61953,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970516599",
+   "name": "Shreeji Children Hospital",
+   "lat": 23.029454,
+   "lon": 72.474723,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727790",
+   "name": "Shreeji Children's Hospital",
+   "lat": 22.981784,
+   "lon": 72.6029,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864133783",
+   "name": "Shreeji ENT and Orthopaedic Hospital",
+   "lat": 23.046427,
+   "lon": 72.534381,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974515481",
+   "name": "Shreeji Neonatal and Child Care",
+   "lat": 23.054426,
+   "lon": 72.59594,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970024809",
+   "name": "Shreeji Orthopaedic And Ent Hospital",
+   "lat": 23.047179,
+   "lon": 72.533313,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590273",
+   "name": "Shreekrishna Hospital and Health Care Centre",
+   "lat": 23.058359,
+   "lon": 72.533251,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970541617",
+   "name": "Shrey Hospital",
+   "lat": 23.037657,
+   "lon": 72.564771,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958944",
+   "name": "Shreyas Dental Hospital",
+   "lat": 23.048247,
+   "lon": 72.561768,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6990752682",
+   "name": "Shreyas Orthopedic Hospital, Ahmedabad",
+   "lat": 23.115428,
+   "lon": 72.582282,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986966093",
+   "name": "Shreyas Orthopedic Hospital, Vasna",
+   "lat": 23.002284,
+   "lon": 72.548234,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982014039",
+   "name": "Shreyas Speciality Hospital",
+   "lat": 23.002323,
+   "lon": 72.517528,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864133850",
+   "name": "Shri Gordhandas Charitable Hospital",
+   "lat": 23.040905,
+   "lon": 72.526418,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727800",
+   "name": "Shri Ji Kripa Prasuti Griha Hospital",
+   "lat": 22.953387,
+   "lon": 72.612777,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979298469",
+   "name": "Shri Rang Hospitaland Research Centre",
+   "lat": 23.076789,
+   "lon": 72.539063,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983440879",
+   "name": "Shri Yogeshwar General Hospital",
+   "lat": 23.081286,
+   "lon": 72.538058,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970675546",
+   "name": "Shridhaj Orthopaedic Hospital",
+   "lat": 23.005771,
+   "lon": 72.533059,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982007106",
+   "name": "Shrreeji Surgical Hospital",
+   "lat": 22.998161,
+   "lon": 72.625165,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753694",
+   "name": "Shruti ENT Hospital",
+   "lat": 22.997277,
+   "lon": 72.609198,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970637983",
+   "name": "Shubham Ent Hospital",
+   "lat": 23.021799,
+   "lon": 72.645708,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988322949",
+   "name": "Shukan Maternity Home",
+   "lat": 22.996806,
+   "lon": 72.656253,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981256117",
+   "name": "Shushilaben Neonatal And Child Care Centre",
+   "lat": 23.031036,
+   "lon": 72.61494,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N1781764967",
+   "name": "Shushtrut Hospital",
+   "lat": 23.009005,
+   "lon": 72.56227,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988534634",
+   "name": "Shyam Urological Hospital",
+   "lat": 23.019345,
+   "lon": 72.557294,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975659494",
+   "name": "Shyamal Orthopaedic Hospital",
+   "lat": 23.013356,
+   "lon": 72.526383,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982092222",
+   "name": "Siddhi Heart and Medical Hospital",
+   "lat": 23.0729,
+   "lon": 72.559169,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979370261",
+   "name": "Siddhi Hospital, Ahmedabad",
+   "lat": 23.067212,
+   "lon": 72.642921,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6990257834",
+   "name": "Siddhi Vinayak Hospital, Ahmedabad",
+   "lat": 23.004135,
+   "lon": 72.606453,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6989112022",
+   "name": "Siddhivinayak Hospital, Ahmedabad",
+   "lat": 23.017546,
+   "lon": 72.557695,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6989122223",
+   "name": "Sitababa Hospital",
+   "lat": 23.062681,
+   "lon": 72.537785,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974503519",
+   "name": "Sivmm Kidney Hospital",
+   "lat": 23.08348,
+   "lon": 72.591222,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590283",
+   "name": "Smruti Fracture Orthopedic Hospital",
+   "lat": 23.046311,
+   "lon": 72.534535,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6989132421",
+   "name": "Smruti Hospital",
+   "lat": 23.005463,
+   "lon": 72.590412,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727751",
+   "name": "Smruti Multi Speciality Hospital",
+   "lat": 22.974308,
+   "lon": 72.611594,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988536883",
+   "name": "Smt Shobhadevi Ent Hospital",
+   "lat": 23.064969,
+   "lon": 72.642685,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6993868923",
+   "name": "Smt.NHL Municipal Medical College Hospital",
+   "lat": 23.018716,
+   "lon": 72.571427,
+   "emergency": false,
+   "beds": null,
+   "operator": "government",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970408459",
+   "name": "Sneh Orthopaedic Hospital",
+   "lat": 23.002429,
+   "lon": 72.554231,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864058638",
+   "name": "Sonal Maternity Hospital",
+   "lat": 23.054795,
+   "lon": 72.620877,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6987525729",
+   "name": "Spandan Hospital, Ahmedabad",
+   "lat": 23.003451,
+   "lon": 72.518919,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727740",
+   "name": "Sparsh Multi Speciality Hospital",
+   "lat": 22.966305,
+   "lon": 72.624931,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977562492",
+   "name": "Sparsh Netralaya",
+   "lat": 23.053951,
+   "lon": 72.595426,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7867052477",
+   "name": "Starling Hospital",
+   "lat": 23.181426,
+   "lon": 72.700156,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974862427",
+   "name": "Stavya Spine Hospital and Research Institute",
+   "lat": 23.025928,
+   "lon": 72.566065,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N440320413",
+   "name": "Sterling Hospital Div. Of Addlife Medical Institute Pvt. Ltd.",
+   "lat": 23.048757,
+   "lon": 72.531268,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982031216",
+   "name": "Sukhmani Hospital / Saviour Annexe Hospital",
+   "lat": 23.036486,
+   "lon": 72.569639,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958942",
+   "name": "Sukhmani hospital",
+   "lat": 23.036498,
+   "lon": 72.569619,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727742",
+   "name": "Suman Hospital",
+   "lat": 22.981475,
+   "lon": 72.611161,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4449189194",
+   "name": "Sunflower Womens Endo Infertility and Hospital Pvt. Ltd.",
+   "lat": 23.045758,
+   "lon": 72.541289,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6978013050",
+   "name": "Super Surgical Hospital, Ahmedabad",
+   "lat": 23.03541,
+   "lon": 72.559456,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972593092",
+   "name": "Surveen Children Hospital And Vaccination Centre",
+   "lat": 23.055355,
+   "lon": 72.52091,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977128145",
+   "name": "Sushri Jasumatiben Shantilal Surti Charitable General Hospital",
+   "lat": 23.025672,
+   "lon": 72.531961,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988491227",
+   "name": "Sushrut Hospital, Ahmedabad",
+   "lat": 23.009041,
+   "lon": 72.562228,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6969601192",
+   "name": "Suvan Eye Care",
+   "lat": 23.057702,
+   "lon": 72.636945,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727796",
+   "name": "Swami Sadanand Hospital",
+   "lat": 22.959851,
+   "lon": 72.611736,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982731905",
+   "name": "Swapn Healthcare Hospital Pvt. Ltd",
+   "lat": 22.983424,
+   "lon": 72.597176,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977867216",
+   "name": "Swari Ent Hospital, Ahmedabad",
+   "lat": 23.066869,
+   "lon": 72.583823,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977588678",
+   "name": "Swastik Hospital, Ahmedabad",
+   "lat": 23.039528,
+   "lon": 72.67597,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982060211",
+   "name": "Swastik Surgical Hospital And Dental Clinic, Ahmedabad",
+   "lat": 23.003474,
+   "lon": 72.518905,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970824544",
+   "name": "Synergy Neonatal and Pediatric Centre",
+   "lat": 22.995734,
+   "lon": 72.608254,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753744",
+   "name": "TB Hospital",
+   "lat": 23.015102,
+   "lon": 72.59083,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N12016441172",
+   "name": "TEJASYA ORTHOPAEDIC HOSPITAL - DR RAVI PATEL orthopaedic surgeon",
+   "lat": 23.049714,
+   "lon": 72.670116,
+   "emergency": true,
+   "beds": null,
+   "operator": "DR RAVI PATEL",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970233678",
+   "name": "Tapan Hospital Pvt Ltd",
+   "lat": 23.036035,
+   "lon": 72.629738,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986619078",
+   "name": "Tejal Eye Hospital",
+   "lat": 23.079099,
+   "lon": 72.575326,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864133804",
+   "name": "Tender Touch Children's Hospital",
+   "lat": 23.032361,
+   "lon": 72.524742,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6989177887",
+   "name": "The Gujarat Research and Medical Institute ( Rajasthan Hospital)",
+   "lat": 23.05529,
+   "lon": 72.596909,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979940478",
+   "name": "The Holistic Medical Centre Ayulink Ayurveda Hospital",
+   "lat": 23.037977,
+   "lon": 72.559598,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6982092151",
+   "name": "The Vitreoretina Clinic and Eye Hospital",
+   "lat": 23.038902,
+   "lon": 72.516143,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970549388",
+   "name": "Tilak Hospital (Multispeciality), Ahmedabad",
+   "lat": 23.033425,
+   "lon": 72.622276,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986279383",
+   "name": "Tirtham Surgical and Laparoscopic Centre",
+   "lat": 23.063857,
+   "lon": 72.530445,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975865077",
+   "name": "Trisha Trauma Centre and Icu",
+   "lat": 23.0714,
+   "lon": 72.55913,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979071770",
+   "name": "Trupti Heart and Medical Hospital, Ahmedabad",
+   "lat": 23.004289,
+   "lon": 72.590508,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975633410",
+   "name": "Trupti Hospital, Saijpur",
+   "lat": 23.063891,
+   "lon": 72.642295,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971932491",
+   "name": "Tulip Women's Hospital",
+   "lat": 23.020171,
+   "lon": 72.518947,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974509084",
+   "name": "U. N.Mehta Institute Of Cardiology and Research Centre",
+   "lat": 23.052726,
+   "lon": 72.601307,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727778",
+   "name": "U.N. Mehta Eye Hospital",
+   "lat": 22.958951,
+   "lon": 72.618997,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970257402",
+   "name": "Udit Hospital Multi Speciality",
+   "lat": 23.050254,
+   "lon": 72.520921,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6971005459",
+   "name": "Umiya Surgical Hospital",
+   "lat": 23.059151,
+   "lon": 72.550702,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6974583170",
+   "name": "Urva Children Hospital and Neonatal Care",
+   "lat": 23.013382,
+   "lon": 72.526473,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6972590230",
+   "name": "Usha - Deep Hospital and Nursing Home",
+   "lat": 23.052209,
+   "lon": 72.559814,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970546258",
+   "name": "Utkarsh Hospital, Ahmedabad",
+   "lat": 23.107899,
+   "lon": 72.578366,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W744794009",
+   "name": "Utkarsh hospital",
+   "lat": 23.107927,
+   "lon": 72.578378,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6993472071",
+   "name": "V and M Orthopaedic Centre",
+   "lat": 22.997029,
+   "lon": 72.606839,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7867000282",
+   "name": "Vachhani Hospital",
+   "lat": 23.179407,
+   "lon": 72.634087,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975686200",
+   "name": "Vadaj Orthopaedic Hospital",
+   "lat": 23.057618,
+   "lon": 72.569295,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7862753691",
+   "name": "Vahedi Hospital",
+   "lat": 22.999361,
+   "lon": 72.585958,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975283854",
+   "name": "Vaishali Hospital",
+   "lat": 23.028354,
+   "lon": 72.477383,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975868185",
+   "name": "Vallabh Surgical Hospital",
+   "lat": 23.059484,
+   "lon": 72.536028,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6976120295",
+   "name": "Valu Hospital",
+   "lat": 23.046198,
+   "lon": 72.56166,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4492330390",
+   "name": "Vani Hospital & IVF center",
+   "lat": 22.99465,
+   "lon": 72.615754,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4514853390",
+   "name": "Vani IVF Center",
+   "lat": 22.994662,
+   "lon": 72.615422,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970328005",
+   "name": "Vanza Hospital",
+   "lat": 23.03075,
+   "lon": 72.474012,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6973933665",
+   "name": "Vardan Eye Hospital, Ahmedabad",
+   "lat": 23.072848,
+   "lon": 72.559042,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6968717638",
+   "name": "Vasudha Eye Hospital",
+   "lat": 23.083447,
+   "lon": 72.589506,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970657650",
+   "name": "Vasundhara Medical Hospital",
+   "lat": 23.034826,
+   "lon": 72.625274,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977959988",
+   "name": "Vatsalya Children Hospital, Ahmedabad",
+   "lat": 23.048279,
+   "lon": 72.533788,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986256250",
+   "name": "Vatsalya Gynec Hospital",
+   "lat": 23.006695,
+   "lon": 72.532583,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6980792037",
+   "name": "Vatsalya Neonatal and Children Hospital",
+   "lat": 23.020866,
+   "lon": 72.638844,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986477087",
+   "name": "Vedanta Institute Of Medical Sciences Hospital",
+   "lat": 23.040215,
+   "lon": 72.559855,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727768",
+   "name": "Vedanth Medical Hospital",
+   "lat": 22.981784,
+   "lon": 72.606863,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6975896997",
+   "name": "Venkaria Ortho Hospital",
+   "lat": 23.038874,
+   "lon": 72.630996,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W332262395",
+   "name": "Victoria Jubilee Hospital",
+   "lat": 23.025153,
+   "lon": 72.599317,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986256251",
+   "name": "Vikas Medical and Heart Hospital",
+   "lat": 23.073077,
+   "lon": 72.652789,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7863727745",
+   "name": "Vimala Hospital",
+   "lat": 22.967894,
+   "lon": 72.617867,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N9653242417",
+   "name": "Vimla Hospital",
+   "lat": 22.976738,
+   "lon": 72.62313,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6987724550",
+   "name": "Vinayak Children Hospital-Ahmedabad",
+   "lat": 23.080436,
+   "lon": 72.567974,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6988267618",
+   "name": "Vishwa Ent Hospital",
+   "lat": 23.022034,
+   "lon": 72.525325,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6983778648",
+   "name": "Vishwa Medical And Heart Hospital",
+   "lat": 23.002901,
+   "lon": 72.595717,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7867000276",
+   "name": "Vishwas Kamdhenu Panchgavya Aarogya Hospital",
+   "lat": 23.169115,
+   "lon": 72.612958,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W745686111",
+   "name": "Vision Care Eye Hospital, Ahmedabad",
+   "lat": 23.022071,
+   "lon": 72.546213,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N7864133830",
+   "name": "Vismay Child Care Hospital",
+   "lat": 23.019857,
+   "lon": 72.512076,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986103047",
+   "name": "Vivek Children Hospital, Khokhara",
+   "lat": 23.001746,
+   "lon": 72.618301,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981777270",
+   "name": "Vraj Hospital and Heart Care Center",
+   "lat": 22.980618,
+   "lon": 72.6022,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6979376757",
+   "name": "Vrundavan Children Hospital",
+   "lat": 23.016969,
+   "lon": 72.566726,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6977209293",
+   "name": "Vrundavan Hospital, Ahmedabad",
+   "lat": 23.047171,
+   "lon": 72.558244,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6970584034",
+   "name": "Welcare Women's Hospital",
+   "lat": 23.045323,
+   "lon": 72.562306,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6986605747",
+   "name": "Yogiji Medical Hospital",
+   "lat": 22.998535,
+   "lon": 72.624753,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N6981717526",
+   "name": "Zeal Maternity And Nursing Home",
+   "lat": 23.054488,
+   "lon": 72.60295,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "W367432722",
+   "name": "Zydus Hospitals",
+   "lat": 23.058498,
+   "lon": 72.517439,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N12871031670",
+   "name": "charvi Hospital",
+   "lat": 22.994196,
+   "lon": 72.671529,
+   "emergency": false,
+   "beds": null,
+   "operator": "kingofshrinivash",
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4449189293",
+   "name": "little flower",
+   "lat": 23.046096,
+   "lon": 72.533033,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N10172958938",
+   "name": "muncipal parsuti Hospital",
+   "lat": 23.037625,
+   "lon": 72.579883,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N3293760662",
+   "name": "saviour annexe hospital",
+   "lat": 23.036859,
+   "lon": 72.569951,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  },
+  {
+   "id": "N4415934891",
+   "name": "vizcare hospital",
+   "lat": 23.099727,
+   "lon": 72.536322,
+   "emergency": false,
+   "beds": null,
+   "operator": null,
+   "healthcare": "hospital"
+  }
+ ]
+}

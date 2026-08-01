@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 
 import type { WardData } from "./data";
 import type { LatLon } from "./geo";
+import type { Hospital } from "./hospitals";
 
 /** Real Navrangpura data: OSM streets, SRTM elevation, OSRM times, rainfall. */
 export const getWardData = createServerFn({ method: "POST" })
@@ -58,4 +59,22 @@ export const getRoutes = createServerFn({ method: "POST" })
       }
     }
     return out;
+  });
+
+export interface HospitalsDTO {
+  hospitals: Hospital[];
+  fetchedAt: string;
+  live: boolean;
+  note: string;
+}
+
+/**
+ * Every mapped hospital in Ahmedabad, straight from OpenStreetMap.
+ * Cached 24 h server-side — the list changes rarely, the risk join does not.
+ */
+export const getHospitals = createServerFn({ method: "POST" })
+  .inputValidator((input?: { refresh?: boolean }) => ({ refresh: Boolean(input?.refresh) }))
+  .handler(async ({ data }): Promise<HospitalsDTO> => {
+    const { fetchHospitals } = await import("./pipeline.server");
+    return fetchHospitals(data.refresh);
   });

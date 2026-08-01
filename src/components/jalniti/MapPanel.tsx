@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useState } from "react";
 
 import type { Depot } from "@/lib/jalniti/data";
 import type { RoutePath } from "@/lib/jalniti/live.functions";
+import type { HospitalRisk } from "@/lib/jalniti/hospitals";
 import type { Assignment, ScoredSegment } from "@/lib/jalniti/model";
 
 // Leaflet touches `window` at import time, so it can only load after hydration.
@@ -17,6 +18,8 @@ interface Props {
   showRoutes: boolean;
   clearedIds: string[];
   closedIds: string[];
+  hospitals: HospitalRisk[];
+  showHospitals: boolean;
 }
 
 

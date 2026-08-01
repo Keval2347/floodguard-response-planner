@@ -18,6 +18,8 @@
 import { haversineM, midOf, pathLengthM, type LatLon } from "./geo";
 import { DEPOTS, WARD, type StreetSegment, type WardData } from "./data";
 import snapshot from "./navrangpura.snapshot.json";
+import hospitalSnapshot from "./hospitals.snapshot.json";
+import type { Hospital } from "./hospitals";
 
 const OVERPASS = [
   "https://overpass-api.de/api/interpreter",
@@ -522,5 +524,77 @@ async function buildLiveWardData(): Promise<WardData> {
       fetchedAt: new Date().toISOString(),
       notes,
     };
+  });
+}
+
+/* ------------------------------------------------------------- hospitals */
+
+/**
+ * Every mapped hospital in Ahmedabad, from OpenStreetMap.
+ *
+ * Overpass query: `amenity=hospital` (node/way/relation) over the Ahmedabad
+ * urban bbox. Ways/relations are reduced to their centroid by `out center`.
+ * Cached 24 h in-process; if Overpass refuses (429/504) we fall back to the
+ * committed capture in hospitals.snapshot.json, which was produced by the very
+ * same query — so the list is always real OSM data with real element ids.
+ */
+const HOSPITAL_BBOX = "22.90,72.40,23.20,72.75";
+const HOSPITAL_QUERY = `[out:json][timeout:120];(node["amenity"="hospital"](${HOSPITAL_BBOX});way["amenity"="hospital"](${HOSPITAL_BBOX});relation["amenity"="hospital"](${HOSPITAL_BBOX}););out center tags;`;
+
+export interface HospitalsPayload {
+  hospitals: Hospital[];
+  fetchedAt: string;
+  live: boolean;
+  note: string;
+}
+
+export async function fetchHospitals(refresh = false): Promise<HospitalsPayload> {
+  if (refresh) store.delete("hospitals");
+  return cached("hospitals", 24 * 3600_000, async (): Promise<HospitalsPayload> => {
+    try {
+      const els = (await overpass(HOSPITAL_QUERY, 3)) as (OverpassWay & {
+        lat?: number;
+        lon?: number;
+        center?: { lat: number; lon: number };
+        type?: string;
+      })[];
+      const seen = new Set<string>();
+      const hospitals: Hospital[] = [];
+      for (const e of els) {
+        const t = e.tags ?? {};
+        const name = t.name ?? t["name:en"];
+        const lat = e.lat ?? e.center?.lat;
+        const lon = e.lon ?? e.center?.lon;
+        if (!name || lat == null || lon == null) continue;
+        const key = `${name.toLowerCase()}|${lat.toFixed(4)}|${lon.toFixed(4)}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        hospitals.push({
+          id: `${(e.type ?? "n")[0].toUpperCase()}${e.id}`,
+          name,
+          lat: Number(lat.toFixed(6)),
+          lon: Number(lon.toFixed(6)),
+          emergency: t.emergency === "yes",
+          beds: /^\d+$/.test(t.beds ?? "") ? Number(t.beds) : null,
+          operator: t.operator ?? t["operator:type"] ?? null,
+          healthcare: t.healthcare ?? "hospital",
+        });
+      }
+      hospitals.sort((a, b) => a.name.localeCompare(b.name));
+      return {
+        hospitals,
+        fetchedAt: new Date().toISOString(),
+        live: true,
+        note: `OpenStreetMap Overpass: ${hospitals.length} mapped hospitals across Ahmedabad (amenity=hospital)`,
+      };
+    } catch (err) {
+      const snap = hospitalSnapshot as { fetchedAt: string; source: string; hospitals: Hospital[] };
+      return {
+        hospitals: snap.hospitals,
+        fetchedAt: snap.fetchedAt,
+        live: false,
+        note: `Overpass unavailable (${(err as Error).message}) — using the committed OSM hospital capture (${snap.hospitals.length} facilities, ${snap.source})`,
+      };
+    }
   });
 }
