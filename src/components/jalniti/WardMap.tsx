@@ -142,25 +142,30 @@ export default function WardMap({
                 fillOpacity: urgent ? 1 : 0.75,
               }}
             >
-              {tagged.has(h.id) && (
+              {/* Leaflet allows one tooltip per layer: tagged facilities get a
+                  small permanent label, the rest a detailed hover card. */}
+              {tagged.has(h.id) ? (
                 <Tooltip
                   permanent
                   direction="right"
-                  offset={[6, 0]}
+                  offset={[7, 0]}
                   className="jalniti-hospital-tag"
                 >
                   {h.name}
+                  {h.worstRoad ? ` — ${meta.label}` : ""}
+                </Tooltip>
+              ) : (
+                <Tooltip direction="top" sticky>
+                  <span className="font-medium">{h.name}</span>
+                  <br />
+                  {meta.label}
+                  {h.worstRoad ? ` · worst approach: ${h.worstRoad}` : ""}
+                  <br />
+                  {h.emergency ? "emergency dept · " : ""}
+                  {h.beds ? `${h.beds} beds · ` : ""}OSM {h.id}
                 </Tooltip>
               )}
-              <Tooltip direction="top" sticky>
-                <span className="font-medium">{h.name}</span>
-                <br />
-                {meta.label}
-                {h.worstRoad ? ` · worst approach: ${h.worstRoad}` : ""}
-                <br />
-                {h.emergency ? "emergency dept · " : ""}
-                {h.beds ? `${h.beds} beds · ` : ""}OSM {h.id}
-              </Tooltip>
+
             </CircleMarker>
           );
         })}
