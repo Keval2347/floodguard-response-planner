@@ -490,7 +490,10 @@ function Dashboard() {
 
             {/* ---- Hospitals exposed by the current risk map ---- */}
             <TabsContent value="hospitals" className="min-h-0 flex-1">
-              <ScrollArea className="h-full px-3 pb-4">
+              {/* Radix sizes the viewport child as a table, which lets long
+                  hospital names push past the panel — force block layout. */}
+              <ScrollArea className="h-full px-3 pb-4 [&_[data-radix-scroll-area-viewport]>div]:!block">
+
                 <Card className="mb-3 w-full gap-1 overflow-hidden p-3 text-xs break-words">
                   <p className="flex items-center gap-2 text-sm font-medium">
                     <Cross className="size-4" /> {hospitalRisk.length} hospitals in Ahmedabad
