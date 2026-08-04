@@ -184,10 +184,13 @@ function Dashboard() {
    * whose mapped approach roads are actually flagged by today's rainfall get a
    * marker — everything else would just bury the street colours.
    */
-  const mapHospitals = useMemo(
-    () => hospitalRisk.filter((h) => h.status === "cut-off" || h.status === "at-risk" || h.status === "watch"),
-    [hospitalRisk],
-  );
+  const mapHospitals = useMemo(() => {
+    // Only facilities today's rainfall actually threatens get a marker. When
+    // nothing is urgent we fall back to the "watch" tier so the layer is never
+    // silently empty — but the full city register stays off the map.
+    if (urgent.length) return urgent;
+    return hospitalRisk.filter((h) => h.status === "watch").slice(0, 25);
+  }, [hospitalRisk, urgent]);
 
 
   /**
