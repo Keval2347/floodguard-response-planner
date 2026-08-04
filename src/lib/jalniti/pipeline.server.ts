@@ -494,22 +494,40 @@ async function buildLiveWardData(): Promise<WardData> {
       s.base_risk = Math.round(Math.min(0.97, Math.max(0.05, raw)) * 100) / 100;
     }
 
-    // --- Real road-network travel times (depots first, then segments).
+    // --- Travel times (depots first, then segments).
+    // The whole network is scored for the map, but OSRM's public /table caps
+    // the coordinate count, so the exact road-network matrix is computed for
+    // the depots plus the highest-risk PLANNING_SEGMENTS streets — the only
+    // ones the optimizer can realistically reach in a shift. Everything else
+    // keeps a documented straight-line estimate at 25 km/h.
     const matrixPoints: LatLon[] = [
       ...DEPOTS.map((d) => [d.lat, d.lon] as LatLon),
       ...segments.map((s) => midOf(s.path)),
     ];
-    let travelMin: number[][];
+    const travelMin: number[][] = matrixPoints.map((a) =>
+      matrixPoints.map((b) => Math.round((haversineM(a, b) / 1000 / 25) * 60 * 10) / 10),
+    );
+
+    const planIdx = segments
+      .map((s, i) => ({ i: DEPOTS.length + i, risk: s.base_risk }))
+      .sort((a, b) => b.risk - a.risk)
+      .slice(0, PLANNING_SEGMENTS)
+      .map((x) => x.i);
+    const exactIdx = [...DEPOTS.map((_, i) => i), ...planIdx];
     try {
-      travelMin = await fetchTravelMatrix(matrixPoints);
-      notes.push(`OSRM: ${matrixPoints.length}x${matrixPoints.length} road travel-time matrix`);
-    } catch (err) {
-      // Straight-line fallback at 25 km/h so the UI still works if OSRM is down.
-      travelMin = matrixPoints.map((a) =>
-        matrixPoints.map((b) => Math.round((haversineM(a, b) / 1000 / 25) * 60 * 10) / 10),
+      const sub = await fetchTravelMatrix(exactIdx.map((i) => matrixPoints[i]));
+      exactIdx.forEach((ri, r) => {
+        exactIdx.forEach((ci, c) => {
+          travelMin[ri][ci] = sub[r][c];
+        });
+      });
+      notes.push(
+        `OSRM: exact ${exactIdx.length}x${exactIdx.length} road travel-time matrix for the depots + ${planIdx.length} priority streets; remaining ${segments.length - planIdx.length} display-only streets use a 25 km/h straight-line estimate`,
       );
+    } catch (err) {
       notes.push(`OSRM unavailable (${(err as Error).message}) — straight-line times used`);
     }
+
 
     let rain = { rainSeries: [] as { hour: string; mm: number }[], observedMm: 0, forecastMm: 0 };
     try {
