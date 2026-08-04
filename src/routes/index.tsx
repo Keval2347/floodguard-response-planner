@@ -837,8 +837,10 @@ function Dashboard() {
                     {ward ? (
                       <>
                         <p className="text-muted-foreground">
-                          {new Date(ward.fetchedAt).toLocaleString()} · cached 3 h server-side
+                          {istStamp(ward.fetchedAt)} · street/terrain layer cached 45 min,
+                          rainfall re-read every 60 s
                         </p>
+
                         <ul className="list-disc pl-4 text-muted-foreground">
                           {ward.notes.map((n) => (
                             <li key={n}>{n}</li>
