@@ -32,7 +32,14 @@ const OSRM = "https://router.project-osrm.org";
 const TOPO = "https://api.opentopodata.org/v1";
 const METEO = "https://api.open-meteo.com/v1/forecast";
 
-const MAX_SEGMENTS = 42;
+/**
+ * How many street pieces the ward map scores. Kept high so the whole drivable
+ * network is coloured — safe streets show green, exactly like a real ward map,
+ * instead of a handful of sampled lines.
+ */
+const MAX_SEGMENTS = 220;
+/** Only the worst streets need an exact OSRM matrix row (public /table caps ~100 coords). */
+const PLANNING_SEGMENTS = 60;
 const SEGMENT_TARGET_M = 450;
 
 /* ------------------------------------------------------------------ cache */
