@@ -337,7 +337,7 @@ export async function buildWardData(
     return await Promise.race([
       buildLiveWardData(),
       new Promise<WardData>((_, rej) =>
-        setTimeout(() => rej(new Error("live upstreams did not answer within 20 s")), 20000),
+        setTimeout(() => rej(new Error("live upstreams did not answer within 35 s")), 35000),
       ),
     ]);
   } catch (err) {
@@ -371,7 +371,7 @@ export function useOsmWays(ways: OverpassWay[]) {
 }
 
 async function buildLiveWardData(): Promise<WardData> {
-  return cached("ward", 3 * 3600_000, async (): Promise<WardData> => {
+  return cached("ward", 45 * 60_000, async (): Promise<WardData> => {
     const notes: string[] = [];
     const ways = injectedWays ?? (await fetchOsm());
 
