@@ -342,7 +342,7 @@ function Dashboard() {
               showRoutes={showRoutes}
               clearedIds={scenario.drainsCleared}
               closedIds={scenario.closed}
-              hospitals={hospitalRisk}
+              hospitals={mapHospitals}
               showHospitals={showHospitals}
             />
           )}
@@ -367,7 +367,7 @@ function Dashboard() {
             <label className="flex items-center gap-2">
               <Switch checked={showHospitals} onCheckedChange={setShowHospitals} />
               <span className="text-muted-foreground">
-                Hospitals ({hospitalRisk.length}) · {urgent.length} at risk,{" "}
+                Hospitals at risk ({mapHospitals.length} of {hospitalRisk.length} mapped) ·{" "}
                 {Math.min(10, urgent.length)} labelled
               </span>
             </label>
