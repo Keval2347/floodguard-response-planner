@@ -57,6 +57,15 @@ export const Route = createFileRoute("/")({
   component: Dashboard,
 });
 
+/** Every timestamp on screen is shown in Indian Standard Time. */
+function istStamp(iso: string) {
+  return new Date(iso).toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    dateStyle: "medium",
+    timeStyle: "short",
+  }) + " IST";
+}
+
 function Dashboard() {
   const fetchWard = useServerFn(getWardData);
   const fetchRoutes = useServerFn(getRoutes);
@@ -68,6 +77,10 @@ function Dashboard() {
     queryKey: ["ward-data"],
     queryFn: () => fetchWard({ data: {} }) as Promise<WardData>,
     staleTime: 30 * 60_000,
+    // Terrain and street geometry barely move, but re-reading every 30 min
+    // keeps the console honest about being live rather than a day-old capture.
+    refetchInterval: 30 * 60_000,
+    refetchIntervalInBackground: true,
     retry: 1,
   });
   const ward = wardQuery.data;
@@ -257,7 +270,8 @@ function Dashboard() {
               JalNiti <span className="text-muted-foreground">· Ward Flood Response Console</span>
             </h1>
             <p className="text-xs text-muted-foreground">
-              {WARD.name}, {WARD.city} — live OSM · SRTM · OSRM · rainfall feeds
+              {WARD.name}, {WARD.city} — live OSM · SRTM · OSRM · rainfall ·{" "}
+              {ward ? `updated ${istStamp(ward.fetchedAt)}` : "loading…"}
             </p>
           </div>
         </div>
