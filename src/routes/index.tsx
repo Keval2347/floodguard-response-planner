@@ -166,6 +166,16 @@ function Dashboard() {
     () => hospitalRisk.filter((h) => h.status !== "unknown"),
     [hospitalRisk],
   );
+  /**
+   * Map markers are deliberately NOT the whole city register. Only facilities
+   * whose mapped approach roads are actually flagged by today's rainfall get a
+   * marker — everything else would just bury the street colours.
+   */
+  const mapHospitals = useMemo(
+    () => hospitalRisk.filter((h) => h.status === "cut-off" || h.status === "at-risk" || h.status === "watch"),
+    [hospitalRisk],
+  );
+
 
   /**
    * De-silting list, ordered by the *baseline* risk so a street does not jump
