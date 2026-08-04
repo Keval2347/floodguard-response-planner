@@ -57,6 +57,15 @@ export const Route = createFileRoute("/")({
   component: Dashboard,
 });
 
+/** Every timestamp on screen is shown in Indian Standard Time. */
+function istStamp(iso: string) {
+  return new Date(iso).toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    dateStyle: "medium",
+    timeStyle: "short",
+  }) + " IST";
+}
+
 function Dashboard() {
   const fetchWard = useServerFn(getWardData);
   const fetchRoutes = useServerFn(getRoutes);
@@ -68,6 +77,10 @@ function Dashboard() {
     queryKey: ["ward-data"],
     queryFn: () => fetchWard({ data: {} }) as Promise<WardData>,
     staleTime: 30 * 60_000,
+    // Terrain and street geometry barely move, but re-reading every 30 min
+    // keeps the console honest about being live rather than a day-old capture.
+    refetchInterval: 30 * 60_000,
+    refetchIntervalInBackground: true,
     retry: 1,
   });
   const ward = wardQuery.data;
@@ -166,6 +179,19 @@ function Dashboard() {
     () => hospitalRisk.filter((h) => h.status !== "unknown"),
     [hospitalRisk],
   );
+  /**
+   * Map markers are deliberately NOT the whole city register. Only facilities
+   * whose mapped approach roads are actually flagged by today's rainfall get a
+   * marker — everything else would just bury the street colours.
+   */
+  const mapHospitals = useMemo(() => {
+    // Only facilities today's rainfall actually threatens get a marker. When
+    // nothing is urgent we fall back to the "watch" tier so the layer is never
+    // silently empty — but the full city register stays off the map.
+    if (urgent.length) return urgent;
+    return hospitalRisk.filter((h) => h.status === "watch").slice(0, 25);
+  }, [hospitalRisk, urgent]);
+
 
   /**
    * De-silting list, ordered by the *baseline* risk so a street does not jump
@@ -247,7 +273,8 @@ function Dashboard() {
               JalNiti <span className="text-muted-foreground">· Ward Flood Response Console</span>
             </h1>
             <p className="text-xs text-muted-foreground">
-              {WARD.name}, {WARD.city} — live OSM · SRTM · OSRM · rainfall feeds
+              {WARD.name}, {WARD.city} — live OSM · SRTM · OSRM · rainfall ·{" "}
+              {ward ? `updated ${istStamp(ward.fetchedAt)}` : "loading…"}
             </p>
           </div>
         </div>
@@ -332,7 +359,7 @@ function Dashboard() {
               showRoutes={showRoutes}
               clearedIds={scenario.drainsCleared}
               closedIds={scenario.closed}
-              hospitals={hospitalRisk}
+              hospitals={mapHospitals}
               showHospitals={showHospitals}
             />
           )}
@@ -357,7 +384,7 @@ function Dashboard() {
             <label className="flex items-center gap-2">
               <Switch checked={showHospitals} onCheckedChange={setShowHospitals} />
               <span className="text-muted-foreground">
-                Hospitals ({hospitalRisk.length}) · {urgent.length} at risk,{" "}
+                Hospitals at risk ({mapHospitals.length} of {hospitalRisk.length} mapped) ·{" "}
                 {Math.min(10, urgent.length)} labelled
               </span>
             </label>
@@ -827,8 +854,10 @@ function Dashboard() {
                     {ward ? (
                       <>
                         <p className="text-muted-foreground">
-                          {new Date(ward.fetchedAt).toLocaleString()} · cached 3 h server-side
+                          {istStamp(ward.fetchedAt)} · street/terrain layer cached 45 min,
+                          rainfall re-read every 60 s
                         </p>
+
                         <ul className="list-disc pl-4 text-muted-foreground">
                           {ward.notes.map((n) => (
                             <li key={n}>{n}</li>
