@@ -81,6 +81,10 @@ function Dashboard() {
     // keeps the console honest about being live rather than a day-old capture.
     refetchInterval: 30 * 60_000,
     refetchIntervalInBackground: true,
+    // Opening the app again days later must re-read the feeds, never replay
+    // whatever was on screen last time.
+    refetchOnMount: "always",
+    refetchOnWindowFocus: true,
     retry: 1,
   });
   const ward = wardQuery.data;
@@ -96,9 +100,12 @@ function Dashboard() {
     refetchInterval: 60_000,
     refetchIntervalInBackground: true,
     refetchOnWindowFocus: true,
+    refetchOnMount: "always",
     staleTime: 30_000,
+    retry: 2,
   });
   const rain = rainQuery.data;
+
 
   /** Real OSM hospitals for the whole city; the list itself changes rarely. */
   const hospitalQuery = useQuery({
