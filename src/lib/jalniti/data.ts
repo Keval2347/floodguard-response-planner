@@ -61,6 +61,8 @@ export interface WardData {
    */
   travelMin: number[][];
   fetchedAt: string;
+  /** When the street/terrain layer itself was captured (snapshot replay). */
+  geometryCapturedAt?: string;
   /** Which upstreams answered, for the provenance panel. */
   notes: string[];
 }
