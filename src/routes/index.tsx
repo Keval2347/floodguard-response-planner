@@ -894,9 +894,13 @@ function Dashboard() {
                     {ward ? (
                       <>
                         <p className="text-muted-foreground">
-                          {istStamp(ward.fetchedAt)} · street/terrain layer cached 45 min,
-                          rainfall re-read every 60 s
+                          This response assembled {istStamp(ward.fetchedAt)}
+                          {ward.geometryCapturedAt
+                            ? ` · street/terrain layer replayed from the capture of ${istStamp(ward.geometryCapturedAt)} (roads and elevation do not change day to day) · rainfall and risk are today's`
+                            : " · fetched live from OSM / SRTM / OSRM"}{" "}
+                          · rainfall re-read every 60 s, street layer every 30 min
                         </p>
+
 
                         <ul className="list-disc pl-4 text-muted-foreground">
                           {ward.notes.map((n) => (
