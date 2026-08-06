@@ -345,7 +345,7 @@ export async function buildWardData(
     const snap = snapshot as unknown as WardData;
     const notes = [
       ...snap.notes,
-      `Live refresh unavailable (${(err as Error).message}) — using the cached OSM/SRTM/OSRM capture from ${new Date(snap.fetchedAt).toLocaleString("en-IN")}`,
+      `Live refresh unavailable (${(err as Error).message}) — street geometry and terrain replayed from the OSM/SRTM/OSRM capture of ${new Date(snap.fetchedAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST (roads and elevation do not change day to day)`,
     ];
     let rain = {
       rainSeries: snap.rainSeries,
@@ -360,7 +360,15 @@ export async function buildWardData(
     } catch {
       notes.push("Rainfall feed unavailable — snapshot rainfall shown");
     }
-    return { ...snap, ...rain, notes };
+    return {
+      ...snap,
+      ...rain,
+      // This response was assembled now, from today's rainfall — only the
+      // geometry layer is replayed, so stamp both separately.
+      fetchedAt: new Date().toISOString(),
+      geometryCapturedAt: snap.fetchedAt,
+      notes,
+    };
   }
 }
 

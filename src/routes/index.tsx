@@ -81,6 +81,10 @@ function Dashboard() {
     // keeps the console honest about being live rather than a day-old capture.
     refetchInterval: 30 * 60_000,
     refetchIntervalInBackground: true,
+    // Opening the app again days later must re-read the feeds, never replay
+    // whatever was on screen last time.
+    refetchOnMount: "always",
+    refetchOnWindowFocus: true,
     retry: 1,
   });
   const ward = wardQuery.data;
@@ -96,9 +100,12 @@ function Dashboard() {
     refetchInterval: 60_000,
     refetchIntervalInBackground: true,
     refetchOnWindowFocus: true,
+    refetchOnMount: "always",
     staleTime: 30_000,
+    retry: 2,
   });
   const rain = rainQuery.data;
+
 
   /** Real OSM hospitals for the whole city; the list itself changes rarely. */
   const hospitalQuery = useQuery({
@@ -122,6 +129,32 @@ function Dashboard() {
     const t = setInterval(() => setTick(Date.now()), 1000);
     return () => clearInterval(t);
   }, []);
+
+  /**
+   * Calendar-aware freshness: if the IST date rolls over (or the tab was left
+   * open / re-opened after a long gap), every feed is re-read from scratch so
+   * you never look at yesterday's rainfall or risk map.
+   */
+  const istDay = (t: number) =>
+    new Date(t).toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+  useEffect(() => {
+    let day = istDay(Date.now());
+    const check = () => {
+      const today = istDay(Date.now());
+      if (today !== day) {
+        day = today;
+        void queryClient.invalidateQueries({ queryKey: ["rain-now"] });
+        void queryClient.invalidateQueries({ queryKey: ["ward-data"] });
+      }
+    };
+    const t = setInterval(check, 60_000);
+    document.addEventListener("visibilitychange", check);
+    return () => {
+      clearInterval(t);
+      document.removeEventListener("visibilitychange", check);
+    };
+  }, [queryClient]);
+
 
   /**
    * Live 24 h rainfall load driving the risk map: what has already fallen in
@@ -295,11 +328,18 @@ function Dashboard() {
                   ? rain.raining
                     ? `${rain.nowMmPerHr} mm/h`
                     : "Dry"
-                  : "…"}
+                  : rainQuery.isError
+                    ? "Feed down"
+                    : "Checking…"}
                 <span className="ml-1 text-[10px] font-normal text-muted-foreground">
-                  {rain ? `updated ${secondsAgo}s ago` : ""}
+                  {rain
+                    ? `updated ${secondsAgo}s ago`
+                    : rainQuery.isError
+                      ? "retrying"
+                      : "reading Open-Meteo"}
                 </span>
               </span>
+
             </span>
           </div>
           <Stat
@@ -854,9 +894,13 @@ function Dashboard() {
                     {ward ? (
                       <>
                         <p className="text-muted-foreground">
-                          {istStamp(ward.fetchedAt)} · street/terrain layer cached 45 min,
-                          rainfall re-read every 60 s
+                          This response assembled {istStamp(ward.fetchedAt)}
+                          {ward.geometryCapturedAt
+                            ? ` · street/terrain layer replayed from the capture of ${istStamp(ward.geometryCapturedAt)} (roads and elevation do not change day to day) · rainfall and risk are today's`
+                            : " · fetched live from OSM / SRTM / OSRM"}{" "}
+                          · rainfall re-read every 60 s, street layer every 30 min
                         </p>
+
 
                         <ul className="list-disc pl-4 text-muted-foreground">
                           {ward.notes.map((n) => (
