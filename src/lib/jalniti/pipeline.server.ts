@@ -360,7 +360,15 @@ export async function buildWardData(
     } catch {
       notes.push("Rainfall feed unavailable — snapshot rainfall shown");
     }
-    return { ...snap, ...rain, notes };
+    return {
+      ...snap,
+      ...rain,
+      // This response was assembled now, from today's rainfall — only the
+      // geometry layer is replayed, so stamp both separately.
+      fetchedAt: new Date().toISOString(),
+      geometryCapturedAt: snap.fetchedAt,
+      notes,
+    };
   }
 }
 
