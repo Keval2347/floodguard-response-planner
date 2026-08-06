@@ -328,11 +328,18 @@ function Dashboard() {
                   ? rain.raining
                     ? `${rain.nowMmPerHr} mm/h`
                     : "Dry"
-                  : "…"}
+                  : rainQuery.isError
+                    ? "Feed down"
+                    : "Checking…"}
                 <span className="ml-1 text-[10px] font-normal text-muted-foreground">
-                  {rain ? `updated ${secondsAgo}s ago` : ""}
+                  {rain
+                    ? `updated ${secondsAgo}s ago`
+                    : rainQuery.isError
+                      ? "retrying"
+                      : "reading Open-Meteo"}
                 </span>
               </span>
+
             </span>
           </div>
           <Stat
