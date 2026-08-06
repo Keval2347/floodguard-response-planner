@@ -131,6 +131,32 @@ function Dashboard() {
   }, []);
 
   /**
+   * Calendar-aware freshness: if the IST date rolls over (or the tab was left
+   * open / re-opened after a long gap), every feed is re-read from scratch so
+   * you never look at yesterday's rainfall or risk map.
+   */
+  const istDay = (t: number) =>
+    new Date(t).toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+  useEffect(() => {
+    let day = istDay(Date.now());
+    const check = () => {
+      const today = istDay(Date.now());
+      if (today !== day) {
+        day = today;
+        void queryClient.invalidateQueries({ queryKey: ["rain-now"] });
+        void queryClient.invalidateQueries({ queryKey: ["ward-data"] });
+      }
+    };
+    const t = setInterval(check, 60_000);
+    document.addEventListener("visibilitychange", check);
+    return () => {
+      clearInterval(t);
+      document.removeEventListener("visibilitychange", check);
+    };
+  }, [queryClient]);
+
+
+  /**
    * Live 24 h rainfall load driving the risk map: what has already fallen in
    * the last 24 h plus what the nowcast expects in the next hour. When the rain
    * stops, this falls back down and the map recolours by itself.
