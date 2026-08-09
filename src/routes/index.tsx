@@ -744,7 +744,7 @@ function Dashboard() {
                           key={s.id}
                           className="rounded-md border border-dashed border-border px-3 py-2 text-sm"
                         >
-                          <span className="truncate">{s.name}</span>
+                          <span className="break-words">{s.name}</span>
                           <span className="ml-2 text-xs text-muted-foreground">
                             risk {(s.risk * 100).toFixed(0)}%
                           </span>
