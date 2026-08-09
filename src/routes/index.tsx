@@ -968,19 +968,30 @@ function Dashboard() {
   );
 }
 
-function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+function Stat({
+  icon,
+  label,
+  value,
+  className = "",
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  className?: string;
+}) {
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-muted-foreground">{icon}</span>
-      <span className="leading-tight">
-        <span className="block text-[10px] uppercase tracking-wide text-muted-foreground">
+    <div className={`flex min-w-0 items-center gap-2 ${className}`}>
+      <span className="shrink-0 text-muted-foreground">{icon}</span>
+      <span className="min-w-0 leading-tight">
+        <span className="block truncate text-[10px] uppercase tracking-wide text-muted-foreground">
           {label}
         </span>
-        <span className="block text-sm font-semibold tabular-nums">{value}</span>
+        <span className="block truncate text-sm font-semibold tabular-nums">{value}</span>
       </span>
     </div>
   );
 }
+
 
 function Row({ k, v }: { k: string; v: string }) {
   return (
