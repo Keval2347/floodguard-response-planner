@@ -298,22 +298,26 @@ function Dashboard() {
     <div className="flex h-[100dvh] min-h-[100dvh] flex-col overflow-hidden bg-background text-foreground">
       <header className="grid shrink-0 grid-cols-1 items-center gap-x-6 gap-y-2 border-b border-border bg-card px-3 py-2.5 sm:px-5 sm:py-3 lg:grid-cols-[minmax(0,1fr)_auto]">
 
-        <div className="flex items-center gap-3">
-          <div className="flex size-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="flex size-9 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Waves className="size-5" />
           </div>
-          <div>
-            <h1 className="text-base font-semibold leading-tight tracking-tight">
-              JalNiti <span className="text-muted-foreground">· Ward Flood Response Console</span>
+          <div className="min-w-0">
+            <h1 className="truncate text-sm font-semibold leading-tight tracking-tight sm:text-base">
+              JalNiti{" "}
+              <span className="hidden text-muted-foreground sm:inline">
+                · Ward Flood Response Console
+              </span>
             </h1>
-            <p className="text-xs text-muted-foreground">
+            <p className="truncate text-[11px] text-muted-foreground sm:text-xs">
               {WARD.name}, {WARD.city} — live OSM · SRTM · OSRM · rainfall ·{" "}
               {ward ? `updated ${istStamp(ward.fetchedAt)}` : "loading…"}
             </p>
           </div>
         </div>
 
-        <div className="ml-auto flex items-center gap-5 text-sm">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm lg:justify-end lg:gap-x-5">
+
           <div className="flex items-center gap-2">
             <span
               className={`size-2 rounded-full ${
