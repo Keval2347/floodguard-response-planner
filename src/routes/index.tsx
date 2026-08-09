@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -12,6 +12,8 @@ import {
   Database,
   RefreshCw,
   Cross,
+  Layers,
+
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -118,6 +120,24 @@ function Dashboard() {
   const [scenario, setScenario] = useState<ScenarioOverrides>(() => defaultScenario(undefined));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showRoutes, setShowRoutes] = useState(true);
+  /** The map legend/layers panel is opened from a small corner button. */
+  const [legendOpen, setLegendOpen] = useState(false);
+  const legendRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!legendOpen) return;
+    const onDown = (e: PointerEvent) => {
+      if (!legendRef.current?.contains(e.target as Node)) setLegendOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setLegendOpen(false);
+    document.addEventListener("pointerdown", onDown, true);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDown, true);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [legendOpen]);
+
   const [initialised, setInitialised] = useState(false);
   /** When true the rainfall input tracks the live feed instead of the slider. */
   const [followLive, setFollowLive] = useState(true);
@@ -422,65 +442,92 @@ function Dashboard() {
             />
           )}
 
-          <Card className="absolute bottom-3 left-3 z-[500] max-h-[min(60%,20rem)] w-[min(15rem,calc(100%-1.5rem))] gap-2 overflow-y-auto p-2.5 text-[11px] shadow-lg sm:bottom-4 sm:left-4 sm:p-3 sm:text-xs">
-            <p className="font-medium">Waterlogging risk</p>
-            {(["critical", "high", "moderate", "low"] as const).map((b) => (
-              <div key={b} className="flex items-center gap-2">
-                <span
-                  className="h-1.5 w-6 rounded-full"
-                  style={{ backgroundColor: BAND_META[b].color }}
-                />
-                <span className="text-muted-foreground">
-                  {BAND_META[b].label} · {counts[b] ?? 0}
-                </span>
-              </div>
-            ))}
-            <p className="text-[10px] text-muted-foreground">
-              Green = safe to drive at the current rainfall.
-            </p>
-            <Separator className="my-1" />
-            <label className="flex items-center gap-2">
-              <Switch checked={showHospitals} onCheckedChange={setShowHospitals} />
-              <span className="text-muted-foreground">
-                Hospitals at risk ({mapHospitals.length} of {hospitalRisk.length} mapped) ·{" "}
-                {Math.min(10, urgent.length)} labelled
-              </span>
-            </label>
-            <Separator className="my-1" />
-            <label className="flex items-center gap-2">
-              <Switch checked={showRoutes} onCheckedChange={setShowRoutes} />
-              <span className="text-muted-foreground">
-                Road routes {routesQuery.isFetching ? "(routing…)" : ""}
-              </span>
-            </label>
-            {showRoutes && (
-              <div className="space-y-1 pt-1">
-                <div className="flex items-center gap-2">
-                  <span className="h-[3px] w-6 rounded-full bg-[#1f6f8b]" />
-                  <span className="text-muted-foreground">Current leg</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span
-                    className="h-[3px] w-6 rounded-full"
-                    style={{
-                      backgroundImage:
-                        "repeating-linear-gradient(to right, #7b5ea7 0 3px, transparent 3px 7px)",
-                    }}
+          <div ref={legendRef} className="absolute bottom-3 left-3 z-[500] sm:bottom-4 sm:left-4">
+            <Button
+              size="sm"
+              variant={legendOpen ? "default" : "secondary"}
+              className="h-8 gap-1.5 px-2.5 text-xs shadow-lg"
+              aria-expanded={legendOpen}
+              onClick={() => setLegendOpen((v) => !v)}
+            >
+              <Layers className="size-3.5" />
+              Legend & layers
+            </Button>
+
+            {legendOpen && (
+              <Card className="absolute bottom-10 left-0 max-h-[min(60dvh,22rem)] w-[min(16rem,calc(100vw-2rem))] gap-2 overflow-y-auto p-3 text-[11px] shadow-xl sm:text-xs">
+                <p className="font-medium">Waterlogging risk</p>
+                {(["critical", "high", "moderate", "low"] as const).map((b) => (
+                  <div key={b} className="flex items-center gap-2">
+                    <span
+                      className="h-1.5 w-6 shrink-0 rounded-full"
+                      style={{ backgroundColor: BAND_META[b].color }}
+                    />
+                    <span className="min-w-0 text-muted-foreground">
+                      {BAND_META[b].label} · {counts[b] ?? 0}
+                    </span>
+                  </div>
+                ))}
+                <p className="text-[10px] text-muted-foreground">
+                  Green = safe to drive at the current rainfall.
+                </p>
+                <Separator className="my-1" />
+                <label className="flex items-start gap-2">
+                  <Switch
+                    className="mt-0.5 shrink-0"
+                    checked={showHospitals}
+                    onCheckedChange={setShowHospitals}
                   />
-                  <span className="text-muted-foreground">Next suggested leg</span>
-                </div>
-              </div>
+                  <span className="min-w-0 text-muted-foreground">
+                    Hospitals at risk ({mapHospitals.length} of {hospitalRisk.length} mapped) ·{" "}
+                    {Math.min(10, urgent.length)} labelled
+                  </span>
+                </label>
+                <Separator className="my-1" />
+                <label className="flex items-start gap-2">
+                  <Switch
+                    className="mt-0.5 shrink-0"
+                    checked={showRoutes}
+                    onCheckedChange={setShowRoutes}
+                  />
+                  <span className="min-w-0 text-muted-foreground">
+                    Road routes {routesQuery.isFetching ? "(routing…)" : ""}
+                  </span>
+                </label>
+                {showRoutes && (
+                  <div className="space-y-1 pt-1">
+                    <div className="flex items-center gap-2">
+                      <span className="h-[3px] w-6 shrink-0 rounded-full bg-[#1f6f8b]" />
+                      <span className="min-w-0 text-muted-foreground">Current leg</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="h-[3px] w-6 shrink-0 rounded-full"
+                        style={{
+                          backgroundImage:
+                            "repeating-linear-gradient(to right, #7b5ea7 0 3px, transparent 3px 7px)",
+                        }}
+                      />
+                      <span className="min-w-0 text-muted-foreground">Next suggested leg</span>
+                    </div>
+                  </div>
+                )}
+              </Card>
             )}
-          </Card>
+          </div>
+
 
           {selected && (
             <Card className="absolute right-3 top-3 z-[500] max-h-[calc(100%-1.5rem)] w-[min(16rem,calc(100%-1.5rem))] gap-1 overflow-y-auto p-3 text-xs shadow-lg sm:right-4 sm:top-4">
               <div className="flex items-start justify-between gap-2">
-                <p className="text-sm font-semibold leading-tight">{selected.name}</p>
-                <Button variant="ghost" size="sm" className="-mr-2 -mt-1 h-6 px-2" onClick={() => setSelectedId(null)}>
+                <p className="min-w-0 flex-1 text-sm font-semibold leading-tight break-words">
+                  {selected.name}
+                </p>
+                <Button variant="ghost" size="sm" className="-mr-2 -mt-1 h-6 shrink-0 px-2" onClick={() => setSelectedId(null)}>
                   ✕
                 </Button>
               </div>
+
               <RiskBadge band={selected.band} risk={selected.risk} />
               <Row k="Road class (OSM)" v={selected.highway} />
               <Row k="Segment length" v={`${selected.length_m} m`} />
@@ -498,7 +545,7 @@ function Dashboard() {
                 OSM way #{selected.osm_id}
               </a>
               <Separator className="my-1" />
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <Button
                   size="sm"
                   variant={scenario.drainsCleared.includes(selected.id) ? "default" : "outline"}
@@ -522,12 +569,13 @@ function Dashboard() {
 
         <aside className="flex min-h-0 w-full shrink-0 flex-col border-t border-border bg-card max-lg:h-[52dvh] lg:h-auto lg:w-[clamp(320px,30vw,440px)] lg:border-l lg:border-t-0">
           <Tabs defaultValue="risk" className="flex min-h-0 flex-1 flex-col gap-0">
-            <TabsList className="m-2 grid w-[calc(100%-1rem)] grid-cols-5 text-[11px] sm:m-3 sm:w-[calc(100%-1.5rem)] sm:text-sm">
-              <TabsTrigger className="min-w-0 truncate px-1" value="risk">Risk</TabsTrigger>
-              <TabsTrigger className="min-w-0 truncate px-1" value="hospitals">Care</TabsTrigger>
-              <TabsTrigger className="min-w-0 truncate px-1" value="plan">Allocation</TabsTrigger>
-              <TabsTrigger className="min-w-0 truncate px-1" value="whatif">What-if</TabsTrigger>
-              <TabsTrigger className="min-w-0 truncate px-1" value="data">Data</TabsTrigger>
+            <TabsList className="m-2 grid w-[calc(100%-1rem)] grid-cols-5 gap-0.5 text-[10px] sm:m-3 sm:w-[calc(100%-1.5rem)] sm:text-xs">
+              <TabsTrigger className="min-w-0 px-0.5" value="risk">Risk</TabsTrigger>
+              <TabsTrigger className="min-w-0 px-0.5" value="hospitals">Care</TabsTrigger>
+              <TabsTrigger className="min-w-0 px-0.5" value="plan">Trucks</TabsTrigger>
+              <TabsTrigger className="min-w-0 px-0.5" value="whatif">What-if</TabsTrigger>
+              <TabsTrigger className="min-w-0 px-0.5" value="data">Data</TabsTrigger>
+
             </TabsList>
 
 
@@ -560,7 +608,7 @@ function Dashboard() {
                         style={{ backgroundColor: BAND_META[s.band].color }}
                       />
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-sm font-medium">{s.name}</span>
+                        <span className="block break-words text-sm font-medium">{s.name}</span>
                         <span className="block text-xs text-muted-foreground">
                           {s.dist_to_water_m} m to water · {s.slope_pct}% slope · {s.elevation_m} m
                         </span>
@@ -607,7 +655,7 @@ function Dashboard() {
                       className="w-full overflow-hidden rounded-md border border-border px-3 py-2 break-words"
                     >
                       <div className="flex items-start justify-between gap-2">
-                        <span className="min-w-0 flex-1 truncate text-sm font-medium">{h.name}</span>
+                        <span className="min-w-0 flex-1 break-words text-sm font-medium">{h.name}</span>
                         <span
                           className="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium text-white"
                           style={{ backgroundColor: STATUS_META[h.status].color }}
@@ -676,7 +724,7 @@ function Dashboard() {
                             arrive T+{a.arriveMin} min
                           </Badge>
                         </div>
-                        <p className="truncate text-sm">{a.segment.name}</p>
+                        <p className="break-words text-sm">{a.segment.name}</p>
                         <p className="text-xs text-muted-foreground">
                           from {a.depot.name} · {a.travelMin} min by road
                           {r ? ` · ${r.distanceKm} km` : ""} · risk{" "}
@@ -696,7 +744,7 @@ function Dashboard() {
                           key={s.id}
                           className="rounded-md border border-dashed border-border px-3 py-2 text-sm"
                         >
-                          <span className="truncate">{s.name}</span>
+                          <span className="break-words">{s.name}</span>
                           <span className="ml-2 text-xs text-muted-foreground">
                             risk {(s.risk * 100).toFixed(0)}%
                           </span>
@@ -816,16 +864,18 @@ function Dashboard() {
                         return (
                           <label
                             key={s.id}
-                            className={`flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm ${
+                            className={`flex cursor-pointer items-start gap-2 rounded-md px-2 py-1.5 text-sm ${
                               on ? "bg-accent" : "hover:bg-accent/60"
                             }`}
                           >
                             <Switch
+                              className="mt-0.5 shrink-0"
                               checked={on}
                               onCheckedChange={() => toggleIn("drainsCleared", s.id)}
                             />
-                            <span className="min-w-0 flex-1 truncate">{s.name}</span>
+                            <span className="min-w-0 flex-1 break-words">{s.name}</span>
                             <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
+
                               {on ? (
                                 <>
                                   <span className="line-through">{before}%</span>{" "}
@@ -997,10 +1047,11 @@ function Stat({
 
 function Row({ k, v }: { k: string; v: string }) {
   return (
-    <div className="flex justify-between gap-2">
-      <span className="text-muted-foreground">{k}</span>
-      <span className="tabular-nums">{v}</span>
+    <div className="flex flex-wrap justify-between gap-x-2">
+      <span className="min-w-0 break-words text-muted-foreground">{k}</span>
+      <span className="shrink-0 tabular-nums">{v}</span>
     </div>
+
   );
 }
 
@@ -1028,7 +1079,7 @@ function Field({
 }) {
   return (
     <div className="space-y-2">
-      <div className="flex items-baseline justify-between">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-2">
         <span className="text-sm font-medium">{label}</span>
         <span className="text-sm tabular-nums text-muted-foreground">{value}</span>
       </div>
