@@ -295,24 +295,29 @@ function Dashboard() {
 
 
   return (
-    <div className="flex h-screen flex-col bg-background text-foreground">
-      <header className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-2 border-b border-border bg-card px-5 py-3">
-        <div className="flex items-center gap-3">
-          <div className="flex size-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
+    <div className="flex h-[100dvh] min-h-[100dvh] flex-col overflow-hidden bg-background text-foreground">
+      <header className="grid shrink-0 grid-cols-1 items-center gap-x-6 gap-y-2 border-b border-border bg-card px-3 py-2.5 sm:px-5 sm:py-3 lg:grid-cols-[minmax(0,1fr)_auto]">
+
+        <div className="flex min-w-0 items-center gap-3">
+          <div className="flex size-9 shrink-0 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Waves className="size-5" />
           </div>
-          <div>
-            <h1 className="text-base font-semibold leading-tight tracking-tight">
-              JalNiti <span className="text-muted-foreground">· Ward Flood Response Console</span>
+          <div className="min-w-0">
+            <h1 className="truncate text-sm font-semibold leading-tight tracking-tight sm:text-base">
+              JalNiti{" "}
+              <span className="hidden text-muted-foreground sm:inline">
+                · Ward Flood Response Console
+              </span>
             </h1>
-            <p className="text-xs text-muted-foreground">
+            <p className="truncate text-[11px] text-muted-foreground sm:text-xs">
               {WARD.name}, {WARD.city} — live OSM · SRTM · OSRM · rainfall ·{" "}
               {ward ? `updated ${istStamp(ward.fetchedAt)}` : "loading…"}
             </p>
           </div>
         </div>
 
-        <div className="ml-auto flex items-center gap-5 text-sm">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm lg:justify-end lg:gap-x-5">
+
           <div className="flex items-center gap-2">
             <span
               className={`size-2 rounded-full ${
@@ -348,12 +353,24 @@ function Dashboard() {
             value={`${scenario.rainMm} mm`}
           />
           <Stat
+            className="hidden sm:flex"
             icon={<TriangleAlert className="size-4" />}
             label="Critical + high"
             value={`${(counts.critical ?? 0) + (counts.high ?? 0)} streets`}
           />
-          <Stat icon={<Truck className="size-4" />} label="Trucks" value={`${scenario.trucksAvailable}`} />
-          <Stat icon={<MapPin className="size-4" />} label="Coverage" value={`${coverage}%`} />
+          <Stat
+            className="hidden md:flex"
+            icon={<Truck className="size-4" />}
+            label="Trucks"
+            value={`${scenario.trucksAvailable}`}
+          />
+          <Stat
+            className="hidden md:flex"
+            icon={<MapPin className="size-4" />}
+            label="Coverage"
+            value={`${coverage}%`}
+          />
+
           <Button
             size="sm"
             variant="outline"
@@ -381,8 +398,9 @@ function Dashboard() {
         </div>
       )}
 
-      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
-        <div className="relative min-h-[320px] flex-1">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden lg:flex-row">
+        <div className="relative min-h-[45dvh] flex-1 lg:min-h-0">
+
           {wardQuery.isPending ? (
             <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-muted text-sm text-muted-foreground">
               <RefreshCw className="size-5 animate-spin" />
@@ -404,7 +422,7 @@ function Dashboard() {
             />
           )}
 
-          <Card className="absolute bottom-4 left-4 z-[500] gap-2 p-3 text-xs shadow-lg">
+          <Card className="absolute bottom-3 left-3 z-[500] max-h-[min(60%,20rem)] w-[min(15rem,calc(100%-1.5rem))] gap-2 overflow-y-auto p-2.5 text-[11px] shadow-lg sm:bottom-4 sm:left-4 sm:p-3 sm:text-xs">
             <p className="font-medium">Waterlogging risk</p>
             {(["critical", "high", "moderate", "low"] as const).map((b) => (
               <div key={b} className="flex items-center gap-2">
@@ -456,7 +474,7 @@ function Dashboard() {
           </Card>
 
           {selected && (
-            <Card className="absolute right-4 top-4 z-[500] w-64 gap-1 p-3 text-xs shadow-lg">
+            <Card className="absolute right-3 top-3 z-[500] max-h-[calc(100%-1.5rem)] w-[min(16rem,calc(100%-1.5rem))] gap-1 overflow-y-auto p-3 text-xs shadow-lg sm:right-4 sm:top-4">
               <div className="flex items-start justify-between gap-2">
                 <p className="text-sm font-semibold leading-tight">{selected.name}</p>
                 <Button variant="ghost" size="sm" className="-mr-2 -mt-1 h-6 px-2" onClick={() => setSelectedId(null)}>
@@ -502,15 +520,16 @@ function Dashboard() {
           )}
         </div>
 
-        <aside className="flex w-full shrink-0 flex-col border-t border-border bg-card lg:w-[400px] lg:border-l lg:border-t-0">
+        <aside className="flex min-h-0 w-full shrink-0 flex-col border-t border-border bg-card max-lg:h-[52dvh] lg:h-auto lg:w-[clamp(320px,30vw,440px)] lg:border-l lg:border-t-0">
           <Tabs defaultValue="risk" className="flex min-h-0 flex-1 flex-col gap-0">
-            <TabsList className="m-3 grid grid-cols-5">
-              <TabsTrigger value="risk">Risk</TabsTrigger>
-              <TabsTrigger value="hospitals">Care</TabsTrigger>
-              <TabsTrigger value="plan">Allocation</TabsTrigger>
-              <TabsTrigger value="whatif">What-if</TabsTrigger>
-              <TabsTrigger value="data">Data</TabsTrigger>
+            <TabsList className="m-2 grid w-[calc(100%-1rem)] grid-cols-5 text-[11px] sm:m-3 sm:w-[calc(100%-1.5rem)] sm:text-sm">
+              <TabsTrigger className="min-w-0 truncate px-1" value="risk">Risk</TabsTrigger>
+              <TabsTrigger className="min-w-0 truncate px-1" value="hospitals">Care</TabsTrigger>
+              <TabsTrigger className="min-w-0 truncate px-1" value="plan">Allocation</TabsTrigger>
+              <TabsTrigger className="min-w-0 truncate px-1" value="whatif">What-if</TabsTrigger>
+              <TabsTrigger className="min-w-0 truncate px-1" value="data">Data</TabsTrigger>
             </TabsList>
+
 
             {/* ---- Module 1: per-street risk ---- */}
             <TabsContent value="risk" className="min-h-0 flex-1">
@@ -951,19 +970,30 @@ function Dashboard() {
   );
 }
 
-function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+function Stat({
+  icon,
+  label,
+  value,
+  className = "",
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  className?: string;
+}) {
   return (
-    <div className="flex items-center gap-2">
-      <span className="text-muted-foreground">{icon}</span>
-      <span className="leading-tight">
-        <span className="block text-[10px] uppercase tracking-wide text-muted-foreground">
+    <div className={`flex min-w-0 items-center gap-2 ${className}`}>
+      <span className="shrink-0 text-muted-foreground">{icon}</span>
+      <span className="min-w-0 leading-tight">
+        <span className="block truncate text-[10px] uppercase tracking-wide text-muted-foreground">
           {label}
         </span>
-        <span className="block text-sm font-semibold tabular-nums">{value}</span>
+        <span className="block truncate text-sm font-semibold tabular-nums">{value}</span>
       </span>
     </div>
   );
 }
+
 
 function Row({ k, v }: { k: string; v: string }) {
   return (
