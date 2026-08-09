@@ -137,11 +137,20 @@
     border-color: var(--color-border);
   }
 
+  html {
+    /* Fluid root size: the whole UI scales smoothly with viewport width and
+       browser zoom instead of jumping only at breakpoints. */
+    font-size: clamp(13px, 0.35vw + 12.2px, 16px);
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    overflow-wrap: anywhere;
   }
 }
+
 
 /* Small, legible hospital tags on the ward map (urgent facilities only). */
 .leaflet-tooltip.jalniti-hospital-tag {
