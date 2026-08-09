@@ -520,11 +520,14 @@ function Dashboard() {
           {selected && (
             <Card className="absolute right-3 top-3 z-[500] max-h-[calc(100%-1.5rem)] w-[min(16rem,calc(100%-1.5rem))] gap-1 overflow-y-auto p-3 text-xs shadow-lg sm:right-4 sm:top-4">
               <div className="flex items-start justify-between gap-2">
-                <p className="text-sm font-semibold leading-tight">{selected.name}</p>
-                <Button variant="ghost" size="sm" className="-mr-2 -mt-1 h-6 px-2" onClick={() => setSelectedId(null)}>
+                <p className="min-w-0 flex-1 text-sm font-semibold leading-tight break-words">
+                  {selected.name}
+                </p>
+                <Button variant="ghost" size="sm" className="-mr-2 -mt-1 h-6 shrink-0 px-2" onClick={() => setSelectedId(null)}>
                   ✕
                 </Button>
               </div>
+
               <RiskBadge band={selected.band} risk={selected.risk} />
               <Row k="Road class (OSM)" v={selected.highway} />
               <Row k="Segment length" v={`${selected.length_m} m`} />
