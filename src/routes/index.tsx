@@ -474,7 +474,7 @@ function Dashboard() {
           </Card>
 
           {selected && (
-            <Card className="absolute right-4 top-4 z-[500] w-64 gap-1 p-3 text-xs shadow-lg">
+            <Card className="absolute right-3 top-3 z-[500] max-h-[calc(100%-1.5rem)] w-[min(16rem,calc(100%-1.5rem))] gap-1 overflow-y-auto p-3 text-xs shadow-lg sm:right-4 sm:top-4">
               <div className="flex items-start justify-between gap-2">
                 <p className="text-sm font-semibold leading-tight">{selected.name}</p>
                 <Button variant="ghost" size="sm" className="-mr-2 -mt-1 h-6 px-2" onClick={() => setSelectedId(null)}>
