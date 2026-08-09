@@ -724,7 +724,7 @@ function Dashboard() {
                             arrive T+{a.arriveMin} min
                           </Badge>
                         </div>
-                        <p className="truncate text-sm">{a.segment.name}</p>
+                        <p className="break-words text-sm">{a.segment.name}</p>
                         <p className="text-xs text-muted-foreground">
                           from {a.depot.name} · {a.travelMin} min by road
                           {r ? ` · ${r.distanceKm} km` : ""} · risk{" "}
