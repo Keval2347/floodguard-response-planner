@@ -118,6 +118,24 @@ function Dashboard() {
   const [scenario, setScenario] = useState<ScenarioOverrides>(() => defaultScenario(undefined));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showRoutes, setShowRoutes] = useState(true);
+  /** The map legend/layers panel is opened from a small corner button. */
+  const [legendOpen, setLegendOpen] = useState(false);
+  const legendRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!legendOpen) return;
+    const onDown = (e: PointerEvent) => {
+      if (!legendRef.current?.contains(e.target as Node)) setLegendOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setLegendOpen(false);
+    document.addEventListener("pointerdown", onDown, true);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDown, true);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [legendOpen]);
+
   const [initialised, setInitialised] = useState(false);
   /** When true the rainfall input tracks the live feed instead of the slider. */
   const [followLive, setFollowLive] = useState(true);
