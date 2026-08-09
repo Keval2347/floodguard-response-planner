@@ -1079,7 +1079,7 @@ function Field({
 }) {
   return (
     <div className="space-y-2">
-      <div className="flex items-baseline justify-between">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-2">
         <span className="text-sm font-medium">{label}</span>
         <span className="text-sm tabular-nums text-muted-foreground">{value}</span>
       </div>
