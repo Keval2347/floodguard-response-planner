@@ -608,7 +608,7 @@ function Dashboard() {
                         style={{ backgroundColor: BAND_META[s.band].color }}
                       />
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-sm font-medium">{s.name}</span>
+                        <span className="block break-words text-sm font-medium">{s.name}</span>
                         <span className="block text-xs text-muted-foreground">
                           {s.dist_to_water_m} m to water · {s.slope_pct}% slope · {s.elevation_m} m
                         </span>
