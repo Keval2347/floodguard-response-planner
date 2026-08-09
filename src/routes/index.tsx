@@ -440,56 +440,80 @@ function Dashboard() {
             />
           )}
 
-          <Card className="absolute bottom-3 left-3 z-[500] max-h-[min(60%,20rem)] w-[min(15rem,calc(100%-1.5rem))] gap-2 overflow-y-auto p-2.5 text-[11px] shadow-lg sm:bottom-4 sm:left-4 sm:p-3 sm:text-xs">
-            <p className="font-medium">Waterlogging risk</p>
-            {(["critical", "high", "moderate", "low"] as const).map((b) => (
-              <div key={b} className="flex items-center gap-2">
-                <span
-                  className="h-1.5 w-6 rounded-full"
-                  style={{ backgroundColor: BAND_META[b].color }}
-                />
-                <span className="text-muted-foreground">
-                  {BAND_META[b].label} · {counts[b] ?? 0}
-                </span>
-              </div>
-            ))}
-            <p className="text-[10px] text-muted-foreground">
-              Green = safe to drive at the current rainfall.
-            </p>
-            <Separator className="my-1" />
-            <label className="flex items-center gap-2">
-              <Switch checked={showHospitals} onCheckedChange={setShowHospitals} />
-              <span className="text-muted-foreground">
-                Hospitals at risk ({mapHospitals.length} of {hospitalRisk.length} mapped) ·{" "}
-                {Math.min(10, urgent.length)} labelled
-              </span>
-            </label>
-            <Separator className="my-1" />
-            <label className="flex items-center gap-2">
-              <Switch checked={showRoutes} onCheckedChange={setShowRoutes} />
-              <span className="text-muted-foreground">
-                Road routes {routesQuery.isFetching ? "(routing…)" : ""}
-              </span>
-            </label>
-            {showRoutes && (
-              <div className="space-y-1 pt-1">
-                <div className="flex items-center gap-2">
-                  <span className="h-[3px] w-6 rounded-full bg-[#1f6f8b]" />
-                  <span className="text-muted-foreground">Current leg</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span
-                    className="h-[3px] w-6 rounded-full"
-                    style={{
-                      backgroundImage:
-                        "repeating-linear-gradient(to right, #7b5ea7 0 3px, transparent 3px 7px)",
-                    }}
+          <div ref={legendRef} className="absolute bottom-3 left-3 z-[500] sm:bottom-4 sm:left-4">
+            <Button
+              size="sm"
+              variant={legendOpen ? "default" : "secondary"}
+              className="h-8 gap-1.5 px-2.5 text-xs shadow-lg"
+              aria-expanded={legendOpen}
+              onClick={() => setLegendOpen((v) => !v)}
+            >
+              <Layers className="size-3.5" />
+              Legend & layers
+            </Button>
+
+            {legendOpen && (
+              <Card className="absolute bottom-10 left-0 max-h-[min(60dvh,22rem)] w-[min(16rem,calc(100vw-2rem))] gap-2 overflow-y-auto p-3 text-[11px] shadow-xl sm:text-xs">
+                <p className="font-medium">Waterlogging risk</p>
+                {(["critical", "high", "moderate", "low"] as const).map((b) => (
+                  <div key={b} className="flex items-center gap-2">
+                    <span
+                      className="h-1.5 w-6 shrink-0 rounded-full"
+                      style={{ backgroundColor: BAND_META[b].color }}
+                    />
+                    <span className="min-w-0 text-muted-foreground">
+                      {BAND_META[b].label} · {counts[b] ?? 0}
+                    </span>
+                  </div>
+                ))}
+                <p className="text-[10px] text-muted-foreground">
+                  Green = safe to drive at the current rainfall.
+                </p>
+                <Separator className="my-1" />
+                <label className="flex items-start gap-2">
+                  <Switch
+                    className="mt-0.5 shrink-0"
+                    checked={showHospitals}
+                    onCheckedChange={setShowHospitals}
                   />
-                  <span className="text-muted-foreground">Next suggested leg</span>
-                </div>
-              </div>
+                  <span className="min-w-0 text-muted-foreground">
+                    Hospitals at risk ({mapHospitals.length} of {hospitalRisk.length} mapped) ·{" "}
+                    {Math.min(10, urgent.length)} labelled
+                  </span>
+                </label>
+                <Separator className="my-1" />
+                <label className="flex items-start gap-2">
+                  <Switch
+                    className="mt-0.5 shrink-0"
+                    checked={showRoutes}
+                    onCheckedChange={setShowRoutes}
+                  />
+                  <span className="min-w-0 text-muted-foreground">
+                    Road routes {routesQuery.isFetching ? "(routing…)" : ""}
+                  </span>
+                </label>
+                {showRoutes && (
+                  <div className="space-y-1 pt-1">
+                    <div className="flex items-center gap-2">
+                      <span className="h-[3px] w-6 shrink-0 rounded-full bg-[#1f6f8b]" />
+                      <span className="min-w-0 text-muted-foreground">Current leg</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="h-[3px] w-6 shrink-0 rounded-full"
+                        style={{
+                          backgroundImage:
+                            "repeating-linear-gradient(to right, #7b5ea7 0 3px, transparent 3px 7px)",
+                        }}
+                      />
+                      <span className="min-w-0 text-muted-foreground">Next suggested leg</span>
+                    </div>
+                  </div>
+                )}
+              </Card>
             )}
-          </Card>
+          </div>
+
 
           {selected && (
             <Card className="absolute right-3 top-3 z-[500] max-h-[calc(100%-1.5rem)] w-[min(16rem,calc(100%-1.5rem))] gap-1 overflow-y-auto p-3 text-xs shadow-lg sm:right-4 sm:top-4">
