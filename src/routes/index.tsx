@@ -353,12 +353,24 @@ function Dashboard() {
             value={`${scenario.rainMm} mm`}
           />
           <Stat
+            className="hidden sm:flex"
             icon={<TriangleAlert className="size-4" />}
             label="Critical + high"
             value={`${(counts.critical ?? 0) + (counts.high ?? 0)} streets`}
           />
-          <Stat icon={<Truck className="size-4" />} label="Trucks" value={`${scenario.trucksAvailable}`} />
-          <Stat icon={<MapPin className="size-4" />} label="Coverage" value={`${coverage}%`} />
+          <Stat
+            className="hidden md:flex"
+            icon={<Truck className="size-4" />}
+            label="Trucks"
+            value={`${scenario.trucksAvailable}`}
+          />
+          <Stat
+            className="hidden md:flex"
+            icon={<MapPin className="size-4" />}
+            label="Coverage"
+            value={`${coverage}%`}
+          />
+
           <Button
             size="sm"
             variant="outline"
