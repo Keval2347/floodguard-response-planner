@@ -1047,10 +1047,11 @@ function Stat({
 
 function Row({ k, v }: { k: string; v: string }) {
   return (
-    <div className="flex justify-between gap-2">
-      <span className="text-muted-foreground">{k}</span>
-      <span className="tabular-nums">{v}</span>
+    <div className="flex flex-wrap justify-between gap-x-2">
+      <span className="min-w-0 break-words text-muted-foreground">{k}</span>
+      <span className="shrink-0 tabular-nums">{v}</span>
     </div>
+
   );
 }
 
