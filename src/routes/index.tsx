@@ -422,7 +422,7 @@ function Dashboard() {
             />
           )}
 
-          <Card className="absolute bottom-4 left-4 z-[500] gap-2 p-3 text-xs shadow-lg">
+          <Card className="absolute bottom-3 left-3 z-[500] max-h-[min(60%,20rem)] w-[min(15rem,calc(100%-1.5rem))] gap-2 overflow-y-auto p-2.5 text-[11px] shadow-lg sm:bottom-4 sm:left-4 sm:p-3 sm:text-xs">
             <p className="font-medium">Waterlogging risk</p>
             {(["critical", "high", "moderate", "low"] as const).map((b) => (
               <div key={b} className="flex items-center gap-2">
