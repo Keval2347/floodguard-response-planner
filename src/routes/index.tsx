@@ -545,7 +545,7 @@ function Dashboard() {
                 OSM way #{selected.osm_id}
               </a>
               <Separator className="my-1" />
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <Button
                   size="sm"
                   variant={scenario.drainsCleared.includes(selected.id) ? "default" : "outline"}
