@@ -864,16 +864,18 @@ function Dashboard() {
                         return (
                           <label
                             key={s.id}
-                            className={`flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm ${
+                            className={`flex cursor-pointer items-start gap-2 rounded-md px-2 py-1.5 text-sm ${
                               on ? "bg-accent" : "hover:bg-accent/60"
                             }`}
                           >
                             <Switch
+                              className="mt-0.5 shrink-0"
                               checked={on}
                               onCheckedChange={() => toggleIn("drainsCleared", s.id)}
                             />
-                            <span className="min-w-0 flex-1 truncate">{s.name}</span>
+                            <span className="min-w-0 flex-1 break-words">{s.name}</span>
                             <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
+
                               {on ? (
                                 <>
                                   <span className="line-through">{before}%</span>{" "}
