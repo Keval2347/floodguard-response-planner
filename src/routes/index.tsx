@@ -295,8 +295,9 @@ function Dashboard() {
 
 
   return (
-    <div className="flex h-screen flex-col bg-background text-foreground">
-      <header className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-2 border-b border-border bg-card px-5 py-3">
+    <div className="flex h-[100dvh] min-h-[100dvh] flex-col overflow-hidden bg-background text-foreground">
+      <header className="grid shrink-0 grid-cols-1 items-center gap-x-6 gap-y-2 border-b border-border bg-card px-3 py-2.5 sm:px-5 sm:py-3 lg:grid-cols-[minmax(0,1fr)_auto]">
+
         <div className="flex items-center gap-3">
           <div className="flex size-9 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Waves className="size-5" />
