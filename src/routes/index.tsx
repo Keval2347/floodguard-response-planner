@@ -569,12 +569,13 @@ function Dashboard() {
 
         <aside className="flex min-h-0 w-full shrink-0 flex-col border-t border-border bg-card max-lg:h-[52dvh] lg:h-auto lg:w-[clamp(320px,30vw,440px)] lg:border-l lg:border-t-0">
           <Tabs defaultValue="risk" className="flex min-h-0 flex-1 flex-col gap-0">
-            <TabsList className="m-2 grid w-[calc(100%-1rem)] grid-cols-5 text-[11px] sm:m-3 sm:w-[calc(100%-1.5rem)] sm:text-sm">
-              <TabsTrigger className="min-w-0 truncate px-1" value="risk">Risk</TabsTrigger>
-              <TabsTrigger className="min-w-0 truncate px-1" value="hospitals">Care</TabsTrigger>
-              <TabsTrigger className="min-w-0 truncate px-1" value="plan">Allocation</TabsTrigger>
-              <TabsTrigger className="min-w-0 truncate px-1" value="whatif">What-if</TabsTrigger>
-              <TabsTrigger className="min-w-0 truncate px-1" value="data">Data</TabsTrigger>
+            <TabsList className="m-2 grid w-[calc(100%-1rem)] grid-cols-5 gap-0.5 text-[10px] sm:m-3 sm:w-[calc(100%-1.5rem)] sm:text-xs">
+              <TabsTrigger className="min-w-0 px-0.5" value="risk">Risk</TabsTrigger>
+              <TabsTrigger className="min-w-0 px-0.5" value="hospitals">Care</TabsTrigger>
+              <TabsTrigger className="min-w-0 px-0.5" value="plan">Trucks</TabsTrigger>
+              <TabsTrigger className="min-w-0 px-0.5" value="whatif">What-if</TabsTrigger>
+              <TabsTrigger className="min-w-0 px-0.5" value="data">Data</TabsTrigger>
+
             </TabsList>
 
 
