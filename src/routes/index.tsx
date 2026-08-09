@@ -398,8 +398,9 @@ function Dashboard() {
         </div>
       )}
 
-      <div className="flex min-h-0 flex-1 flex-col lg:flex-row">
-        <div className="relative min-h-[320px] flex-1">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden lg:flex-row">
+        <div className="relative min-h-[45dvh] flex-1 lg:min-h-0">
+
           {wardQuery.isPending ? (
             <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-muted text-sm text-muted-foreground">
               <RefreshCw className="size-5 animate-spin" />
