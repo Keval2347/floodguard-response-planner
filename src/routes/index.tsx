@@ -286,6 +286,32 @@ function Dashboard() {
     ? Math.round((plan.coveredExposure / plan.totalExposure) * 100)
     : 0;
 
+  const liveScenario = useMemo(
+    () => ({
+      ...defaultScenario(ward),
+      rainMm: liveRainMm ?? defaultScenario(ward).rainMm,
+    }),
+    [ward, liveRainMm],
+  );
+  const liveScored = useMemo(
+    () => (ward ? scoreSegments(ward, liveScenario) : []),
+    [ward, liveScenario],
+  );
+  const livePlan = useMemo(
+    () => (ward ? allocate(ward, liveScored, liveScenario) : null),
+    [ward, liveScored, liveScenario],
+  );
+  const scenarioChanged =
+    !followLive ||
+    scenario.trucksAvailable !== liveScenario.trucksAvailable ||
+    scenario.shiftMinutes !== liveScenario.shiftMinutes ||
+    scenario.drainsCleared.length > 0 ||
+    scenario.closed.length > 0;
+  const scenarioCoverage = coverage;
+  const liveCoverage = livePlan?.totalExposure
+    ? Math.round((livePlan.coveredExposure / livePlan.totalExposure) * 100)
+    : 0;
+
   const fleetTotal = (ward?.depots ?? []).reduce((n, d) => n + d.trucks, 0) || 10;
 
   const set = (patch: Partial<ScenarioOverrides>) => setScenario((s) => ({ ...s, ...patch }));
@@ -421,7 +447,25 @@ function Dashboard() {
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden lg:flex-row">
         <div className="relative min-h-[45dvh] flex-1 lg:min-h-0">
 
-          {wardQuery.isPending ? (
+          {wardQuery.isError ? (
+            <div className="flex h-full w-full items-center justify-center bg-muted p-6">
+              <Card className="max-w-lg gap-3 border-destructive/40 p-5 text-center">
+                <TriangleAlert className="mx-auto size-7 text-destructive" />
+                <div>
+                  <p className="font-semibold">Live source data is unavailable</p>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    JalNiti has stopped the risk map and truck plan rather than substitute old,
+                    synthetic, or estimated data. Check the public OSM, elevation, weather, and
+                    routing services, then retry.
+                  </p>
+                </div>
+                <Button onClick={refreshFeeds} disabled={refreshing}>
+                  <RefreshCw className={`size-4 ${refreshing ? "animate-spin" : ""}`} />
+                  {refreshing ? "Checking sources" : "Retry live sources"}
+                </Button>
+              </Card>
+            </div>
+          ) : wardQuery.isPending ? (
             <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-muted text-sm text-muted-foreground">
               <RefreshCw className="size-5 animate-spin" />
               Fetching real ward data — OSM streets, SRTM elevation, OSRM travel times, rainfall…
@@ -518,11 +562,13 @@ function Dashboard() {
 
 
           {selected && (
-            <Card className="absolute right-3 top-3 z-[500] max-h-[calc(100%-1.5rem)] w-[min(16rem,calc(100%-1.5rem))] gap-1 overflow-y-auto p-3 text-xs shadow-lg sm:right-4 sm:top-4">
+            <Card className="absolute right-3 top-3 z-[500] max-h-[calc(100%-1.5rem)] w-[min(16rem,calc(100%-1.5rem))] gap-1 overflow-y-auto border-2 border-primary p-3 text-xs shadow-lg ring-2 ring-primary/20 sm:right-4 sm:top-4">
               <div className="flex items-start justify-between gap-2">
-                <p className="min-w-0 flex-1 text-sm font-semibold leading-tight break-words">
-                  {selected.name}
-                </p>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[10px] font-semibold uppercase text-primary">Selected road</p>
+                  <p className="break-words text-sm font-semibold leading-tight">{selected.name}</p>
+                  <p className="text-[10px] text-muted-foreground">Segment {selected.id}</p>
+                </div>
                 <Button variant="ghost" size="sm" className="-mr-2 -mt-1 h-6 shrink-0 px-2" onClick={() => setSelectedId(null)}>
                   ✕
                 </Button>
@@ -795,6 +841,36 @@ function Dashboard() {
                     </p>
                   </Card>
 
+                  <Card className="gap-2 border-primary/30 p-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="text-sm font-medium">Scenario impact</p>
+                      <Badge variant={scenarioChanged ? "default" : "secondary"} className="text-[10px]">
+                        {scenarioChanged ? "What-if active" : "Live baseline"}
+                      </Badge>
+                    </div>
+                    <div className="grid grid-cols-[1fr_auto_auto] gap-x-3 gap-y-1 text-xs">
+                      <span className="text-muted-foreground">Outcome</span>
+                      <span className="text-right text-muted-foreground">Live</span>
+                      <span className="text-right text-muted-foreground">Scenario</span>
+                      <span>Roads assigned</span>
+                      <span className="text-right tabular-nums">{livePlan?.assignments.length ?? 0}</span>
+                      <span className="text-right font-semibold tabular-nums">{plan.assignments.length}</span>
+                      <span>Roads unserved</span>
+                      <span className="text-right tabular-nums">{livePlan?.unserved.length ?? 0}</span>
+                      <span className="text-right font-semibold tabular-nums">{plan.unserved.length}</span>
+                      <span>Exposure covered</span>
+                      <span className="text-right tabular-nums">{liveCoverage}%</span>
+                      <span className="text-right font-semibold tabular-nums">{scenarioCoverage}%</span>
+                      <span>At-risk hospitals</span>
+                      <span className="text-right tabular-nums">{urgentHospitals(assessHospitals(hospitalQuery.data?.hospitals ?? [], liveScored, WARD.center)).length}</span>
+                      <span className="text-right font-semibold tabular-nums">{urgent.length}</span>
+                    </div>
+                    <p className="text-[10px] text-muted-foreground">
+                      Truck availability and shift length rebuild the assignments and routes;
+                      rainfall and de-silting rebuild road risk and hospital access.
+                    </p>
+                  </Card>
+
                   <Field
                     label="Rainfall driving the map"
                     value={`${scenario.rainMm} mm / 24 h`}
@@ -805,7 +881,14 @@ function Dashboard() {
                     }
                   >
                     <label className="flex items-center gap-2 pb-1 text-xs">
-                      <Switch checked={followLive} onCheckedChange={setFollowLive} />
+                       <Switch
+                         checked={followLive}
+                         disabled={liveRainMm === undefined}
+                         onCheckedChange={(checked) => {
+                           setFollowLive(checked);
+                           if (checked && liveRainMm !== undefined) set({ rainMm: liveRainMm });
+                         }}
+                       />
                       <span className="text-muted-foreground">
                         Follow live feed{liveRainMm !== undefined ? ` (${liveRainMm} mm)` : ""}
                       </span>
@@ -942,9 +1025,11 @@ function Dashboard() {
                     variant="outline"
                     className="w-full"
                     onClick={() => {
-                      setScenario({ ...defaultScenario(ward), rainMm: liveRainMm ?? scenario.rainMm });
+                       if (liveRainMm === undefined) return;
+                       setScenario({ ...defaultScenario(ward), rainMm: liveRainMm });
                       setFollowLive(true);
                     }}
+                    disabled={liveRainMm === undefined}
                   >
                     Reset to the live feed
                   </Button>

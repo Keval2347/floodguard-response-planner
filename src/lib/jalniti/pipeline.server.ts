@@ -502,18 +502,15 @@ async function buildLiveWardData(): Promise<WardData> {
       s.base_risk = Math.round(Math.min(0.97, Math.max(0.05, raw)) * 100) / 100;
     }
 
-    // --- Travel times (depots first, then segments).
-    // The whole network is scored for the map, but OSRM's public /table caps
-    // the coordinate count, so the exact road-network matrix is computed for
-    // the depots plus the highest-risk PLANNING_SEGMENTS streets — the only
-    // ones the optimizer can realistically reach in a shift. Everything else
-    // keeps a documented straight-line estimate at 25 km/h.
+    // --- Travel times (depots first, then segments). Only OSRM measurements
+    // are eligible for allocation. Unmeasured pairs stay unreachable rather
+    // than being filled with an assumed speed or straight-line prediction.
     const matrixPoints: LatLon[] = [
       ...DEPOTS.map((d) => [d.lat, d.lon] as LatLon),
       ...segments.map((s) => midOf(s.path)),
     ];
-    const travelMin: number[][] = matrixPoints.map((a) =>
-      matrixPoints.map((b) => Math.round((haversineM(a, b) / 1000 / 25) * 60 * 10) / 10),
+    const travelMin: number[][] = matrixPoints.map((_, row) =>
+      matrixPoints.map((__, col) => (row === col ? 0 : Number.POSITIVE_INFINITY)),
     );
 
     const planIdx = segments
@@ -522,30 +519,21 @@ async function buildLiveWardData(): Promise<WardData> {
       .slice(0, PLANNING_SEGMENTS)
       .map((x) => x.i);
     const exactIdx = [...DEPOTS.map((_, i) => i), ...planIdx];
-    try {
-      const sub = await fetchTravelMatrix(exactIdx.map((i) => matrixPoints[i]));
-      exactIdx.forEach((ri, r) => {
-        exactIdx.forEach((ci, c) => {
-          travelMin[ri][ci] = sub[r][c];
-        });
+    const sub = await fetchTravelMatrix(exactIdx.map((i) => matrixPoints[i]));
+    exactIdx.forEach((ri, r) => {
+      exactIdx.forEach((ci, c) => {
+        travelMin[ri][ci] = sub[r][c];
       });
-      notes.push(
-        `OSRM: exact ${exactIdx.length}x${exactIdx.length} road travel-time matrix for the depots + ${planIdx.length} priority streets; remaining ${segments.length - planIdx.length} display-only streets use a 25 km/h straight-line estimate`,
-      );
-    } catch (err) {
-      notes.push(`OSRM unavailable (${(err as Error).message}) — straight-line times used`);
-    }
+    });
+    notes.push(
+      `OSRM: exact ${exactIdx.length}x${exactIdx.length} road travel-time matrix for the depots + ${planIdx.length} priority streets; ${segments.length - planIdx.length} remaining streets are map-only and never assigned using estimated travel times`,
+    );
 
 
-    let rain = { rainSeries: [] as { hour: string; mm: number }[], observedMm: 0, forecastMm: 0 };
-    try {
-      rain = await fetchRain();
-      notes.push(
-        `Rainfall: ${rain.observedMm} mm observed in the last 24 h, ${rain.forecastMm} mm forecast for the next 24 h`,
-      );
-    } catch (err) {
-      notes.push(`Rainfall feed unavailable (${(err as Error).message})`);
-    }
+    const rain = await fetchRain();
+    notes.push(
+      `Rainfall: ${rain.observedMm} mm observed in the last 24 h, ${rain.forecastMm} mm forecast for the next 24 h`,
+    );
 
     return {
       segments,
@@ -581,7 +569,10 @@ export interface HospitalsPayload {
   note: string;
 }
 
-export async function fetchHospitals(refresh = false): Promise<HospitalsPayload> {
+export async function fetchHospitals(
+  refresh = false,
+  allowSnapshot = true,
+): Promise<HospitalsPayload> {
   if (refresh) store.delete("hospitals");
   return cached("hospitals", 24 * 3600_000, async (): Promise<HospitalsPayload> => {
     try {
@@ -621,6 +612,7 @@ export async function fetchHospitals(refresh = false): Promise<HospitalsPayload>
         note: `OpenStreetMap Overpass: ${hospitals.length} mapped hospitals across Ahmedabad (amenity=hospital)`,
       };
     } catch (err) {
+      if (!allowSnapshot) throw err;
       const snap = hospitalSnapshot as { fetchedAt: string; source: string; hospitals: Hospital[] };
       return {
         hospitals: snap.hospitals,
