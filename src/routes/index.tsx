@@ -142,6 +142,7 @@ function Dashboard() {
   /** When true the rainfall input tracks the live feed instead of the slider. */
   const [followLive, setFollowLive] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [sourceError, setSourceError] = useState<string | null>(null);
   const [tick, setTick] = useState(Date.now());
 
   // Ticking clock so "updated Ns ago" actually counts up on screen.
@@ -325,11 +326,14 @@ function Dashboard() {
   /** Real refresh: bypasses the server-side cache and re-hits every upstream. */
   const refreshFeeds = async () => {
     setRefreshing(true);
+    setSourceError(null);
     try {
       const fresh = (await fetchWard({ data: { refresh: true } })) as WardData;
       queryClient.setQueryData(["ward-data"], fresh);
       await queryClient.invalidateQueries({ queryKey: ["rain-now"] });
       await queryClient.invalidateQueries({ queryKey: ["routes"] });
+    } catch (error) {
+      setSourceError(error instanceof Error ? error.message : "Live sources did not answer");
     } finally {
       setRefreshing(false);
     }
@@ -431,12 +435,12 @@ function Dashboard() {
 
       </header>
 
-      {wardQuery.isError && (
+      {(wardQuery.isError || sourceError) && (
         <div className="flex items-center gap-3 border-b border-destructive/40 bg-destructive/10 px-5 py-2 text-xs text-destructive">
           <TriangleAlert className="size-4 shrink-0" />
           <span className="flex-1">
-            Live data fetch failed: {(wardQuery.error as Error).message}. The public OSM / DEM
-            endpoints rate-limit; retry in a moment.
+             Live data fetch failed: {sourceError ?? (wardQuery.error as Error).message}. Risk and
+             allocation outputs are paused until all required sources answer.
           </span>
           <Button size="sm" variant="outline" className="h-7" onClick={refreshFeeds}>
             Retry
@@ -447,7 +451,7 @@ function Dashboard() {
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden lg:flex-row">
         <div className="relative min-h-[45dvh] flex-1 lg:min-h-0">
 
-          {wardQuery.isError ? (
+          {wardQuery.isError || sourceError ? (
             <div className="flex h-full w-full items-center justify-center bg-muted p-6">
               <Card className="max-w-lg gap-3 border-destructive/40 p-5 text-center">
                 <TriangleAlert className="mx-auto size-7 text-destructive" />

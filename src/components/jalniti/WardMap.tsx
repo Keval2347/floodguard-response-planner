@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { MapContainer, TileLayer, Polyline, CircleMarker, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -93,7 +94,7 @@ export default function WardMap({
         const cleared = clearedIds.includes(s.id);
         const closed = closedIds.includes(s.id);
         return (
-          <div key={s.id}>
+          <Fragment key={s.id}>
             {active && (
               <Polyline
                 positions={s.path}
@@ -141,7 +142,7 @@ export default function WardMap({
                 )}
               </Tooltip>
             </Polyline>
-          </div>
+          </Fragment>
         );
       })}
 

@@ -510,7 +510,7 @@ async function buildLiveWardData(): Promise<WardData> {
       ...segments.map((s) => midOf(s.path)),
     ];
     const travelMin: number[][] = matrixPoints.map((_, row) =>
-      matrixPoints.map((__, col) => (row === col ? 0 : Number.POSITIVE_INFINITY)),
+      matrixPoints.map((__, col) => (row === col ? 0 : 1_000_000_000)),
     );
 
     const planIdx = segments
