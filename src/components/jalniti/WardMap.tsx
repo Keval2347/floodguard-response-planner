@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { MapContainer, TileLayer, Polyline, CircleMarker, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -93,36 +94,55 @@ export default function WardMap({
         const cleared = clearedIds.includes(s.id);
         const closed = closedIds.includes(s.id);
         return (
-          <Polyline
-            key={s.id}
-            positions={s.path}
-            eventHandlers={{ click: () => onSelect(s.id) }}
-            pathOptions={{
-              color: closed ? "#6b7280" : BAND_META[s.band].color,
-              weight: active ? 10 : 6,
-              opacity: closed ? 0.55 : active ? 1 : 0.85,
-              dashArray: closed ? "6 6" : cleared ? "12 5" : undefined,
-              lineCap: "round",
-            }}
-          >
-            <Tooltip sticky>
-              <span className="font-medium">{s.name}</span>
-              <br />
-              risk {(s.risk * 100).toFixed(0)}% · {BAND_META[s.band].label}
-              {cleared && (
-                <>
-                  <br />
-                  drain de-silted (−30% risk)
-                </>
-              )}
-              {closed && (
-                <>
-                  <br />
-                  closed to traffic — not pumped
-                </>
-              )}
-            </Tooltip>
-          </Polyline>
+          <Fragment key={s.id}>
+            {active && (
+              <Polyline
+                positions={s.path}
+                interactive={false}
+                pathOptions={{
+                  color: "#0e7490",
+                  weight: 14,
+                  opacity: 0.95,
+                  lineCap: "round",
+                }}
+              />
+            )}
+            <Polyline
+              positions={s.path}
+              eventHandlers={{ click: () => onSelect(s.id) }}
+              pathOptions={{
+                color: closed ? "#6b7280" : BAND_META[s.band].color,
+                weight: active ? 7 : 6,
+                opacity: closed ? 0.55 : 0.85,
+                dashArray: closed ? "6 6" : cleared ? "12 5" : undefined,
+                lineCap: "round",
+              }}
+            >
+              <Tooltip sticky>
+                <span className="font-medium">{s.name}</span>
+                <br />
+                risk {(s.risk * 100).toFixed(0)}% · {BAND_META[s.band].label}
+                {active && (
+                  <>
+                    <br />
+                    selected road
+                  </>
+                )}
+                {cleared && (
+                  <>
+                    <br />
+                    drain de-silted (−30% risk)
+                  </>
+                )}
+                {closed && (
+                  <>
+                    <br />
+                    closed to traffic — not pumped
+                  </>
+                )}
+              </Tooltip>
+            </Polyline>
+          </Fragment>
         );
       })}
 

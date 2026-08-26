@@ -9,7 +9,7 @@ export const getWardData = createServerFn({ method: "POST" })
   .inputValidator((input?: { refresh?: boolean }) => ({ refresh: Boolean(input?.refresh) }))
   .handler(async ({ data }): Promise<WardData> => {
     const { buildWardData } = await import("./pipeline.server");
-    return buildWardData({ refresh: data.refresh });
+    return buildWardData({ refresh: data.refresh, allowSnapshot: false });
   });
 
 export interface RainNowDTO {
@@ -76,5 +76,5 @@ export const getHospitals = createServerFn({ method: "POST" })
   .inputValidator((input?: { refresh?: boolean }) => ({ refresh: Boolean(input?.refresh) }))
   .handler(async ({ data }): Promise<HospitalsDTO> => {
     const { fetchHospitals } = await import("./pipeline.server");
-    return fetchHospitals(data.refresh);
+    return fetchHospitals(data.refresh, false);
   });
