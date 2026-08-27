@@ -78,5 +78,5 @@ export const getHospitals = createServerFn({ method: "POST" })
   .inputValidator((input?: { refresh?: boolean }) => ({ refresh: Boolean(input?.refresh) }))
   .handler(async ({ data }): Promise<HospitalsDTO> => {
     const { fetchHospitals } = await import("./pipeline.server");
-    return fetchHospitals(data.refresh, false);
+    return fetchHospitals(data.refresh, true);
   });
