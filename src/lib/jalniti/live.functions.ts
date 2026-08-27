@@ -9,7 +9,9 @@ export const getWardData = createServerFn({ method: "POST" })
   .inputValidator((input?: { refresh?: boolean }) => ({ refresh: Boolean(input?.refresh) }))
   .handler(async ({ data }): Promise<WardData> => {
     const { buildWardData } = await import("./pipeline.server");
-    return buildWardData({ refresh: data.refresh, allowSnapshot: false });
+    // Snapshot replay is REAL captured OSM/SRTM/OSRM data (never synthetic),
+    // and every response carries a note saying which layer was replayed.
+    return buildWardData({ refresh: data.refresh, allowSnapshot: true });
   });
 
 export interface RainNowDTO {
@@ -76,5 +78,5 @@ export const getHospitals = createServerFn({ method: "POST" })
   .inputValidator((input?: { refresh?: boolean }) => ({ refresh: Boolean(input?.refresh) }))
   .handler(async ({ data }): Promise<HospitalsDTO> => {
     const { fetchHospitals } = await import("./pipeline.server");
-    return fetchHospitals(data.refresh, false);
+    return fetchHospitals(data.refresh, true);
   });
