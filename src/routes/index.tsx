@@ -396,20 +396,23 @@ function Dashboard() {
               <span className="block text-[10px] uppercase tracking-wide text-muted-foreground">
                 Rain right now
               </span>
-              <span className="block text-sm font-semibold tabular-nums">
+              <span className="block text-sm font-semibold tabular-nums" title={rainProblem ?? undefined}>
                 {rain
                   ? rain.raining
                     ? `${rain.nowMmPerHr} mm/h`
                     : "Dry"
                   : rainQuery.isError
-                    ? "Feed down"
+                    ? "No reading"
                     : "Checking…"}
                 <span className="ml-1 text-[10px] font-normal text-muted-foreground">
                   {rain
-                    ? `updated ${secondsAgo}s ago`
+                    ? rainProblem
+                      ? `last good reading, ${secondsAgo}s ago`
+                      : `updated ${secondsAgo}s ago`
                     : rainQuery.isError
-                      ? "retrying"
+                      ? "weather service not answering — retrying"
                       : "reading Open-Meteo"}
+
                 </span>
               </span>
 
