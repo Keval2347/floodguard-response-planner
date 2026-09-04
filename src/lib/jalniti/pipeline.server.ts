@@ -255,7 +255,7 @@ export async function fetchRainNow(): Promise<RainNow> {
 
     const nowMmPerHr = Math.round(Number(data.current?.precipitation ?? 0) * 10) / 10;
 
-    return {
+    const reading: RainNow = {
       nowMmPerHr,
       raining: nowMmPerHr > 0 || last60Mm > 0.1,
       last60Mm,
@@ -267,7 +267,10 @@ export async function fetchRainNow(): Promise<RainNow> {
       observedAt: String(data.current?.time ?? "").replace("T", " "),
       fetchedAt: new Date().toISOString(),
     };
+    lastGoodRain = reading;
+    return reading;
   });
+
 }
 
 async function fetchRain() {
