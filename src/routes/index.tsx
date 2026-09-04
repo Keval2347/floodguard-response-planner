@@ -104,9 +104,22 @@ function Dashboard() {
     refetchOnWindowFocus: true,
     refetchOnMount: "always",
     staleTime: 30_000,
-    retry: 2,
+    retry: 3,
+    retryDelay: (a) => Math.min(8000, 1000 * 2 ** a),
+    // A failed poll must never blank the readouts: keep the last good reading
+    // on screen and label it, instead of falling back to dashes.
+    placeholderData: (prev) => prev,
   });
   const rain = rainQuery.data;
+  /** Plain-English reason the readout is not fresh, or null when all is well. */
+  const rainProblem = rainQuery.isError
+    ? rainQuery.error instanceof Error
+      ? rainQuery.error.message
+      : String(rainQuery.error)
+    : rain?.stale
+      ? (rain.staleReason ?? "the weather service did not answer")
+      : null;
+
 
 
   /** Real OSM hospitals for the whole city; the list itself changes rarely. */
