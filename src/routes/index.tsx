@@ -1062,7 +1062,11 @@ function Dashboard() {
                         </p>
                       </>
                     ) : (
-                      <p className="text-xs text-muted-foreground">Rainfall feed loading…</p>
+                      <p className="text-xs text-muted-foreground">
+                        {rainProblem
+                          ? "No hourly rainfall available — the weather service is not answering."
+                          : "Rainfall feed loading…"}
+                      </p>
                     )}
                   </Card>
 
@@ -1070,14 +1074,18 @@ function Dashboard() {
                     variant="outline"
                     className="w-full"
                     onClick={() => {
-                       if (liveRainMm === undefined) return;
-                       setScenario({ ...defaultScenario(ward), rainMm: liveRainMm });
+                      // Reset always works: fall back to the ward feed's observed
+                      // total, then to whatever is on the slider, if the rainfall
+                      // poll is failing.
+                      const base = defaultScenario(ward);
+                      setScenario({ ...base, rainMm: liveRainMm ?? base.rainMm });
                       setFollowLive(true);
+                      void rainQuery.refetch();
                     }}
-                    disabled={liveRainMm === undefined}
                   >
                     Reset to the live feed
                   </Button>
+
                 </div>
               </ScrollArea>
             </TabsContent>
