@@ -173,7 +173,16 @@ export interface RainNow {
   observedAt: string;
   /** When this server actually called the weather API. */
   fetchedAt: string;
+  /** True when the weather API failed and this is the last good reading. */
+  stale?: boolean;
+  /** Why the last call failed, shown verbatim in the UI. */
+  staleReason?: string;
 }
+
+/** Last successful reading, kept so a single failed poll never blanks the UI. */
+let lastGoodRain: RainNow | undefined;
+
+const METEO_HOSTS = ["https://api.open-meteo.com/v1/forecast", "https://api.open-meteo.com/v1/gfs"];
 
 /**
  * Real-time rainfall for the ward centroid.
@@ -182,18 +191,38 @@ export interface RainNow {
  * radar/observation assimilation IMD feeds into) plus the 15-minute nowcast,
  * so "is it raining right now" is answered by an observation, not by a 24 h
  * forecast total. Cached for only 60 s so the dashboard can poll it live.
+ *
+ * If every attempt fails we return the last good reading marked `stale` with
+ * the real error text, instead of leaving the dashboard with empty dashes.
  */
 export async function fetchRainNow(): Promise<RainNow> {
   return cached("rain-now", 60_000, async () => {
     const [lat, lon] = WARD.center;
-    const data = await getJson(
-      `${METEO}?latitude=${lat}&longitude=${lon}` +
-        `&current=precipitation,rain` +
-        `&minutely_15=precipitation` +
-        `&hourly=precipitation&past_days=2&forecast_days=2&timezone=Asia%2FKolkata`,
-      undefined,
-      15000,
-    );
+    const query =
+      `?latitude=${lat}&longitude=${lon}` +
+      `&current=precipitation,rain` +
+      `&minutely_15=precipitation` +
+      `&hourly=precipitation&past_days=2&forecast_days=2&timezone=Asia%2FKolkata`;
+
+    let data: any;
+    let lastErr: unknown;
+    for (let attempt = 0; attempt < 4 && !data; attempt++) {
+      const host = METEO_HOSTS[attempt % METEO_HOSTS.length];
+      try {
+        data = await getJson(host + query, undefined, 12000);
+      } catch (err) {
+        lastErr = err;
+        await new Promise((r) => setTimeout(r, 400 * (attempt + 1)));
+      }
+    }
+    if (!data) {
+      const reason = lastErr instanceof Error ? lastErr.message : String(lastErr);
+      if (lastGoodRain) {
+        return { ...lastGoodRain, stale: true, staleReason: reason };
+      }
+      throw new Error(`Open-Meteo unreachable: ${reason}`);
+    }
+
 
     const times: string[] = data.hourly.time;
     const mm: number[] = data.hourly.precipitation;
@@ -226,7 +255,7 @@ export async function fetchRainNow(): Promise<RainNow> {
 
     const nowMmPerHr = Math.round(Number(data.current?.precipitation ?? 0) * 10) / 10;
 
-    return {
+    const reading: RainNow = {
       nowMmPerHr,
       raining: nowMmPerHr > 0 || last60Mm > 0.1,
       last60Mm,
@@ -238,7 +267,10 @@ export async function fetchRainNow(): Promise<RainNow> {
       observedAt: String(data.current?.time ?? "").replace("T", " "),
       fetchedAt: new Date().toISOString(),
     };
+    lastGoodRain = reading;
+    return reading;
   });
+
 }
 
 async function fetchRain() {

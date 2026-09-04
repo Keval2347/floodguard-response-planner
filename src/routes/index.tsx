@@ -104,9 +104,22 @@ function Dashboard() {
     refetchOnWindowFocus: true,
     refetchOnMount: "always",
     staleTime: 30_000,
-    retry: 2,
+    retry: 3,
+    retryDelay: (a) => Math.min(8000, 1000 * 2 ** a),
+    // A failed poll must never blank the readouts: keep the last good reading
+    // on screen and label it, instead of falling back to dashes.
+    placeholderData: (prev) => prev,
   });
   const rain = rainQuery.data;
+  /** Plain-English reason the readout is not fresh, or null when all is well. */
+  const rainProblem = rainQuery.isError
+    ? rainQuery.error instanceof Error
+      ? rainQuery.error.message
+      : String(rainQuery.error)
+    : rain?.stale
+      ? (rain.staleReason ?? "the weather service did not answer")
+      : null;
+
 
 
   /** Real OSM hospitals for the whole city; the list itself changes rarely. */
@@ -184,7 +197,12 @@ function Dashboard() {
    */
   const liveRainMm = rain
     ? Math.max(0, Math.round((rain.observedMm + rain.next60Mm) * 10) / 10)
-    : undefined;
+    : // Rainfall poll is failing: fall back to the 24 h observed total that came
+      // with the ward feed, so "follow live" and "reset" stay usable.
+      ward
+      ? Math.max(0, Math.round(ward.observedMm * 10) / 10)
+      : undefined;
+
 
   // Once real data lands, start from the actual observed rainfall + full fleet.
   useEffect(() => {
@@ -378,20 +396,23 @@ function Dashboard() {
               <span className="block text-[10px] uppercase tracking-wide text-muted-foreground">
                 Rain right now
               </span>
-              <span className="block text-sm font-semibold tabular-nums">
+              <span className="block text-sm font-semibold tabular-nums" title={rainProblem ?? undefined}>
                 {rain
                   ? rain.raining
                     ? `${rain.nowMmPerHr} mm/h`
                     : "Dry"
                   : rainQuery.isError
-                    ? "Feed down"
+                    ? "No reading"
                     : "Checking…"}
                 <span className="ml-1 text-[10px] font-normal text-muted-foreground">
                   {rain
-                    ? `updated ${secondsAgo}s ago`
+                    ? rainProblem
+                      ? `last good reading, ${secondsAgo}s ago`
+                      : `updated ${secondsAgo}s ago`
                     : rainQuery.isError
-                      ? "retrying"
+                      ? "weather service not answering — retrying"
                       : "reading Open-Meteo"}
+
                 </span>
               </span>
 
@@ -843,7 +864,27 @@ function Dashboard() {
                       Station time {rain?.observedAt || "—"} IST · polled every 60 s · last poll{" "}
                       {secondsAgo}s ago{rainQuery.isFetching ? " · updating…" : ""}
                     </p>
+                    {rainProblem && (
+                      <div className="rounded-md border border-destructive/40 bg-destructive/5 p-2 text-[11px]">
+                        <p className="font-medium text-destructive">
+                          {rain
+                            ? "Showing the last good reading — the weather service is not answering right now."
+                            : "No rainfall reading yet — the weather service is not answering."}
+                        </p>
+                        <p className="break-words pt-1 text-muted-foreground">{rainProblem}</p>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="mt-2 h-7 text-[11px]"
+                          onClick={() => void rainQuery.refetch()}
+                          disabled={rainQuery.isFetching}
+                        >
+                          {rainQuery.isFetching ? "Trying again…" : "Try the rainfall feed again"}
+                        </Button>
+                      </div>
+                    )}
                   </Card>
+
 
                   <Card className="gap-2 border-primary/30 p-3">
                     <div className="flex items-center justify-between gap-2">
@@ -1021,7 +1062,11 @@ function Dashboard() {
                         </p>
                       </>
                     ) : (
-                      <p className="text-xs text-muted-foreground">Rainfall feed loading…</p>
+                      <p className="text-xs text-muted-foreground">
+                        {rainProblem
+                          ? "No hourly rainfall available — the weather service is not answering."
+                          : "Rainfall feed loading…"}
+                      </p>
                     )}
                   </Card>
 
@@ -1029,14 +1074,18 @@ function Dashboard() {
                     variant="outline"
                     className="w-full"
                     onClick={() => {
-                       if (liveRainMm === undefined) return;
-                       setScenario({ ...defaultScenario(ward), rainMm: liveRainMm });
+                      // Reset always works: fall back to the ward feed's observed
+                      // total, then to whatever is on the slider, if the rainfall
+                      // poll is failing.
+                      const base = defaultScenario(ward);
+                      setScenario({ ...base, rainMm: liveRainMm ?? base.rainMm });
                       setFollowLive(true);
+                      void rainQuery.refetch();
                     }}
-                    disabled={liveRainMm === undefined}
                   >
                     Reset to the live feed
                   </Button>
+
                 </div>
               </ScrollArea>
             </TabsContent>
