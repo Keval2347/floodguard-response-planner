@@ -25,7 +25,12 @@ export interface RainNowDTO {
   nowcast: { time: string; mm: number }[];
   observedAt: string;
   fetchedAt: string;
+  /** True when the weather API failed and this is the last good reading. */
+  stale?: boolean;
+  /** The real upstream error text, so the UI can say what went wrong. */
+  staleReason?: string;
 }
+
 
 /**
  * Live rainfall only — small and fast, so the dashboard can poll it every
