@@ -864,7 +864,27 @@ function Dashboard() {
                       Station time {rain?.observedAt || "—"} IST · polled every 60 s · last poll{" "}
                       {secondsAgo}s ago{rainQuery.isFetching ? " · updating…" : ""}
                     </p>
+                    {rainProblem && (
+                      <div className="rounded-md border border-destructive/40 bg-destructive/5 p-2 text-[11px]">
+                        <p className="font-medium text-destructive">
+                          {rain
+                            ? "Showing the last good reading — the weather service is not answering right now."
+                            : "No rainfall reading yet — the weather service is not answering."}
+                        </p>
+                        <p className="break-words pt-1 text-muted-foreground">{rainProblem}</p>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="mt-2 h-7 text-[11px]"
+                          onClick={() => void rainQuery.refetch()}
+                          disabled={rainQuery.isFetching}
+                        >
+                          {rainQuery.isFetching ? "Trying again…" : "Try the rainfall feed again"}
+                        </Button>
+                      </div>
+                    )}
                   </Card>
+
 
                   <Card className="gap-2 border-primary/30 p-3">
                     <div className="flex items-center justify-between gap-2">
