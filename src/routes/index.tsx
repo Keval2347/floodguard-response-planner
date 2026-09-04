@@ -197,7 +197,12 @@ function Dashboard() {
    */
   const liveRainMm = rain
     ? Math.max(0, Math.round((rain.observedMm + rain.next60Mm) * 10) / 10)
-    : undefined;
+    : // Rainfall poll is failing: fall back to the 24 h observed total that came
+      // with the ward feed, so "follow live" and "reset" stay usable.
+      ward
+      ? Math.max(0, Math.round(ward.observedMm * 10) / 10)
+      : undefined;
+
 
   // Once real data lands, start from the actual observed rainfall + full fleet.
   useEffect(() => {
