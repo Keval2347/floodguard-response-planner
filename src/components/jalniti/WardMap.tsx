@@ -53,6 +53,7 @@ function WardMap({
     <MapContainer
       center={WARD.center}
       zoom={14}
+      preferCanvas
       scrollWheelZoom
       className="h-full w-full"
       style={{ background: "#e9e4d8" }}
@@ -206,3 +207,7 @@ function WardMap({
     </MapContainer>
   );
 }
+
+// The ward has ~220 polylines plus markers; skip re-rendering them unless a
+// prop actually changed.
+export default memo(WardMap);
