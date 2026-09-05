@@ -122,6 +122,38 @@ function Dashboard() {
       ? (rain.staleReason ?? "the weather service did not answer")
       : null;
 
+  /**
+   * The weather outage is a whole-app caveat, not a what-if detail: raise it as
+   * a sticky notification that stays up (and re-states itself every 2 min)
+   * until a real reading lands again.
+   */
+  useEffect(() => {
+    if (!rainProblem) {
+      toast.dismiss("rain-feed");
+      return;
+    }
+    const show = () =>
+      toast.warning(
+        rain
+          ? "Live rainfall feed is not answering — showing the last measured reading"
+          : "Live rainfall feed is not answering — risk colours may be out of date",
+        {
+          id: "rain-feed",
+          description: `${rainProblem}. Predictions on screen are based on the last real measurement, not on live rain.`,
+          duration: Infinity,
+          action: {
+            label: "Retry now",
+            onClick: () => void rainQuery.refetch(),
+          },
+        },
+      );
+    show();
+    const t = setInterval(show, 120_000);
+    return () => clearInterval(t);
+  }, [rainProblem, rain, rainQuery]);
+
+
+
 
 
   /** Real OSM hospitals for the whole city; the list itself changes rarely. */
