@@ -905,21 +905,23 @@ function Dashboard() {
                       {secondsAgo}s ago{rainQuery.isFetching ? " · updating…" : ""}
                     </p>
                     {rainProblem && (
-                      <div className="rounded-md border border-destructive/40 bg-destructive/5 p-2 text-[11px]">
-                        <p className="font-medium text-destructive">
+                      <div className="flex flex-wrap items-center gap-2 rounded-md border border-destructive/40 bg-destructive/5 p-2 text-[11px]">
+                        <span
+                          className="min-w-0 flex-1 font-medium text-destructive"
+                          title={rainProblem}
+                        >
                           {rain
-                            ? "Showing the last good reading — the weather service is not answering right now."
-                            : "No rainfall reading yet — the weather service is not answering."}
-                        </p>
-                        <p className="break-words pt-1 text-muted-foreground">{rainProblem}</p>
+                            ? "Last measured reading — live feed not answering"
+                            : "No live rainfall reading yet"}
+                        </span>
                         <Button
                           size="sm"
                           variant="outline"
-                          className="mt-2 h-7 text-[11px]"
+                          className="h-6 shrink-0 px-2 text-[11px]"
                           onClick={() => void rainQuery.refetch()}
                           disabled={rainQuery.isFetching}
                         >
-                          {rainQuery.isFetching ? "Trying again…" : "Try the rainfall feed again"}
+                          {rainQuery.isFetching ? "Trying…" : "Retry"}
                         </Button>
                       </div>
                     )}
