@@ -137,7 +137,7 @@ function Dashboard() {
     }
     const show = () =>
       toast.warning(
-        rain
+        hasReading
           ? "Live rainfall feed is not answering — showing the last measured reading"
           : "Live rainfall feed is not answering — risk colours may be out of date",
         {
