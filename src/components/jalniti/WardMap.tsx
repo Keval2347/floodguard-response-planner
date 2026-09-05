@@ -25,7 +25,7 @@ interface Props {
   showHospitals: boolean;
 }
 
-export default function WardMap({
+function WardMap({
   segments,
   depots,
   assignments,
