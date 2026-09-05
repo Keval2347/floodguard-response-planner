@@ -16,6 +16,8 @@ import {
 
 } from "lucide-react";
 
+import { toast } from "sonner";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -120,6 +122,41 @@ function Dashboard() {
       ? (rain.staleReason ?? "the weather service did not answer")
       : null;
 
+  /**
+   * The weather outage is a whole-app caveat, not a what-if detail: raise it as
+   * a sticky notification that stays up (and re-states itself every 2 min)
+   * until a real reading lands again.
+   */
+  const refetchRainRef = useRef(rainQuery.refetch);
+  refetchRainRef.current = rainQuery.refetch;
+  const hasReading = Boolean(rain);
+  useEffect(() => {
+    if (!rainProblem) {
+      toast.dismiss("rain-feed");
+      return;
+    }
+    const show = () =>
+      toast.warning(
+        hasReading
+          ? "Live rainfall feed is not answering — showing the last measured reading"
+          : "Live rainfall feed is not answering — risk colours may be out of date",
+        {
+          id: "rain-feed",
+          description: `${rainProblem}. Predictions on screen are based on the last real measurement, not on live rain.`,
+          duration: Infinity,
+          action: {
+            label: "Retry now",
+            onClick: () => void refetchRainRef.current(),
+          },
+        },
+      );
+    show();
+    const t = setInterval(show, 120_000);
+    return () => clearInterval(t);
+  }, [rainProblem, hasReading]);
+
+
+
 
 
   /** Real OSM hospitals for the whole city; the list itself changes rarely. */
@@ -192,16 +229,19 @@ function Dashboard() {
 
   /**
    * Live 24 h rainfall load driving the risk map: what has already fallen in
-   * the last 24 h plus what the nowcast expects in the next hour. When the rain
-   * stops, this falls back down and the map recolours by itself.
+   * the last 24 h, plus the next hour of nowcast, compared against the 24 h
+   * forecast total. Planning has to use the wetter of "what has fallen" and
+   * "what is still coming" — otherwise a dry morning with a wet forecast
+   * repaints the whole ward green and hides the roads that will flood.
    */
-  const liveRainMm = rain
-    ? Math.max(0, Math.round((rain.observedMm + rain.next60Mm) * 10) / 10)
-    : // Rainfall poll is failing: fall back to the 24 h observed total that came
-      // with the ward feed, so "follow live" and "reset" stay usable.
-      ward
-      ? Math.max(0, Math.round(ward.observedMm * 10) / 10)
-      : undefined;
+  const liveRainMm = (() => {
+    const round = (v: number) => Math.max(0, Math.round(v * 10) / 10);
+    if (rain) return round(Math.max(rain.observedMm + rain.next60Mm, rain.forecastMm));
+    // Rainfall poll is failing: fall back to the totals that came with the ward
+    // feed, so "follow live" and "reset" stay usable.
+    if (ward) return round(Math.max(ward.observedMm, ward.forecastMm));
+    return undefined;
+  })();
 
 
   // Once real data lands, start from the actual observed rainfall + full fleet.
@@ -865,21 +905,23 @@ function Dashboard() {
                       {secondsAgo}s ago{rainQuery.isFetching ? " · updating…" : ""}
                     </p>
                     {rainProblem && (
-                      <div className="rounded-md border border-destructive/40 bg-destructive/5 p-2 text-[11px]">
-                        <p className="font-medium text-destructive">
+                      <div className="flex flex-wrap items-center gap-2 rounded-md border border-destructive/40 bg-destructive/5 p-2 text-[11px]">
+                        <span
+                          className="min-w-0 flex-1 font-medium text-destructive"
+                          title={rainProblem}
+                        >
                           {rain
-                            ? "Showing the last good reading — the weather service is not answering right now."
-                            : "No rainfall reading yet — the weather service is not answering."}
-                        </p>
-                        <p className="break-words pt-1 text-muted-foreground">{rainProblem}</p>
+                            ? "Last measured reading — live feed not answering"
+                            : "No live rainfall reading yet"}
+                        </span>
                         <Button
                           size="sm"
                           variant="outline"
-                          className="mt-2 h-7 text-[11px]"
+                          className="h-6 shrink-0 px-2 text-[11px]"
                           onClick={() => void rainQuery.refetch()}
                           disabled={rainQuery.isFetching}
                         >
-                          {rainQuery.isFetching ? "Trying again…" : "Try the rainfall feed again"}
+                          {rainQuery.isFetching ? "Trying…" : "Retry"}
                         </Button>
                       </div>
                     )}
