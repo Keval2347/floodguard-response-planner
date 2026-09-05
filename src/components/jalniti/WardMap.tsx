@@ -1,6 +1,7 @@
-import { Fragment } from "react";
+import { Fragment, memo } from "react";
 import { MapContainer, TileLayer, Polyline, CircleMarker, Tooltip } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+
 
 import { BAND_META, WARD, type Depot } from "@/lib/jalniti/data";
 import { STATUS_META, type HospitalRisk } from "@/lib/jalniti/hospitals";
