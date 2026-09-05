@@ -127,6 +127,9 @@ function Dashboard() {
    * a sticky notification that stays up (and re-states itself every 2 min)
    * until a real reading lands again.
    */
+  const refetchRainRef = useRef(rainQuery.refetch);
+  refetchRainRef.current = rainQuery.refetch;
+  const hasReading = Boolean(rain);
   useEffect(() => {
     if (!rainProblem) {
       toast.dismiss("rain-feed");
