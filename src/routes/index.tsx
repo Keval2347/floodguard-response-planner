@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -193,13 +193,6 @@ function Dashboard() {
   const [followLive, setFollowLive] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [sourceError, setSourceError] = useState<string | null>(null);
-  const [tick, setTick] = useState(Date.now());
-
-  // Ticking clock so "updated Ns ago" actually counts up on screen.
-  useEffect(() => {
-    const t = setInterval(() => setTick(Date.now()), 1000);
-    return () => clearInterval(t);
-  }, []);
 
   /**
    * Calendar-aware freshness: if the IST date rolls over (or the tab was left
@@ -259,11 +252,20 @@ function Dashboard() {
     }
   }, [followLive, liveRainMm]);
 
-  const scored = useMemo(() => (ward ? scoreSegments(ward, scenario) : []), [ward, scenario]);
+  /**
+   * Scoring 220 segments and re-running the allocator on every slider pixel
+   * is what made the console stutter. Deferring keeps the controls at 60 fps
+   * and lets React recompute the map once the drag settles.
+   */
+  const deferredScenario = useDeferredValue(scenario);
+  const scored = useMemo(
+    () => (ward ? scoreSegments(ward, deferredScenario) : []),
+    [ward, deferredScenario],
+  );
   const plan = useMemo(
     () =>
       ward
-        ? allocate(ward, scored, scenario)
+        ? allocate(ward, scored, deferredScenario)
         : ({
             assignments: [],
             unserved: [],
@@ -273,7 +275,7 @@ function Dashboard() {
             improvements: 0,
             method: "waiting for ward data",
           } satisfies AllocationResult),
-    [ward, scored, scenario],
+    [ward, scored, deferredScenario],
   );
   const selected = scored.find((s) => s.id === selectedId) ?? null;
 
@@ -334,12 +336,19 @@ function Dashboard() {
     enabled: pairs.length > 0 && showRoutes,
     staleTime: 60 * 60_000,
   });
-  const routes = (routesQuery.data ?? []).map((r, i) => ({ ...r, key: pairs[i]?.key ?? r.key }));
+  const routes = useMemo(
+    () => (routesQuery.data ?? []).map((r, i) => ({ ...r, key: pairs[i]?.key ?? r.key })),
+    [routesQuery.data, pairs],
+  );
 
-  const counts = scored.reduce<Record<string, number>>((acc, s) => {
-    acc[s.band] = (acc[s.band] ?? 0) + 1;
-    return acc;
-  }, {});
+  const counts = useMemo(
+    () =>
+      scored.reduce<Record<string, number>>((acc, s) => {
+        acc[s.band] = (acc[s.band] ?? 0) + 1;
+        return acc;
+      }, {}),
+    [scored],
+  );
 
   const coverage = plan.totalExposure
     ? Math.round((plan.coveredExposure / plan.totalExposure) * 100)
@@ -397,9 +406,6 @@ function Dashboard() {
     }
   };
 
-  const secondsAgo = rain
-    ? Math.max(0, Math.round((tick - new Date(rain.fetchedAt).getTime()) / 1000))
-    : 0;
 
 
   return (
@@ -447,8 +453,8 @@ function Dashboard() {
                 <span className="ml-1 text-[10px] font-normal text-muted-foreground">
                   {rain
                     ? rainProblem
-                      ? `last good reading, ${secondsAgo}s ago`
-                      : `updated ${secondsAgo}s ago`
+                      ? <>last good reading, <Ago iso={rain.fetchedAt} /></>
+                      : <>updated <Ago iso={rain.fetchedAt} /></>
                     : rainQuery.isError
                       ? "weather service not answering — retrying"
                       : "reading Open-Meteo"}
@@ -1267,4 +1273,18 @@ function Field({
       <p className="text-xs text-muted-foreground">{hint}</p>
     </div>
   );
+}
+
+/**
+ * Self-contained "Ns ago" ticker. Keeping the clock inside its own component
+ * means one tiny node re-renders each second instead of the whole console.
+ */
+function Ago({ iso }: { iso: string }) {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, []);
+  const s = Math.max(0, Math.round((now - new Date(iso).getTime()) / 1000));
+  return <span className="tabular-nums">{s < 90 ? `${s}s ago` : `${Math.round(s / 60)}m ago`}</span>;
 }
