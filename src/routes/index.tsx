@@ -192,16 +192,19 @@ function Dashboard() {
 
   /**
    * Live 24 h rainfall load driving the risk map: what has already fallen in
-   * the last 24 h plus what the nowcast expects in the next hour. When the rain
-   * stops, this falls back down and the map recolours by itself.
+   * the last 24 h, plus the next hour of nowcast, compared against the 24 h
+   * forecast total. Planning has to use the wetter of "what has fallen" and
+   * "what is still coming" — otherwise a dry morning with a wet forecast
+   * repaints the whole ward green and hides the roads that will flood.
    */
-  const liveRainMm = rain
-    ? Math.max(0, Math.round((rain.observedMm + rain.next60Mm) * 10) / 10)
-    : // Rainfall poll is failing: fall back to the 24 h observed total that came
-      // with the ward feed, so "follow live" and "reset" stay usable.
-      ward
-      ? Math.max(0, Math.round(ward.observedMm * 10) / 10)
-      : undefined;
+  const liveRainMm = (() => {
+    const round = (v: number) => Math.max(0, Math.round(v * 10) / 10);
+    if (rain) return round(Math.max(rain.observedMm + rain.next60Mm, rain.forecastMm));
+    // Rainfall poll is failing: fall back to the totals that came with the ward
+    // feed, so "follow live" and "reset" stay usable.
+    if (ward) return round(Math.max(ward.observedMm, ward.forecastMm));
+    return undefined;
+  })();
 
 
   // Once real data lands, start from the actual observed rainfall + full fleet.
