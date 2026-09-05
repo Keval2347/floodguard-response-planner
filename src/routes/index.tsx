@@ -146,14 +146,14 @@ function Dashboard() {
           duration: Infinity,
           action: {
             label: "Retry now",
-            onClick: () => void rainQuery.refetch(),
+            onClick: () => void refetchRainRef.current(),
           },
         },
       );
     show();
     const t = setInterval(show, 120_000);
     return () => clearInterval(t);
-  }, [rainProblem, rain, rainQuery]);
+  }, [rainProblem, hasReading]);
 
 
 
