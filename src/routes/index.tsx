@@ -170,6 +170,8 @@ function Dashboard() {
   const [scenario, setScenario] = useState<ScenarioOverrides>(() => defaultScenario(undefined));
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showRoutes, setShowRoutes] = useState(true);
+  /** The ranked street list renders in pages — 220 rows at once stutters. */
+  const [riskShown, setRiskShown] = useState(60);
   /** The map legend/layers panel is opened from a small corner button. */
   const [legendOpen, setLegendOpen] = useState(false);
   const legendRef = useRef<HTMLDivElement | null>(null);
@@ -707,7 +709,7 @@ function Dashboard() {
                   "pump this street before that one", never as "this street will flood".
                 </p>
                 <div className="space-y-1.5">
-                  {scored.map((s, i) => (
+                  {scored.slice(0, riskShown).map((s, i) => (
                     <button
                       key={s.id}
                       onClick={() => setSelectedId(s.id)}
@@ -736,6 +738,16 @@ function Dashboard() {
                     </button>
                   ))}
                 </div>
+                {scored.length > riskShown && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="mt-2 w-full text-xs"
+                    onClick={() => setRiskShown((n) => n + 60)}
+                  >
+                    Show {Math.min(60, scored.length - riskShown)} more of {scored.length} streets
+                  </Button>
+                )}
               </ScrollArea>
             </TabsContent>
 
@@ -908,7 +920,9 @@ function Dashboard() {
                     </div>
                     <p className="text-[10px] text-muted-foreground">
                       Station time {rain?.observedAt || "—"} IST · polled every 60 s · last poll{" "}
-                      {secondsAgo}s ago{rainQuery.isFetching ? " · updating…" : ""}
+                      {rain ? <Ago iso={rain.fetchedAt} /> : "—"}
+                      {rainQuery.isFetching ? " · updating…" : ""}
+
                     </p>
                     {rainProblem && (
                       <div className="flex flex-wrap items-center gap-2 rounded-md border border-destructive/40 bg-destructive/5 p-2 text-[11px]">
