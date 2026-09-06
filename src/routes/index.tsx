@@ -908,7 +908,9 @@ function Dashboard() {
                     </div>
                     <p className="text-[10px] text-muted-foreground">
                       Station time {rain?.observedAt || "—"} IST · polled every 60 s · last poll{" "}
-                      {secondsAgo}s ago{rainQuery.isFetching ? " · updating…" : ""}
+                      {rain ? <Ago iso={rain.fetchedAt} /> : "—"}
+                      {rainQuery.isFetching ? " · updating…" : ""}
+
                     </p>
                     {rainProblem && (
                       <div className="flex flex-wrap items-center gap-2 rounded-md border border-destructive/40 bg-destructive/5 p-2 text-[11px]">
