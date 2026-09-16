@@ -235,7 +235,7 @@ function parseOpenMeteo(data: any, source: string): RainNow {
     : Number(mm[nowIdx] ?? 0);
   const nowcast = qTimes.length
     ? qTimes.slice(qIdx, qIdx + 8).map((t, i) => ({ time: t.slice(11, 16), mm: Number(qMm[qIdx + i] ?? 0) }))
-    : times.slice(nowIdx, nowIdx + 4).map((t, i) => ({ hour: t, time: t.slice(11, 16), mm: Number(mm[nowIdx + i] ?? 0) }));
+    : times.slice(nowIdx, nowIdx + 4).map((t, i) => ({ time: t.slice(11, 16), mm: Number(mm[nowIdx + i] ?? 0) }));
 
   const nowMmPerHr = Math.round(Number(data.current?.precipitation ?? mm[Math.max(0, nowIdx - 1)] ?? 0) * 10) / 10;
 
