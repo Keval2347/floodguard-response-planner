@@ -555,6 +555,7 @@ async function buildLiveWardData(): Promise<WardData> {
       tertiary: 3,
       unclassified: 4,
       residential: 5,
+      living_street: 6,
     };
     candidates.sort(
       (a, b) =>
