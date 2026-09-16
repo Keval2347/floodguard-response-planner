@@ -37,7 +37,7 @@ const METEO = "https://api.open-meteo.com/v1/forecast";
  * network is coloured — safe streets show green, exactly like a real ward map,
  * instead of a handful of sampled lines.
  */
-const MAX_SEGMENTS = 220;
+const MAX_SEGMENTS = 420;
 /** Only the worst streets need an exact OSRM matrix row (public /table caps ~100 coords). */
 const PLANNING_SEGMENTS = 60;
 const SEGMENT_TARGET_M = 450;
@@ -84,7 +84,7 @@ interface OverpassWay {
  * across mirrors, and the whole result is cached for 3 h.
  */
 const ROADS_QUERY = (bbox: string) =>
-  `[out:json][timeout:90];way["highway"~"^(trunk|primary|secondary|tertiary|residential)$"](${bbox});out geom;`;
+  `[out:json][timeout:90];way["highway"~"^(trunk|primary|secondary|tertiary|unclassified|residential|living_street)$"](${bbox});out geom;`;
 const WATER_QUERY = (bbox: string) =>
   `[out:json][timeout:90];(way["waterway"](${bbox});way["natural"="water"](${bbox}););out geom;`;
 
