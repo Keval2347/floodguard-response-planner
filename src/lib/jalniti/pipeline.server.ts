@@ -40,7 +40,7 @@ const METEO = "https://api.open-meteo.com/v1/forecast";
 const MAX_SEGMENTS = 420;
 /** Only the worst streets need an exact OSRM matrix row (public /table caps ~100 coords). */
 const PLANNING_SEGMENTS = 60;
-const SEGMENT_TARGET_M = 450;
+const SEGMENT_TARGET_M = 320;
 
 /* ------------------------------------------------------------------ cache */
 
@@ -543,7 +543,7 @@ async function buildLiveWardData(): Promise<WardData> {
       if (!name) continue;
       const g = w.geometry!.map((p) => [p.lat, p.lon] as LatLon);
       for (const piece of splitWay(g)) {
-        if (pathLengthM(piece) < 120) continue;
+        if (pathLengthM(piece) < 70) continue;
         candidates.push({ name, osm_id: w.id, highway: w.tags!.highway, path: piece });
       }
     }
