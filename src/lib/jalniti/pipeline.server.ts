@@ -177,26 +177,162 @@ export interface RainNow {
   stale?: boolean;
   /** Why the last call failed, shown verbatim in the UI. */
   staleReason?: string;
+  /** Which upstream actually produced this reading. */
+  source?: string;
 }
 
 /** Last successful reading, kept so a single failed poll never blanks the UI. */
 let lastGoodRain: RainNow | undefined;
 
-const METEO_HOSTS = ["https://api.open-meteo.com/v1/forecast", "https://api.open-meteo.com/v1/gfs"];
+/**
+ * Rainfall providers, tried in order until one answers with real numbers.
+ *
+ *   0. IMD  — only used once an IMD API key exists in the environment.
+ *             Absent key = provider skipped silently, everything else works.
+ *   1..4 Open-Meteo model endpoints (different hosts/models; a 429 on one
+ *        does not mean the others are rate-limited).
+ *   5. MET Norway locationforecast — a completely independent agency feed,
+ *        so a total Open-Meteo outage still leaves live rain on screen.
+ */
+const METEO_HOSTS = [
+  "https://api.open-meteo.com/v1/forecast",
+  "https://api.open-meteo.com/v1/gfs",
+  "https://api.open-meteo.com/v1/ecmwf",
+  "https://api.open-meteo.com/v1/jma",
+];
+
+const sumMm = (xs: (number | null | undefined)[]) =>
+  Math.round(xs.reduce<number>((a, b) => a + (b ?? 0), 0) * 10) / 10;
+
+const istMs = (t: string) => new Date(`${t}+05:30`).getTime();
+
+/** Shape an Open-Meteo style response into our reading. */
+function parseOpenMeteo(data: any, source: string): RainNow {
+  const times: string[] = data.hourly?.time ?? [];
+  const mm: number[] = data.hourly?.precipitation ?? [];
+  if (!times.length) throw new Error(`${source}: no hourly precipitation returned`);
+  const now = Date.now();
+  let nowIdx = times.findIndex((t) => istMs(t) > now);
+  if (nowIdx < 0) nowIdx = times.length - 1;
+  const from = Math.max(0, nowIdx - 12);
+
+  const rainSeries = times
+    .slice(from, nowIdx)
+    .map((t, i) => ({ hour: t.slice(11, 16), mm: Number(mm[from + i] ?? 0) }));
+
+  const observedMm = sumMm(mm.slice(Math.max(0, nowIdx - 24), nowIdx));
+  const forecastMm = sumMm(mm.slice(nowIdx, nowIdx + 24));
+
+  const qTimes: string[] = data.minutely_15?.time ?? [];
+  const qMm: number[] = data.minutely_15?.precipitation ?? [];
+  let qIdx = qTimes.findIndex((t) => istMs(t) > now);
+  if (qIdx < 0) qIdx = qTimes.length;
+  const last60Mm = qTimes.length
+    ? sumMm(qMm.slice(Math.max(0, qIdx - 4), qIdx))
+    : Number(mm[Math.max(0, nowIdx - 1)] ?? 0);
+  const next60Mm = qTimes.length
+    ? sumMm(qMm.slice(qIdx, qIdx + 4))
+    : Number(mm[nowIdx] ?? 0);
+  const nowcast = qTimes.length
+    ? qTimes.slice(qIdx, qIdx + 8).map((t, i) => ({ time: t.slice(11, 16), mm: Number(qMm[qIdx + i] ?? 0) }))
+    : times.slice(nowIdx, nowIdx + 4).map((t, i) => ({ hour: t, time: t.slice(11, 16), mm: Number(mm[nowIdx + i] ?? 0) }));
+
+  const nowMmPerHr = Math.round(Number(data.current?.precipitation ?? mm[Math.max(0, nowIdx - 1)] ?? 0) * 10) / 10;
+
+  return {
+    nowMmPerHr,
+    raining: nowMmPerHr > 0 || last60Mm > 0.1,
+    last60Mm,
+    next60Mm,
+    observedMm,
+    forecastMm,
+    rainSeries,
+    nowcast,
+    observedAt: String(data.current?.time ?? times[Math.max(0, nowIdx - 1)] ?? "").replace("T", " "),
+    fetchedAt: new Date().toISOString(),
+    source,
+  };
+}
+
+/** MET Norway locationforecast → the same reading shape (independent agency). */
+async function fetchMetNo(lat: number, lon: number): Promise<RainNow> {
+  const url = `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat}&lon=${lon}`;
+  const data = await getJson(
+    url,
+    { headers: { "User-Agent": "JalNiti-student-project (flood decision support, Ahmedabad)" } },
+    12000,
+  );
+  const series: any[] = data?.properties?.timeseries ?? [];
+  if (!series.length) throw new Error("MET Norway: empty timeseries");
+  const hourMm = (e: any) =>
+    Number(e?.data?.next_1_hours?.details?.precipitation_amount ?? 0);
+  const istLabel = (iso: string) =>
+    new Date(iso).toLocaleTimeString("en-GB", {
+      timeZone: "Asia/Kolkata",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+  const next24 = series.slice(0, 24);
+  const nowMmPerHr = Math.round(hourMm(series[0]) * 10) / 10;
+  return {
+    nowMmPerHr,
+    raining: nowMmPerHr > 0,
+    last60Mm: lastGoodRain?.last60Mm ?? 0,
+    next60Mm: Math.round(hourMm(series[0]) * 10) / 10,
+    // MET Norway is forecast-only; keep the last measured 24 h total if we have one.
+    observedMm: lastGoodRain?.observedMm ?? 0,
+    forecastMm: sumMm(next24.map(hourMm)),
+    rainSeries: lastGoodRain?.rainSeries ?? [],
+    nowcast: series.slice(0, 8).map((e) => ({ time: istLabel(e.time), mm: hourMm(e) })),
+    observedAt: istLabel(series[0].time),
+    fetchedAt: new Date().toISOString(),
+    source: "MET Norway locationforecast",
+  };
+}
+
+/**
+ * India Meteorological Department — used only when an IMD API key is present.
+ * IMD does not issue public keys today, so the app must (and does) run fine
+ * without it; drop the key into the IMD_API_KEY environment variable and this
+ * provider is preferred automatically.
+ */
+async function fetchImd(lat: number, lon: number): Promise<RainNow> {
+  const key = process.env["IMD_API_KEY"];
+  if (!key) throw new Error("IMD_API_KEY not configured");
+  const base = process.env["IMD_API_BASE"] || "https://api.imd.gov.in";
+  const data = await getJson(
+    `${base}/nowcastapi.php?lat=${lat}&lon=${lon}`,
+    { headers: { Authorization: `Bearer ${key}` } },
+    12000,
+  );
+  const mm = Number(data?.rainfall ?? data?.precipitation ?? NaN);
+  if (!Number.isFinite(mm)) throw new Error("IMD: unexpected response shape");
+  return {
+    nowMmPerHr: mm,
+    raining: mm > 0,
+    last60Mm: mm,
+    next60Mm: Number(data?.nowcast_mm ?? 0),
+    observedMm: Number(data?.rainfall_24h ?? lastGoodRain?.observedMm ?? 0),
+    forecastMm: Number(data?.forecast_24h ?? lastGoodRain?.forecastMm ?? 0),
+    rainSeries: lastGoodRain?.rainSeries ?? [],
+    nowcast: [],
+    observedAt: String(data?.time ?? new Date().toISOString()).replace("T", " "),
+    fetchedAt: new Date().toISOString(),
+    source: "IMD API",
+  };
+}
 
 /**
  * Real-time rainfall for the ward centroid.
  *
- * Uses Open-Meteo's `current` block (updated every ~15 min from the same
- * radar/observation assimilation IMD feeds into) plus the 15-minute nowcast,
- * so "is it raining right now" is answered by an observation, not by a 24 h
- * forecast total. Cached for only 60 s so the dashboard can poll it live.
- *
- * If every attempt fails we return the last good reading marked `stale` with
- * the real error text, instead of leaving the dashboard with empty dashes.
+ * Every provider above is tried in turn; a 429 from one Open-Meteo model is no
+ * longer fatal because three other models and MET Norway are tried next.
+ * Cached 120 s, which also keeps the deployed app well under the free-tier
+ * rate limits that produced the HTTP 429 errors.
  */
 export async function fetchRainNow(): Promise<RainNow> {
-  return cached("rain-now", 60_000, async () => {
+  return cached("rain-now", 120_000, async () => {
     const [lat, lon] = WARD.center;
     const query =
       `?latitude=${lat}&longitude=${lon}` +
@@ -204,73 +340,37 @@ export async function fetchRainNow(): Promise<RainNow> {
       `&minutely_15=precipitation` +
       `&hourly=precipitation&past_days=2&forecast_days=2&timezone=Asia%2FKolkata`;
 
-    let data: any;
-    let lastErr: unknown;
-    for (let attempt = 0; attempt < 4 && !data; attempt++) {
-      const host = METEO_HOSTS[attempt % METEO_HOSTS.length];
+    const attempts: { label: string; run: () => Promise<RainNow> }[] = [
+      { label: "IMD", run: () => fetchImd(lat, lon) },
+      ...METEO_HOSTS.map((host) => ({
+        label: host,
+        run: async () =>
+          parseOpenMeteo(
+            await getJson(host + query, undefined, 12000),
+            `Open-Meteo ${host.split("/").pop()}`,
+          ),
+      })),
+      { label: "MET Norway", run: () => fetchMetNo(lat, lon) },
+    ];
+
+    const errors: string[] = [];
+    for (const a of attempts) {
       try {
-        data = await getJson(host + query, undefined, 12000);
+        const reading = await a.run();
+        lastGoodRain = reading;
+        return reading;
       } catch (err) {
-        lastErr = err;
-        await new Promise((r) => setTimeout(r, 400 * (attempt + 1)));
+        const msg = err instanceof Error ? err.message : String(err);
+        // A missing IMD key is expected, not an outage — don't report it.
+        if (!msg.includes("IMD_API_KEY")) errors.push(`${a.label}: ${msg}`);
+        await new Promise((r) => setTimeout(r, 300));
       }
     }
-    if (!data) {
-      const reason = lastErr instanceof Error ? lastErr.message : String(lastErr);
-      if (lastGoodRain) {
-        return { ...lastGoodRain, stale: true, staleReason: reason };
-      }
-      throw new Error(`Open-Meteo unreachable: ${reason}`);
-    }
 
-
-    const times: string[] = data.hourly.time;
-    const mm: number[] = data.hourly.precipitation;
-    const now = Date.now();
-    const ist = (t: string) => new Date(`${t}+05:30`).getTime();
-    let nowIdx = times.findIndex((t) => ist(t) > now);
-    if (nowIdx < 0) nowIdx = times.length - 1;
-    const from = Math.max(0, nowIdx - 12);
-
-    const rainSeries = times
-      .slice(from, nowIdx)
-      .map((t, i) => ({ hour: t.slice(11, 16), mm: Number(mm[from + i] ?? 0) }));
-
-    const sum = (xs: (number | null)[]) =>
-      Math.round(xs.reduce((a: number, b) => a + (b ?? 0), 0) * 10) / 10;
-
-    const observedMm = sum(mm.slice(Math.max(0, nowIdx - 24), nowIdx));
-    const forecastMm = sum(mm.slice(nowIdx, nowIdx + 24));
-
-    // 15-minute buckets around "now" → the last hour and the next hour.
-    const qTimes: string[] = data.minutely_15?.time ?? [];
-    const qMm: number[] = data.minutely_15?.precipitation ?? [];
-    let qIdx = qTimes.findIndex((t) => ist(t) > now);
-    if (qIdx < 0) qIdx = qTimes.length;
-    const last60Mm = sum(qMm.slice(Math.max(0, qIdx - 4), qIdx));
-    const next60Mm = sum(qMm.slice(qIdx, qIdx + 4));
-    const nowcast = qTimes
-      .slice(qIdx, qIdx + 8)
-      .map((t, i) => ({ time: t.slice(11, 16), mm: Number(qMm[qIdx + i] ?? 0) }));
-
-    const nowMmPerHr = Math.round(Number(data.current?.precipitation ?? 0) * 10) / 10;
-
-    const reading: RainNow = {
-      nowMmPerHr,
-      raining: nowMmPerHr > 0 || last60Mm > 0.1,
-      last60Mm,
-      next60Mm,
-      observedMm,
-      forecastMm,
-      rainSeries,
-      nowcast,
-      observedAt: String(data.current?.time ?? "").replace("T", " "),
-      fetchedAt: new Date().toISOString(),
-    };
-    lastGoodRain = reading;
-    return reading;
+    const reason = errors.join(" | ") || "no weather provider answered";
+    if (lastGoodRain) return { ...lastGoodRain, stale: true, staleReason: reason };
+    throw new Error(`No weather provider answered: ${reason}`);
   });
-
 }
 
 async function fetchRain() {
