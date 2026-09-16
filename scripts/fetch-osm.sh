@@ -11,7 +11,7 @@ fetch() {
   done
   return 1
 }
-echo "[out:json][timeout:120];way[\"highway\"~\"^(trunk|primary|secondary|tertiary|residential)\$\"](${BB});out geom;" > /tmp/q_roads.txt
+echo "[out:json][timeout:120];way[\"highway\"~\"^(trunk|primary|secondary|tertiary|unclassified|residential|living_street)\$\"](${BB});out geom;" > /tmp/q_roads.txt
 echo "[out:json][timeout:120];(way[\"waterway\"](${BB});way[\"natural\"=\"water\"](${BB}););out geom;" > /tmp/q_water.txt
 fetch /tmp/q_roads.txt /tmp/roads.json
 fetch /tmp/q_water.txt /tmp/water.json
