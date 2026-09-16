@@ -29,6 +29,8 @@ export interface RainNowDTO {
   stale?: boolean;
   /** The real upstream error text, so the UI can say what went wrong. */
   staleReason?: string;
+  /** Which weather upstream produced this reading (IMD / Open-Meteo / MET Norway). */
+  source?: string;
 }
 
 
