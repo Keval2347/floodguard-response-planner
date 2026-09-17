@@ -1007,6 +1007,7 @@ function Dashboard() {
                       </span>
                     </label>
                     <Slider
+                      aria-label="Rainfall in mm per 24 hours"
                       min={0}
                       max={200}
                       step={1}
@@ -1024,6 +1025,7 @@ function Dashboard() {
                     hint="Fleet size is the project assumption — no Indian municipality publishes a live vehicle feed."
                   >
                     <Slider
+                      aria-label="Trucks available"
                       min={0}
                       max={fleetTotal}
                       step={1}
@@ -1038,6 +1040,7 @@ function Dashboard() {
                     hint="The optimizer only assigns work it can finish inside this window."
                   >
                     <Slider
+                      aria-label="Shift length in minutes"
                       min={60}
                       max={480}
                       step={30}
