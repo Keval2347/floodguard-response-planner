@@ -56,7 +56,9 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:url", content: "https://floodguard-response-planner.lovable.app/" },
     ],
+    links: [{ rel: "canonical", href: "https://floodguard-response-planner.lovable.app/" }],
   }),
   component: Dashboard,
 });
@@ -642,7 +644,7 @@ function Dashboard() {
                   <p className="break-words text-sm font-semibold leading-tight">{selected.name}</p>
                   <p className="text-[10px] text-muted-foreground">Segment {selected.id}</p>
                 </div>
-                <Button variant="ghost" size="sm" className="-mr-2 -mt-1 h-6 shrink-0 px-2" onClick={() => setSelectedId(null)}>
+                <Button aria-label="Close road details" variant="ghost" size="sm" className="-mr-2 -mt-1 h-6 shrink-0 px-2" onClick={() => setSelectedId(null)}>
                   ✕
                 </Button>
               </div>
@@ -701,6 +703,7 @@ function Dashboard() {
             {/* ---- Module 1: per-street risk ---- */}
             <TabsContent value="risk" className="min-h-0 flex-1">
               <ScrollArea className="h-full px-3 pb-4">
+                <h2 className="sr-only">Per-street waterlogging risk</h2>
                 <p className="pb-2 text-xs text-muted-foreground">
                   {scored.length} real OSM street segments, ranked by a waterlogging{" "}
                   <strong>risk index</strong> (0–100) at {scenario.rainMm} mm/24h. The index is a
@@ -756,6 +759,7 @@ function Dashboard() {
               {/* Radix sizes the viewport child as a table, which lets long
                   hospital names push past the panel — force block layout. */}
               <ScrollArea className="h-full px-3 pb-4 [&_[data-radix-scroll-area-viewport]>div]:!block">
+                <h2 className="sr-only">Hospitals exposed to flood risk</h2>
 
                 <Card className="mb-3 w-full gap-1 overflow-hidden p-3 text-xs break-words">
                   <p className="flex items-center gap-2 text-sm font-medium">
@@ -821,6 +825,7 @@ function Dashboard() {
             {/* ---- Module 2: pump-truck allocation ---- */}
             <TabsContent value="plan" className="min-h-0 flex-1">
               <ScrollArea className="h-full px-3 pb-4">
+                <h2 className="sr-only">Pump-truck allocation plan</h2>
                 <Card className="mb-3 gap-1 p-3 text-xs">
                   <p className="text-sm font-medium">
                     {plan.assignments.length} assignments · {plan.unserved.length} unserved
@@ -888,6 +893,7 @@ function Dashboard() {
             {/* ---- Module 3: what-if simulator ---- */}
             <TabsContent value="whatif" className="min-h-0 flex-1">
               <ScrollArea className="h-full px-3 pb-4">
+                <h2 className="sr-only">What-if scenario simulator</h2>
                 <div className="space-y-5">
                   <Card className="gap-2 p-3">
                     <div className="flex items-center justify-between gap-2">
@@ -1155,6 +1161,7 @@ function Dashboard() {
             {/* ---- Provenance ---- */}
             <TabsContent value="data" className="min-h-0 flex-1">
               <ScrollArea className="h-full px-3 pb-4">
+                <h2 className="sr-only">Data sources and provenance</h2>
                 <div className="space-y-3">
                   <Card className="gap-1 p-3 text-xs">
                     <p className="flex items-center gap-2 text-sm font-medium">
