@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://floodguard-response-planner.lovable.app/sitemap.xml
