@@ -78,11 +78,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "JalNiti — Ward Flood Response Console" },
+      {
+        name: "description",
+        content:
+          "Street-level waterlogging risk, pump-truck allocation and rainfall scenario planning for Navrangpura ward, Ahmedabad.",
+      },
+      { name: "author", content: "JalNiti" },
+      { property: "og:title", content: "JalNiti — Ward Flood Response Console" },
+      {
+        property: "og:description",
+        content:
+          "Street-level waterlogging risk, pump-truck allocation and rainfall scenario planning for Navrangpura ward, Ahmedabad.",
+      },
+      { property: "og:site_name", content: "JalNiti" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
