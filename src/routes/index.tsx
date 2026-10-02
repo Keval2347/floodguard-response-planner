@@ -244,10 +244,13 @@ function Dashboard() {
   // Once real data lands, start from the actual observed rainfall + full fleet.
   useEffect(() => {
     if (ward && !initialised) {
-      setScenario(defaultScenario(ward));
+      // Same rainfall load as "Reset to the live feed", so opening the app and
+      // resetting always show the identical map.
+      const base = defaultScenario(ward);
+      setScenario({ ...base, rainMm: liveRainMm ?? base.rainMm });
       setInitialised(true);
     }
-  }, [ward, initialised]);
+  }, [ward, initialised, liveRainMm]);
 
   // Live mode: every poll pushes the measured rainfall into the risk model.
   useEffect(() => {

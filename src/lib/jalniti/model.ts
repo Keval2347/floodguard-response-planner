@@ -36,7 +36,12 @@ export interface ScenarioOverrides {
 
 export function defaultScenario(ward: WardData | undefined): ScenarioOverrides {
   return {
-    rainMm: Math.max(10, Math.round((ward?.forecastMm || WARD.reference_rain_mm) / 5) * 5),
+    // Real measured load only — a dry day must start dry. (Previously a 0 mm
+    // forecast fell back to the 65 mm reference storm, painting a sunny ward red.)
+    rainMm: Math.max(
+      0,
+      Math.round(Math.max(ward?.observedMm ?? 0, ward?.forecastMm ?? 0) * 10) / 10,
+    ),
     drainsCleared: [],
     closed: [],
     trucksAvailable: (ward?.depots ?? []).reduce((n, d) => n + d.trucks, 0) || 10,
