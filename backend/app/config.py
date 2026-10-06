@@ -23,6 +23,9 @@ from typing import Any
 import yaml
 from dotenv import load_dotenv
 
+# Imported here (not inside get_config) so an import error surfaces at startup.
+from app.schemas import WardYamlSchema
+
 # backend/app/config.py -> parents[1] is backend/
 BACKEND_DIR = Path(__file__).resolve().parents[1]
 CONFIG_PATH = BACKEND_DIR / "config" / "ward_config.yaml"
@@ -99,10 +102,20 @@ class Config:
 
     @property
     def database_url(self) -> str:
-        return os.getenv(
-            "DATABASE_URL",
-            "postgresql+psycopg://postgres:jalniti@localhost:5432/postgres",
-        )
+        """
+        Database connection URL.
+        Configured via the DATABASE_URL environment variable, or constructed
+        from individual POSTGRES_* environment variables. Never hardcode credentials.
+        """
+        if env_url := os.getenv("DATABASE_URL"):
+            return env_url
+        user = os.getenv("POSTGRES_USER", "postgres")
+        password = os.getenv("POSTGRES_PASSWORD")
+        host = os.getenv("POSTGRES_HOST", "localhost")
+        port = os.getenv("POSTGRES_PORT", "5432")
+        db = os.getenv("POSTGRES_DB", "postgres")
+        auth = f"{user}:{password}@" if password else f"{user}@"
+        return f"postgresql+psycopg://{auth}{host}:{port}/{db}"
 
     @property
     def imd_api_base(self) -> str:
@@ -113,6 +126,14 @@ class Config:
 def get_config(path: Path | None = None) -> Config:
     """Read ward_config.yaml once and cache it for the process lifetime."""
     raw = yaml.safe_load((path or CONFIG_PATH).read_text(encoding="utf-8"))
+
+    # Validate the YAML structure before unpacking into dataclasses.  This
+    # catches typos, wrong types, missing keys, and unexpected sections early
+    # (at import / startup time) with a clear Pydantic error message.
+    # strict=False here because YAML scalars are untyped (e.g. 30 is always
+    # int from PyYAML), but field-level constraints (ge, le, pattern) still
+    # apply.
+    WardYamlSchema.model_validate(raw, strict=False)
 
     ward = WardConfig(**raw["ward"])
 

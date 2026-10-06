@@ -17,15 +17,31 @@ from __future__ import annotations
 import argparse
 import dataclasses
 
+from pydantic import ValidationError
+
 from app.config import get_config
 from app.data_pipeline import dem_source, osm_source, rainfall_source
+from app.schemas import PipelineCliArgsSchema
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="JalNiti data pipeline (step a)")
     parser.add_argument("--refresh", action="store_true", help="ignore cache, re-fetch everything")
     parser.add_argument("--ward", help="override the ward place_name from ward_config.yaml")
-    args = parser.parse_args()
+    raw_args = parser.parse_args()
+
+    # Validate CLI arguments against a strict schema before anything else runs.
+    # This rejects --ward values with shell-unsafe characters and ensures
+    # --refresh is a plain boolean (argparse already guarantees this, but the
+    # schema provides a single documented source of truth for both code paths).
+    try:
+        args = PipelineCliArgsSchema.model_validate(
+            {"refresh": raw_args.refresh, "ward": raw_args.ward},
+            strict=False,  # argparse gives us native types; no coercion needed
+        )
+    except ValidationError as exc:
+        print(f"[error] invalid CLI arguments:\n{exc}")
+        return 2
 
     cfg = get_config()
     if args.ward:

@@ -16,10 +16,16 @@
  * same construct-then-improve scheme OR-Tools' routing library uses
  * (PATH_CHEAPEST_ARC + GUIDED_LOCAL_SEARCH). The greedy answer is computed
  * too, and the UI reports the improvement so the gain is auditable.
+ *
+ * INPUT VALIDATION POLICY (enforced in scoreSegments and allocate):
+ * Every ScenarioOverrides object is validated against ScenarioOverridesSchema
+ * before any computation runs. Callers that pass invalid data receive a thrown
+ * Error — the model never silently clamps or ignores bad input.
  */
 
 import { WARD, bandOf, type Depot, type StreetSegment, type WardData } from "./data";
 import { midOf, type LatLon } from "./geo";
+import { parseStrict, ScenarioOverridesSchema } from "./schema";
 
 export interface ScenarioOverrides {
   /** Forecast rainfall in mm/24h. Drives the whole risk map. */
@@ -36,7 +42,10 @@ export interface ScenarioOverrides {
 
 export function defaultScenario(ward: WardData | undefined): ScenarioOverrides {
   return {
-    rainMm: Math.max(10, Math.round((ward?.forecastMm || WARD.reference_rain_mm) / 5) * 5),
+    // The default map represents conditions already observed today. A future
+    // forecast remains available in the weather panel, but must not make a
+    // dry ward look flooded before that rain arrives.
+    rainMm: Math.max(0, Math.round((ward?.observedMm ?? 0) * 10) / 10),
     drainsCleared: [],
     closed: [],
     trucksAvailable: (ward?.depots ?? []).reduce((n, d) => n + d.trucks, 0) || 10,
@@ -67,6 +76,9 @@ export interface ScoredSegment extends StreetSegment {
  * together; spatial contrast comes from terrain + network features.
  */
 export function scoreSegments(ward: WardData, o: ScenarioOverrides): ScoredSegment[] {
+  // Reject invalid scenario overrides before running any computation.
+  parseStrict(ScenarioOverridesSchema, o, "scoreSegments: scenario overrides");
+
   const rainFactor = Math.log1p(o.rainMm) / Math.log1p(WARD.reference_rain_mm);
   const depotCount = ward.depots.length;
 
@@ -320,6 +332,10 @@ export function allocate(
   scored: ScoredSegment[],
   o: ScenarioOverrides,
 ): AllocationResult {
+  // Validate overrides here too: allocate() can be called independently of
+  // scoreSegments() (e.g. in tests), so we guard both entry points.
+  parseStrict(ScenarioOverridesSchema, o, "allocate: scenario overrides");
+
   const M = ward.travelMin;
 
   const trucks: Truck[] = [];

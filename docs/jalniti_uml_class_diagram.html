@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JalNiti — UML Class Diagram (Capstone 2)</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#181b24;--border:#2a2d38;--text:#c9cdd5;--dim:#7a7f8d;--accent:#58a6ff;--accent2:#3fb950;--iface:#79c0ff;--enum:#ffa657;--cls:#58a6ff;--dc:#56d364;--lgen:#bc8cff;--lcomp:#e3943a;--laggr:#58a6ff;--lassoc:#8b949e;--ldep:#8b949e;--mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:auto}
+.hd{padding:24px 36px 16px;border-bottom:1px solid var(--border)}
+.hd h1{font-family:var(--mono);font-size:20px;font-weight:700;color:#fff}
+.hd h1 em{color:var(--accent);font-style:normal}
+.hd .sub{font-size:12px;color:var(--dim);margin-top:3px;font-family:var(--mono)}
+.lg{display:flex;flex-wrap:wrap;gap:18px;padding:12px 36px;border-bottom:1px solid var(--border);background:#13151d;font-size:11px;font-family:var(--mono);align-items:center}
+.lg .i{display:flex;align-items:center;gap:6px}
+.lg .sw{width:13px;height:13px;border-radius:3px;border:1.4px solid;flex-shrink:0}
+.wrap{padding:28px 20px 40px;overflow-x:auto;display:flex;justify-content:center}
+svg.uml{font-family:var(--mono);max-width:none}
+.cb rect.bg{rx:6;ry:6} .cb rect.hd2{rx:6;ry:6}
+.cb line.sp{stroke:var(--border);stroke-width:1}
+.cb text.nm{font-weight:700;font-size:12.5px;fill:#fff}
+.cb text.st{font-size:9.5px;fill:var(--lgen);font-weight:500}
+.cb text.at{font-size:10.5px;fill:var(--text)}
+.cb text.mt{font-size:10.5px;fill:var(--text);font-style:italic}
+.rl{fill:none;stroke-width:1.5}
+.rc{stroke:var(--lcomp)} .ra{stroke:var(--laggr)} .rg{stroke:var(--lgen)} .rs{stroke:var(--lassoc)} .rd{stroke:var(--ldep);stroke-dasharray:6,4}
+text.mu{font-size:10px;fill:#8b949e;font-family:var(--mono);font-weight:600}
+text.lb{font-size:10px;fill:#8b949e;font-family:var(--mono);font-weight:500}
+.sl{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
+.ex{max-width:960px;margin:0 auto;padding:36px 36px 56px}
+.ex h2{font-family:var(--mono);font-size:16px;font-weight:700;color:#fff;margin-bottom:14px;border-bottom:1px solid var(--border);padding-bottom:8px}
+.ex h3{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent);margin:16px 0 6px}
+.ex p,.ex li{font-size:13px;line-height:1.7;color:var(--text)}
+.ex ul{padding-left:18px} .ex li{margin-bottom:4px}
+.ex code{font-family:var(--mono);font-size:11.5px;background:#1c1f2b;padding:1px 5px;border-radius:3px;color:var(--accent)}
+.tg{display:inline-block;font-family:var(--mono);font-size:9.5px;font-weight:600;padding:2px 6px;border-radius:3px;margin-right:4px;vertical-align:middle}
+.tg-c{background:rgba(227,148,58,.16);color:var(--lcomp);border:1px solid rgba(227,148,58,.32)}
+.tg-a{background:rgba(88,166,255,.1);color:var(--laggr);border:1px solid rgba(88,166,255,.28)}
+.tg-g{background:rgba(188,140,255,.1);color:var(--lgen);border:1px solid rgba(188,140,255,.28)}
+.tg-d{background:rgba(139,148,158,.16);color:var(--dim);border:1px solid rgba(139,148,158,.36)}
+.tg-s{background:rgba(139,148,158,.1);color:var(--dim);border:1px solid rgba(139,148,158,.32)}
+</style>
+</head>
+<body>
+<div class="hd">
+  <h1>&#127754; <em>JalNiti</em> &#8212; UML Class Diagram</h1>
+  <div class="sub">Capstone Presentation 2 &#183; Oct 3, 2026 &#183; github.com/Keval2347/floodguard-response-planner</div>
+</div>
+<div class="lg">
+  <div class="i"><div class="sw" style="background:rgba(121,192,255,.1);border-color:var(--iface)"></div>&#171;interface&#187;</div>
+  <div class="i"><div class="sw" style="background:rgba(86,211,100,.08);border-color:var(--dc)"></div>&#171;dataclass&#187;</div>
+  <div class="i"><div class="sw" style="background:rgba(255,166,87,.08);border-color:var(--enum)"></div>&#171;enumeration&#187;</div>
+  <div class="i"><div class="sw" style="background:rgba(88,166,255,.08);border-color:var(--cls)"></div>Class/Module</div>
+  <div class="i"><svg width="30" height="12"><line x1="0" y1="6" x2="30" y2="6" stroke="var(--lgen)" stroke-width="1.5"/><polygon points="30,6 23,2.5 23,9.5" fill="none" stroke="var(--lgen)" stroke-width="1.3"/></svg>Generalization (Extends)</div>
+  <div class="i"><svg width="30" height="12"><line x1="9" y1="6" x2="30" y2="6" stroke="var(--lcomp)" stroke-width="1.5"/><polygon points="0,6 4.5,2.5 9,6 4.5,9.5" fill="var(--lcomp)"/></svg>Composition (Owns)</div>
+  <div class="i"><svg width="30" height="12"><line x1="9" y1="6" x2="30" y2="6" stroke="var(--laggr)" stroke-width="1.5"/><polygon points="0,6 4.5,2.5 9,6 4.5,9.5" fill="none" stroke="var(--laggr)" stroke-width="1.3"/></svg>Aggregation (Shared Ref)</div>
+  <div class="i"><svg width="30" height="12"><line x1="0" y1="6" x2="30" y2="6" stroke="var(--lassoc)" stroke-width="1.5"/><polygon points="30,6 24,3.5 24,8.5" fill="var(--lassoc)"/></svg>Association</div>
+  <div class="i"><svg width="30" height="12"><line x1="0" y1="6" x2="30" y2="6" stroke="var(--ldep)" stroke-width="1.5" stroke-dasharray="5,3"/><polygon points="30,6 24,3.5 24,8.5" fill="none" stroke="var(--ldep)" stroke-width="1.2"/></svg>Dependency (Uses)</div>
+</div>
+
+<div class="wrap">
+<svg class="uml" viewBox="0 0 1780 1560" width="1780" height="1560" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="aa" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,1L8,4L0,7Z" fill="var(--lassoc)"/></marker>
+<marker id="ad" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,1L8,4L0,7" fill="none" stroke="var(--ldep)" stroke-width="1.2"/></marker>
+<marker id="ag" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,1L10,5L0,9Z" fill="var(--bg)" stroke="var(--lgen)" stroke-width="1.3"/></marker>
+<marker id="dc" viewBox="0 0 12 8" refX="0" refY="4" markerWidth="12" markerHeight="8" orient="auto"><path d="M0,4L6,0L12,4L6,8Z" fill="var(--lcomp)"/></marker>
+<marker id="da" viewBox="0 0 12 8" refX="0" refY="4" markerWidth="12" markerHeight="8" orient="auto"><path d="M0,4L6,0L12,4L6,8Z" fill="var(--bg)" stroke="var(--laggr)" stroke-width="1.3"/></marker>
+</defs>
+
+<!-- Section headers -->
+<text x="40" y="32" class="sl" fill="var(--dim)">MODULE 0 &#8212; DOMAIN DATA &amp; TYPES</text>
+<text x="40" y="440" class="sl" fill="var(--dim)">MODULE 1 &#8212; RISK SCORING</text>
+<text x="635" y="440" class="sl" fill="var(--dim)">MODULE 2 &#8212; RESOURCE ALLOCATION (VRP)</text>
+<text x="40" y="725" class="sl" fill="var(--dim)">MODULE 3 &#8212; DATA PIPELINE (TS + PYTHON)</text>
+<text x="800" y="725" class="sl" fill="var(--dim)">MODULE 4 &#8212; SERVICE &amp; UI</text>
+
+<!-- ═══════════════════════════════════════════════════
+     ROW 1: MODULE 0 DOMAIN DATA & TYPES
+     ═══════════════════════════════════════════════════ -->
+
+<!-- 1. RiskBand -->
+<g class="cb" transform="translate(40,52)">
+<rect class="bg" width="170" height="120" fill="var(--surface)" stroke="var(--enum)" stroke-width="1.2"/>
+<rect class="hd2" width="170" height="34" fill="rgba(255,166,87,.07)" stroke="none"/>
+<text class="st" x="85" y="14" text-anchor="middle">&#171;enumeration&#187;</text>
+<text class="nm" x="85" y="29" text-anchor="middle" fill="var(--enum)">RiskBand</text>
+<line class="sp" x1="0" y1="34" x2="170" y2="34"/>
+<text class="at" x="12" y="50">critical</text><text class="at" x="12" y="64">high</text>
+<text class="at" x="12" y="78">moderate</text><text class="at" x="12" y="92">low</text>
+<line class="sp" x1="0" y1="100" x2="170" y2="100"/>
+<text class="mt" x="12" y="114">+ bandOf(risk): RiskBand</text>
+</g>
+
+<!-- 2. StreetSegment -->
+<g class="cb" transform="translate(260,52)">
+<rect class="bg" width="235" height="218" fill="var(--surface)" stroke="var(--iface)" stroke-width="1.2"/>
+<rect class="hd2" width="235" height="34" fill="rgba(121,192,255,.05)" stroke="none"/>
+<text class="st" x="117" y="14" text-anchor="middle">&#171;interface&#187;</text>
+<text class="nm" x="117" y="29" text-anchor="middle" fill="var(--iface)">StreetSegment</text>
+<line class="sp" x1="0" y1="34" x2="235" y2="34"/>
+<text class="at" x="10" y="50">+ id: string</text>
+<text class="at" x="10" y="64">+ name: string</text>
+<text class="at" x="10" y="78">+ osm_id: number</text>
+<text class="at" x="10" y="92">+ path: LatLon[]</text>
+<text class="at" x="10" y="106">+ length_m: number</text>
+<text class="at" x="10" y="120">+ elevation_m: number</text>
+<text class="at" x="10" y="134">+ slope_pct: number</text>
+<text class="at" x="10" y="148">+ dist_to_water_m: number</text>
+<text class="at" x="10" y="162">+ road_density: number</text>
+<text class="at" x="10" y="176">+ base_risk: number</text>
+<text class="at" x="10" y="190">+ highway: string</text>
+</g>
+
+<!-- 3. Depot -->
+<g class="cb" transform="translate(550,52)">
+<rect class="bg" width="185" height="136" fill="var(--surface)" stroke="var(--iface)" stroke-width="1.2"/>
+<rect class="hd2" width="185" height="34" fill="rgba(121,192,255,.05)" stroke="none"/>
+<text class="st" x="92" y="14" text-anchor="middle">&#171;interface&#187;</text>
+<text class="nm" x="92" y="29" text-anchor="middle" fill="var(--iface)">Depot</text>
+<line class="sp" x1="0" y1="34" x2="185" y2="34"/>
+<text class="at" x="10" y="50">+ id: string</text>
+<text class="at" x="10" y="64">+ name: string</text>
+<text class="at" x="10" y="78">+ lat: number</text>
+<text class="at" x="10" y="92">+ lon: number</text>
+<text class="at" x="10" y="106">+ trucks: number</text>
+</g>
+
+<!-- 4. RainPoint -->
+<g class="cb" transform="translate(775,52)">
+<rect class="bg" width="180" height="96" fill="var(--surface)" stroke="var(--iface)" stroke-width="1.2"/>
+<rect class="hd2" width="180" height="34" fill="rgba(121,192,255,.05)" stroke="none"/>
+<text class="st" x="90" y="14" text-anchor="middle">&#171;interface&#187;</text>
+<text class="nm" x="90" y="29" text-anchor="middle" fill="var(--iface)">RainPoint</text>
+<line class="sp" x1="0" y1="34" x2="180" y2="34"/>
+<text class="at" x="10" y="50">+ hour: string</text>
+<text class="at" x="10" y="64">+ mm: number</text>
+</g>
+
+<!-- 5. WardData -->
+<g class="cb" transform="translate(995,52)">
+<rect class="bg" width="245" height="204" fill="var(--surface)" stroke="var(--iface)" stroke-width="1.2"/>
+<rect class="hd2" width="245" height="34" fill="rgba(121,192,255,.05)" stroke="none"/>
+<text class="st" x="122" y="14" text-anchor="middle">&#171;interface&#187;</text>
+<text class="nm" x="122" y="29" text-anchor="middle" fill="var(--iface)">WardData</text>
+<line class="sp" x1="0" y1="34" x2="245" y2="34"/>
+<text class="at" x="10" y="50">+ segments: StreetSegment[]</text>
+<text class="at" x="10" y="64">+ depots: Depot[]</text>
+<text class="at" x="10" y="78">+ rainSeries: RainPoint[]</text>
+<text class="at" x="10" y="92">+ forecastMm: number</text>
+<text class="at" x="10" y="106">+ observedMm: number</text>
+<text class="at" x="10" y="120">+ travelMin: number[][]</text>
+<text class="at" x="10" y="134">+ fetchedAt: string</text>
+<text class="at" x="10" y="148">+ notes: string[]</text>
+</g>
+
+<!-- 6. Hospital -->
+<g class="cb" transform="translate(1285,52)">
+<rect class="bg" width="215" height="186" fill="var(--surface)" stroke="var(--iface)" stroke-width="1.2"/>
+<rect class="hd2" width="215" height="34" fill="rgba(121,192,255,.05)" stroke="none"/>
+<text class="st" x="107" y="14" text-anchor="middle">&#171;interface&#187;</text>
+<text class="nm" x="107" y="29" text-anchor="middle" fill="var(--iface)">Hospital</text>
+<line class="sp" x1="0" y1="34" x2="215" y2="34"/>
+<text class="at" x="10" y="50">+ id: string</text>
+<text class="at" x="10" y="64">+ name: string</text>
+<text class="at" x="10" y="78">+ lat: number</text>
+<text class="at" x="10" y="92">+ lon: number</text>
+<text class="at" x="10" y="106">+ emergency: boolean</text>
+<text class="at" x="10" y="120">+ beds: number | null</text>
+<text class="at" x="10" y="134">+ operator: string | null</text>
+<text class="at" x="10" y="148">+ healthcare: string</text>
+</g>
+
+<!-- 7. HospitalRisk -->
+<g class="cb" transform="translate(1540,52)">
+<rect class="bg" width="225" height="176" fill="var(--surface)" stroke="var(--iface)" stroke-width="1.2"/>
+<rect class="hd2" width="225" height="34" fill="rgba(121,192,255,.05)" stroke="none"/>
+<text class="st" x="112" y="14" text-anchor="middle">&#171;interface&#187;</text>
+<text class="nm" x="112" y="29" text-anchor="middle" fill="var(--iface)">HospitalRisk</text>
+<line class="sp" x1="0" y1="34" x2="225" y2="34"/>
+<text class="at" x="10" y="50">+ accessRisk: number</text>
+<text class="at" x="10" y="64">+ approachRoads: number</text>
+<text class="at" x="10" y="78">+ worstRoad: string | null</text>
+<text class="at" x="10" y="92">+ distanceToWardM: number</text>
+<text class="at" x="10" y="106">+ status: AccessStatus</text>
+<line class="sp" x1="0" y1="116" x2="225" y2="116"/>
+<text class="mt" x="10" y="132">+ assessHospitals(): HospRisk[]</text>
+<text class="mt" x="10" y="148">+ urgentHospitals(): HospRisk[]</text>
+</g>
+
+<!-- 8. AccessStatus -->
+<g class="cb" transform="translate(1540,268)">
+<rect class="bg" width="175" height="118" fill="var(--surface)" stroke="var(--enum)" stroke-width="1.2"/>
+<rect class="hd2" width="175" height="34" fill="rgba(255,166,87,.07)" stroke="none"/>
+<text class="st" x="87" y="14" text-anchor="middle">&#171;enumeration&#187;</text>
+<text class="nm" x="87" y="29" text-anchor="middle" fill="var(--enum)">AccessStatus</text>
+<line class="sp" x1="0" y1="34" x2="175" y2="34"/>
+<text class="at" x="12" y="50">cut-off</text><text class="at" x="12" y="64">at-risk</text>
+<text class="at" x="12" y="78">watch</text><text class="at" x="12" y="92">clear</text>
+<text class="at" x="12" y="106">unknown</text>
+</g>
+
+<!-- Module 0 Relationship Lines -->
+<!-- HospitalRisk extends Hospital (Generalization) -->
+<line x1="1540" y1="140" x2="1500" y2="140" class="rl rg" marker-end="url(#ag)"/>
+<text class="lb" x="1508" y="132">extends</text>
+
+<!-- HospitalRisk -> AccessStatus (Association) -->
+<line x1="1627" y1="228" x2="1627" y2="268" class="rl rs" marker-end="url(#aa)"/>
+<text class="lb" x="1635" y="252">status</text>
+
+<!-- WardData owns RainPoint[] (Composition) -->
+<line x1="995" y1="86" x2="955" y2="86" class="rl rc" marker-start="url(#dc)"/>
+<text class="mu" x="982" y="78">1</text><text class="mu" x="962" y="78">0..*</text>
+
+<!-- WardData owns Depot[] (Composition, routes in open space at y=168 below RainPoint) -->
+<line x1="995" y1="168" x2="735" y2="168" class="rl rc" marker-start="url(#dc)"/>
+<text class="mu" x="982" y="160">1</text><text class="mu" x="742" y="160">1..*</text>
+
+<!-- WardData owns StreetSegment[] (Composition, routes in open space at y=210 below Depot and RainPoint) -->
+<line x1="995" y1="210" x2="495" y2="210" class="rl rc" marker-start="url(#dc)"/>
+<text class="mu" x="982" y="202">1</text><text class="mu" x="503" y="202">1..*</text>
+
+
+<!-- ═══════════════════════════════════════════════════
+     ROW 2: MODULE 1 (RISK) & MODULE 2 (ALLOCATION)
+     ═══════════════════════════════════════════════════ -->
+
+<!-- 9. ScenarioOverrides -->
+<g class="cb" transform="translate(40,460)">
+<rect class="bg" width="235" height="160" fill="var(--surface)" stroke="var(--iface)" stroke-width="1.2"/>
+<rect class="hd2" width="235" height="34" fill="rgba(121,192,255,.05)" stroke="none"/>
+<text class="st" x="117" y="14" text-anchor="middle">&#171;interface&#187;</text>
+<text class="nm" x="117" y="29" text-anchor="middle" fill="var(--iface)">ScenarioOverrides</text>
+<line class="sp" x1="0" y1="34" x2="235" y2="34"/>
+<text class="at" x="10" y="50">+ rainMm: number</text>
+<text class="at" x="10" y="64">+ drainsCleared: string[]</text>
+<text class="at" x="10" y="78">+ closed: string[]</text>
+<text class="at" x="10" y="92">+ trucksAvailable: number</text>
+<text class="at" x="10" y="106">+ shiftMinutes: number</text>
+<line class="sp" x1="0" y1="116" x2="235" y2="116"/>
+<text class="mt" x="10" y="132">+ defaultScenario(ward): Overrides</text>
+</g>
+
+<!-- 10. ScoredSegment -->
+<g class="cb" transform="translate(330,460)">
+<rect class="bg" width="245" height="174" fill="var(--surface)" stroke="var(--iface)" stroke-width="1.2"/>
+<rect class="hd2" width="245" height="34" fill="rgba(121,192,255,.05)" stroke="none"/>
+<text class="st" x="122" y="14" text-anchor="middle">&#171;interface&#187;</text>
+<text class="nm" x="122" y="29" text-anchor="middle" fill="var(--iface)">ScoredSegment</text>
+<line class="sp" x1="0" y1="34" x2="245" y2="34"/>
+<text class="at" x="10" y="50">+ risk: number</text>
+<text class="at" x="10" y="64">+ band: RiskBand</text>
+<text class="at" x="10" y="78">+ exposure: number</text>
+<text class="at" x="10" y="92">+ matrixIndex: number</text>
+<text class="at" x="10" y="106">+ mid: LatLon</text>
+<text class="at" x="10" y="120">+ confidence: measured|indicative</text>
+<line class="sp" x1="0" y1="128" x2="245" y2="128"/>
+<text class="mt" x="10" y="144">+ scoreSegments(ward,o): Scored[]</text>
+</g>
+
+<!-- 11. Truck -->
+<g class="cb" transform="translate(635,460)">
+<rect class="bg" width="195" height="138" fill="var(--surface)" stroke="var(--cls)" stroke-width="1.2"/>
+<rect class="hd2" width="195" height="30" fill="rgba(88,166,255,.05)" stroke="none"/>
+<text class="nm" x="97" y="21" text-anchor="middle" fill="var(--cls)">Truck</text>
+<line class="sp" x1="0" y1="30" x2="195" y2="30"/>
+<text class="at" x="10" y="46">- id: string</text>
+<text class="at" x="10" y="60">- depot: Depot</text>
+<text class="at" x="10" y="74">- depotIndex: number</text>
+<text class="at" x="10" y="88">- seq: number[]</text>
+<line class="sp" x1="0" y1="96" x2="195" y2="96"/>
+<text class="mt" x="10" y="112">- routeTime(M,seq): number</text>
+<text class="mt" x="10" y="126">- exposureOf(seq): number</text>
+</g>
+
+<!-- 12. Assignment -->
+<g class="cb" transform="translate(885,460)">
+<rect class="bg" width="235" height="174" fill="var(--surface)" stroke="var(--iface)" stroke-width="1.2"/>
+<rect class="hd2" width="235" height="34" fill="rgba(121,192,255,.05)" stroke="none"/>
+<text class="st" x="117" y="14" text-anchor="middle">&#171;interface&#187;</text>
+<text class="nm" x="117" y="29" text-anchor="middle" fill="var(--iface)">Assignment</text>
+<line class="sp" x1="0" y1="34" x2="235" y2="34"/>
+<text class="at" x="10" y="50">+ truck: string</text>
+<text class="at" x="10" y="64">+ depot: Depot</text>
+<text class="at" x="10" y="78">+ segment: ScoredSegment</text>
+<text class="at" x="10" y="92">+ travelMin: number</text>
+<text class="at" x="10" y="106">+ arriveMin: number</text>
+<text class="at" x="10" y="120">+ fromIndex: number</text>
+<text class="at" x="10" y="134">+ fromPoint: LatLon</text>
+<text class="at" x="10" y="148">+ leg: number</text>
+</g>
+
+<!-- 13. AllocationResult -->
+<g class="cb" transform="translate(1175,460)">
+<rect class="bg" width="255" height="204" fill="var(--surface)" stroke="var(--iface)" stroke-width="1.2"/>
+<rect class="hd2" width="255" height="34" fill="rgba(121,192,255,.05)" stroke="none"/>
+<text class="st" x="127" y="14" text-anchor="middle">&#171;interface&#187;</text>
+<text class="nm" x="127" y="29" text-anchor="middle" fill="var(--iface)">AllocationResult</text>
+<line class="sp" x1="0" y1="34" x2="255" y2="34"/>
+<text class="at" x="10" y="50">+ assignments: Assignment[]</text>
+<text class="at" x="10" y="64">+ unserved: ScoredSegment[]</text>
+<text class="at" x="10" y="78">+ coveredExposure: number</text>
+<text class="at" x="10" y="92">+ totalExposure: number</text>
+<text class="at" x="10" y="106">+ greedyExposure: number</text>
+<text class="at" x="10" y="120">+ improvements: number</text>
+<text class="at" x="10" y="134">+ method: string</text>
+<line class="sp" x1="0" y1="144" x2="255" y2="144"/>
+<text class="mt" x="10" y="160">+ allocate(ward,scored,o): Result</text>
+<text class="mt" x="10" y="176">- greedyPlan(M,tasks,...): number</text>
+<text class="mt" x="10" y="192">- localSearch(M,tasks,...): int</text>
+</g>
+
+<!-- Module 1 & 2 Relationship Lines -->
+<!-- ScoredSegment extends StreetSegment (Generalization - direct vertical line) -->
+<line x1="412" y1="460" x2="412" y2="270" class="rl rg" marker-end="url(#ag)"/>
+<text class="lb" x="420" y="360">extends</text>
+
+<!-- ScoredSegment depends on RiskBand (Dependency - routed via open channel at y=390) -->
+<line x1="350" y1="460" x2="350" y2="390" class="rl rd"/>
+<line x1="350" y1="390" x2="125" y2="390" class="rl rd"/>
+<line x1="125" y1="390" x2="125" y2="172" class="rl rd" marker-end="url(#ad)"/>
+<text class="lb" x="135" y="280">band: RiskBand</text>
+
+<!-- ScenarioOverrides -> ScoredSegment (Dependency - parameter in scoreSegments) -->
+<line x1="275" y1="520" x2="330" y2="520" class="rl rd" marker-end="url(#ad)"/>
+<text class="lb" x="282" y="512">overrides</text>
+
+<!-- AllocationResult owns Assignment[] (Composition) -->
+<line x1="1175" y1="500" x2="1120" y2="500" class="rl rc" marker-start="url(#dc)"/>
+<text class="mu" x="1160" y="492">1</text><text class="mu" x="1128" y="492">1..*</text>
+
+<!-- Truck aggregates Depot (Aggregation - direct vertical line in clear channel) -->
+<line x1="680" y1="460" x2="680" y2="188" class="rl ra" marker-start="url(#da)"/>
+<text class="lb" x="688" y="320">depot ref</text>
+<text class="mu" x="688" y="204">1</text>
+
+<!-- Assignment references Depot (Association - routed cleanly via y=380, entering Depot at x=720) -->
+<line x1="910" y1="460" x2="910" y2="380" class="rl rs"/>
+<line x1="910" y1="380" x2="720" y2="380" class="rl rs"/>
+<line x1="720" y1="380" x2="720" y2="188" class="rl rs" marker-end="url(#aa)"/>
+<text class="lb" x="728" y="250">depot</text>
+<text class="mu" x="728" y="204">1</text>
+
+<!-- Assignment references ScoredSegment (Association - routes below Truck at y=640 without touching Truck) -->
+<line x1="885" y1="570" x2="855" y2="570" class="rl rs"/>
+<line x1="855" y1="570" x2="855" y2="640" class="rl rs"/>
+<line x1="855" y1="640" x2="605" y2="640" class="rl rs"/>
+<line x1="605" y1="640" x2="605" y2="570" class="rl rs"/>
+<line x1="605" y1="570" x2="575" y2="570" class="rl rs" marker-end="url(#aa)"/>
+<text class="lb" x="615" y="632">segment</text>
+<text class="mu" x="582" y="562">1</text>
+
+
+<!-- ═══════════════════════════════════════════════════
+     ROW 3: MODULE 3 (PIPELINE) & MODULE 4 (SERVICE/UI)
+     ═══════════════════════════════════════════════════ -->
+
+<!-- 14. GeoUtils -->
+<g class="cb" transform="translate(40,750)">
+<rect class="bg" width="215" height="118" fill="var(--surface)" stroke="var(--cls)" stroke-width="1.2"/>
+<rect class="hd2" width="215" height="30" fill="rgba(88,166,255,.05)" stroke="none"/>
+<text class="nm" x="107" y="21" text-anchor="middle" fill="var(--cls)">GeoUtils</text>
+<line class="sp" x1="0" y1="30" x2="215" y2="30"/>
+<text class="at" x="10" y="46">+ LatLon: [number, number]</text>
+<line class="sp" x1="0" y1="54" x2="215" y2="54"/>
+<text class="mt" x="10" y="70">+ haversineM(a,b): number</text>
+<text class="mt" x="10" y="86">+ pathLengthM(path): number</text>
+<text class="mt" x="10" y="102">+ midOf(path): LatLon</text>
+</g>
+
+<!-- 15. DataPipeline -->
+<g class="cb" transform="translate(295,750)">
+<rect class="bg" width="275" height="200" fill="var(--surface)" stroke="var(--cls)" stroke-width="1.2"/>
+<rect class="hd2" width="275" height="30" fill="rgba(88,166,255,.05)" stroke="none"/>
+<text class="nm" x="137" y="21" text-anchor="middle" fill="var(--cls)">DataPipeline &#171;server&#187;</text>
+<line class="sp" x1="0" y1="30" x2="275" y2="30"/>
+<text class="at" x="10" y="46">- OVERPASS: string[] (4 mirrors)</text>
+<text class="at" x="10" y="60">- OSRM: string</text>
+<text class="at" x="10" y="74">- TOPO: string (OpenTopoData)</text>
+<text class="at" x="10" y="88">- METEO: string (Open-Meteo)</text>
+<line class="sp" x1="0" y1="96" x2="275" y2="96"/>
+<text class="mt" x="10" y="112">+ buildWardData(opts): WardData</text>
+<text class="mt" x="10" y="128">+ fetchRainNow(): RainNow</text>
+<text class="mt" x="10" y="144">+ fetchHospitals(): HospPayload</text>
+<text class="mt" x="10" y="160">+ fetchRouteGeometry(): RoutePath</text>
+<text class="mt" x="10" y="176">- fetchOsm(): OverpassWay[]</text>
+<text class="mt" x="10" y="192">- fetchElevations(pts): number[]</text>
+</g>
+
+<!-- 16. RainNow -->
+<g class="cb" transform="translate(40,900)">
+<rect class="bg" width="225" height="200" fill="var(--surface)" stroke="var(--iface)" stroke-width="1.2"/>
+<rect class="hd2" width="225" height="34" fill="rgba(121,192,255,.05)" stroke="none"/>
+<text class="st" x="112" y="14" text-anchor="middle">&#171;interface&#187;</text>
+<text class="nm" x="112" y="29" text-anchor="middle" fill="var(--iface)">RainNow</text>
+<line class="sp" x1="0" y1="34" x2="225" y2="34"/>
+<text class="at" x="10" y="50">+ nowMmPerHr: number</text>
+<text class="at" x="10" y="64">+ raining: boolean</text>
+<text class="at" x="10" y="78">+ last60Mm: number</text>
+<text class="at" x="10" y="92">+ next60Mm: number</text>
+<text class="at" x="10" y="106">+ observedMm: number</text>
+<text class="at" x="10" y="120">+ forecastMm: number</text>
+<text class="at" x="10" y="134">+ rainSeries: RainPoint[]</text>
+<text class="at" x="10" y="148">+ source?: string</text>
+<text class="at" x="10" y="162">+ stale?: boolean</text>
+<text class="at" x="10" y="176">+ staleReason?: string</text>
+</g>
+
+<!-- 17. JalNitiService -->
+<g class="cb" transform="translate(800,750)">
+<rect class="bg" width="275" height="186" fill="var(--surface)" stroke="var(--accent2)" stroke-width="1.4"/>
+<rect class="hd2" width="275" height="34" fill="rgba(63,185,80,.07)" stroke="none"/>
+<text class="st" x="137" y="14" text-anchor="middle">&#171;service&#187; server functions</text>
+<text class="nm" x="137" y="29" text-anchor="middle" fill="var(--accent2)">JalNitiService</text>
+<line class="sp" x1="0" y1="34" x2="275" y2="34"/>
+<text class="mt" x="10" y="50">+ getWardData(refresh?): WardData</text>
+<text class="mt" x="10" y="66">+ getRainNow(): RainNowDTO</text>
+<text class="mt" x="10" y="82">+ getRoutes(pairs): RoutePath[]</text>
+<text class="mt" x="10" y="98">+ getHospitals(refresh?): HospDTO</text>
+<line class="sp" x1="0" y1="108" x2="275" y2="108"/>
+<text class="mt" x="10" y="124">+ scoreSegments(ward,o): Scored[]</text>
+<text class="mt" x="10" y="140">+ allocate(ward,scored,o): Result</text>
+<text class="mt" x="10" y="156">+ assessHospitals(h,s): HospRisk[]</text>
+</g>
+
+<!-- 18. DashboardUI -->
+<g class="cb" transform="translate(1145,750)">
+<rect class="bg" width="245" height="168" fill="var(--surface)" stroke="var(--cls)" stroke-width="1.2"/>
+<rect class="hd2" width="245" height="34" fill="rgba(88,166,255,.05)" stroke="none"/>
+<text class="st" x="122" y="14" text-anchor="middle">&#171;component&#187; React</text>
+<text class="nm" x="122" y="29" text-anchor="middle" fill="var(--cls)">DashboardUI</text>
+<line class="sp" x1="0" y1="34" x2="245" y2="34"/>
+<text class="at" x="10" y="50">+ segments: ScoredSegment[]</text>
+<text class="at" x="10" y="64">+ assignments: Assignment[]</text>
+<text class="at" x="10" y="78">+ routes: RoutePath[]</text>
+<text class="at" x="10" y="92">+ hospitals: HospitalRisk[]</text>
+<line class="sp" x1="0" y1="102" x2="245" y2="102"/>
+<text class="mt" x="10" y="118">+ WardMap(props): JSX</text>
+<text class="mt" x="10" y="134">+ MapPanel(props): JSX</text>
+<text class="mt" x="10" y="150">+ Dashboard(props): JSX</text>
+</g>
+
+<!-- Module 3 & 4 Relationship Lines -->
+<!-- DataPipeline depends on GeoUtils -->
+<line x1="295" y1="800" x2="255" y2="800" class="rl rd" marker-end="url(#ad)"/>
+<text class="lb" x="260" y="792">uses</text>
+
+<!-- DataPipeline returns RainNow (cleanly routed from bottom to RainNow right edge) -->
+<line x1="330" y1="950" x2="330" y2="980" class="rl rd"/>
+<line x1="330" y1="980" x2="265" y2="980" class="rl rd" marker-end="url(#ad)"/>
+<text class="lb" x="275" y="972">returns</text>
+
+<!-- DataPipeline produces WardData (Routes in Lane 1 at y=690, up through empty gutter at x=1148 into WardData) -->
+<line x1="440" y1="750" x2="440" y2="690" class="rl rd"/>
+<line x1="440" y1="690" x2="1148" y2="690" class="rl rd"/>
+<line x1="1148" y1="690" x2="1148" y2="256" class="rl rd" marker-end="url(#ad)"/>
+<text class="lb" x="590" y="682">produces WardData</text>
+
+<!-- JalNitiService delegates to DataPipeline -->
+<line x1="800" y1="810" x2="570" y2="810" class="rl rd" marker-end="url(#ad)"/>
+<text class="lb" x="660" y="802">delegates to</text>
+
+<!-- DashboardUI calls JalNitiService -->
+<line x1="1145" y1="820" x2="1075" y2="820" class="rl rd" marker-end="url(#ad)"/>
+<text class="lb" x="1092" y="812">calls</text>
+
+<!-- JalNitiService uses model (Routes in Lane 2 at y=715 up to AllocationResult) -->
+<line x1="980" y1="750" x2="980" y2="715" class="rl rd"/>
+<line x1="980" y1="715" x2="1260" y2="715" class="rl rd"/>
+<line x1="1260" y1="715" x2="1260" y2="664" class="rl rd" marker-end="url(#ad)"/>
+<text class="lb" x="1030" y="725">uses model</text>
+
+
+<!-- ═══════════════════════════════════════════════════
+     ROW 4: MODULE 3 (PYTHON BACKEND PIPELINE)
+     ═══════════════════════════════════════════════════ -->
+
+<!-- 19. Config (Python) -->
+<g class="cb" transform="translate(295,1140)">
+<rect class="bg" width="265" height="168" fill="var(--surface)" stroke="var(--dc)" stroke-width="1.2"/>
+<rect class="hd2" width="265" height="34" fill="rgba(86,211,100,.05)" stroke="none"/>
+<text class="st" x="132" y="14" text-anchor="middle">&#171;dataclass&#187; frozen</text>
+<text class="nm" x="132" y="29" text-anchor="middle" fill="var(--dc)">Config</text>
+<line class="sp" x1="0" y1="34" x2="265" y2="34"/>
+<text class="at" x="10" y="50">+ ward: WardConfig</text>
+<text class="at" x="10" y="64">+ fleet: FleetConfig</text>
+<text class="at" x="10" y="78">+ paths: Paths</text>
+<text class="at" x="10" y="92">+ data_sources: dict</text>
+<text class="at" x="10" y="106">+ cache: dict</text>
+<line class="sp" x1="0" y1="116" x2="265" y2="116"/>
+<text class="mt" x="10" y="132">+ ee_project: str (property)</text>
+<text class="mt" x="10" y="148">+ database_url: str (property)</text>
+</g>
+
+<!-- 20. Paths (Python) -->
+<g class="cb" transform="translate(295,1348)">
+<rect class="bg" width="265" height="68" fill="var(--surface)" stroke="var(--dc)" stroke-width="1.2"/>
+<rect class="hd2" width="265" height="34" fill="rgba(86,211,100,.05)" stroke="none"/>
+<text class="st" x="132" y="14" text-anchor="middle">&#171;dataclass&#187; frozen</text>
+<text class="nm" x="132" y="29" text-anchor="middle" fill="var(--dc)">Paths</text>
+<line class="sp" x1="0" y1="34" x2="265" y2="34"/>
+<text class="at" x="10" y="50">+ raw_dir / processed_dir / models_dir</text>
+</g>
+
+<!-- 21. WardConfig (Python) -->
+<g class="cb" transform="translate(610,1140)">
+<rect class="bg" width="200" height="108" fill="var(--surface)" stroke="var(--dc)" stroke-width="1.2"/>
+<rect class="hd2" width="200" height="34" fill="rgba(86,211,100,.05)" stroke="none"/>
+<text class="st" x="100" y="14" text-anchor="middle">&#171;dataclass&#187; frozen</text>
+<text class="nm" x="100" y="29" text-anchor="middle" fill="var(--dc)">WardConfig</text>
+<line class="sp" x1="0" y1="34" x2="200" y2="34"/>
+<text class="at" x="10" y="50">+ place_name: str</text>
+<text class="at" x="10" y="64">+ short_name: str</text>
+<text class="at" x="10" y="78">+ metric_crs: str</text>
+</g>
+
+<!-- 22. FleetConfig (Python) -->
+<g class="cb" transform="translate(610,1288)">
+<rect class="bg" width="235" height="138" fill="var(--surface)" stroke="var(--dc)" stroke-width="1.2"/>
+<rect class="hd2" width="235" height="34" fill="rgba(86,211,100,.05)" stroke="none"/>
+<text class="st" x="117" y="14" text-anchor="middle">&#171;dataclass&#187; frozen</text>
+<text class="nm" x="117" y="29" text-anchor="middle" fill="var(--dc)">FleetConfig</text>
+<line class="sp" x1="0" y1="34" x2="235" y2="34"/>
+<text class="at" x="10" y="50">+ truck_count: int</text>
+<text class="at" x="10" y="64">+ avg_speed_kmph: float</text>
+<text class="at" x="10" y="78">+ service_time_min: int</text>
+<text class="at" x="10" y="92">+ shift_minutes: int</text>
+<text class="at" x="10" y="106">+ depots: list[Depot]</text>
+</g>
+
+<!-- 23. Depot (Python) -->
+<g class="cb" transform="translate(885,1288)">
+<rect class="bg" width="195" height="138" fill="var(--surface)" stroke="var(--dc)" stroke-width="1.2"/>
+<rect class="hd2" width="195" height="34" fill="rgba(86,211,100,.05)" stroke="none"/>
+<text class="st" x="97" y="14" text-anchor="middle">&#171;dataclass&#187; frozen</text>
+<text class="nm" x="97" y="29" text-anchor="middle" fill="var(--dc)">Depot &#171;Python&#187;</text>
+<line class="sp" x1="0" y1="34" x2="195" y2="34"/>
+<text class="at" x="10" y="50">+ id: str</text>
+<text class="at" x="10" y="64">+ name: str</text>
+<text class="at" x="10" y="78">+ lat: float</text>
+<text class="at" x="10" y="92">+ lon: float</text>
+<text class="at" x="10" y="106">+ trucks: int</text>
+</g>
+
+<!-- 24. DiskCache (Python) -->
+<g class="cb" transform="translate(885,1140)">
+<rect class="bg" width="225" height="118" fill="var(--surface)" stroke="var(--cls)" stroke-width="1.2"/>
+<rect class="hd2" width="225" height="30" fill="rgba(88,166,255,.05)" stroke="none"/>
+<text class="nm" x="112" y="21" text-anchor="middle" fill="var(--cls)">DiskCache &#171;Python&#187;</text>
+<line class="sp" x1="0" y1="30" x2="225" y2="30"/>
+<text class="mt" x="10" y="46">+ cached_file(..., producer)</text>
+<text class="mt" x="10" y="62">+ cached_json(..., producer)</text>
+<text class="mt" x="10" y="78">+ is_fresh(path, ttl): bool</text>
+<text class="mt" x="10" y="94">+ static_ttl(): float</text>
+<text class="mt" x="10" y="110">+ live_ttl(): float</text>
+</g>
+
+<!-- 25. DataSources (Python) -->
+<g class="cb" transform="translate(1145,1140)">
+<rect class="bg" width="255" height="160" fill="var(--surface)" stroke="var(--cls)" stroke-width="1.2"/>
+<rect class="hd2" width="255" height="30" fill="rgba(88,166,255,.05)" stroke="none"/>
+<text class="nm" x="127" y="21" text-anchor="middle" fill="var(--cls)">DataSources &#171;Python&#187;</text>
+<line class="sp" x1="0" y1="30" x2="255" y2="30"/>
+<text class="mt" x="10" y="46">osm: fetch_boundary(): GeoDF</text>
+<text class="mt" x="10" y="62">osm: fetch_roads(): GeoDF</text>
+<text class="mt" x="10" y="78">osm: fetch_water(): GeoDF</text>
+<text class="mt" x="10" y="94">dem: fetch_dem(): Path|None</text>
+<text class="mt" x="10" y="110">rain: fetch_historical(): Path</text>
+<text class="mt" x="10" y="126">rain: fetch_live(): dict|None</text>
+<line class="sp" x1="0" y1="134" x2="255" y2="134"/>
+<text class="at" x="10" y="150">Sources: OSM, EarthEngine, IMD</text>
+</g>
+
+<!-- Module 3 (Python) Relationship Lines -->
+<!-- Config owns WardConfig (Composition) -->
+<line x1="560" y1="1180" x2="610" y2="1180" class="rl rc" marker-start="url(#dc)"/>
+<text class="mu" x="572" y="1172">1</text>
+
+<!-- Config owns FleetConfig (Composition - routes in gutter at x=585 into FleetConfig) -->
+<line x1="560" y1="1240" x2="585" y2="1240" class="rl rc"/>
+<line x1="585" y1="1240" x2="585" y2="1350" class="rl rc"/>
+<line x1="585" y1="1350" x2="610" y2="1350" class="rl rc" marker-start="url(#dc)"/>
+<text class="mu" x="572" y="1232">1</text>
+
+<!-- Config owns Paths (Composition - direct vertical line) -->
+<line x1="427" y1="1308" x2="427" y2="1348" class="rl rc" marker-start="url(#dc)"/>
+<text class="mu" x="435" y="1335">1</text>
+
+<!-- FleetConfig owns Depot (Python)[] (Composition) -->
+<line x1="845" y1="1350" x2="885" y2="1350" class="rl rc" marker-start="url(#dc)"/>
+<text class="mu" x="855" y="1342">1..*</text>
+
+<!-- DataSources depends on DiskCache (Dependency) -->
+<line x1="1145" y1="1195" x2="1110" y2="1195" class="rl rd" marker-end="url(#ad)"/>
+<text class="lb" x="1116" y="1187">uses</text>
+
+<!-- DataSources depends on Config (Dependency - routes at y=1460 completely below all boxes) -->
+<line x1="1272" y1="1300" x2="1272" y2="1460" class="rl rd"/>
+<line x1="1272" y1="1460" x2="275" y2="1460" class="rl rd"/>
+<line x1="275" y1="1460" x2="275" y2="1240" class="rl rd"/>
+<line x1="275" y1="1240" x2="295" y2="1240" class="rl rd" marker-end="url(#ad)"/>
+<text class="lb" x="780" y="1452">reads config</text>
+
+</svg>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     EXPLANATION SECTION
+     ═══════════════════════════════════════════════════ -->
+<div class="ex">
+<h2>&#128269; OOP Relationships &#8212; Where &amp; Why</h2>
+
+<h3><span class="tg tg-g">GENERALIZATION</span> (Inheritance &#8212; Solid line, open triangle)</h3>
+<ul>
+<li><code>ScoredSegment</code> <b>extends</b> <code>StreetSegment</code> &#8212; A scored segment <i>is-a</i> street segment enriched with computed model metrics (<code>risk</code>, <code>band</code>, <code>exposure</code>, <code>confidence</code>). The parent interface models raw OSM geospatial and physical road data; the derived interface attaches model outputs while guaranteeing complete backward compatibility. Any consumer expecting a <code>StreetSegment</code> (such as hospital distance computation or geometry rendering) can transparently accept a <code>ScoredSegment</code> (Liskov Substitution Principle).</li>
+<li><code>HospitalRisk</code> <b>extends</b> <code>Hospital</code> &#8212; A hospital-with-risk <i>is-a</i> hospital enriched with dynamic approach accessibility metrics (<code>accessRisk</code>, <code>approachRoads</code>, <code>worstRoad</code>, <code>status</code>). The base interface represents static health infrastructure from OSM; the specialized interface joins dynamic street flood risks to medical facilities.</li>
+</ul>
+
+<h3><span class="tg tg-c">COMPOSITION</span> (&#9670; Filled Diamond &#8212; Strong ownership / "Parts die with the whole")</h3>
+<ul>
+<li><code>WardData</code> <b>owns</b> <code>StreetSegment[]</code>, <code>Depot[]</code>, <code>RainPoint[]</code> &#8212; When a ward snapshot is discarded or refreshed, all constituent segments, depots, and precipitation data points are discarded with it. They possess no independent lifecycle outside of their parent ward context.</li>
+<li><code>AllocationResult</code> <b>owns</b> <code>Assignment[]</code> &#8212; Dispatched truck assignments exist solely as the solution set of a specific VRP optimization run. When re-allocation is computed for a new scenario, previous assignments are destroyed alongside the previous result object.</li>
+<li><code>Config</code> <b>owns</b> <code>WardConfig</code>, <code>FleetConfig</code>, <code>Paths</code> &#8212; The Python backend constructs a unified immutable configuration hierarchy from <code>ward_config.yaml</code>. The sub-configurations exist exclusively as fields of the root configuration.</li>
+<li><code>FleetConfig</code> <b>owns</b> <code>Depot (Python)[]</code> &#8212; Municipal depots are defined and parsed directly inside the fleet configuration block and validated together in <code>__post_init__</code>.</li>
+</ul>
+
+<h3><span class="tg tg-a">AGGREGATION</span> (&#9671; Open Diamond &#8212; Shared reference / "Part can exist independently")</h3>
+<ul>
+<li><code>Truck</code> <b>references</b> <code>Depot</code> &#8212; A dewatering truck is assigned a home base depot from which it departs and to which it returns. The physical depot infrastructure has an independent existence: it outlives any individual truck, route shift, or operational plan, and is shared across multiple trucks.</li>
+</ul>
+
+<h3><span class="tg tg-s">ASSOCIATION</span> (&#8594; Solid Arrow &#8212; Structural relationship / Reference)</h3>
+<ul>
+<li><code>Assignment</code> &#8594; <code>ScoredSegment</code> &#8212; Each scheduled truck task references the specific target street segment requiring dewatering. The segment is not owned by the assignment; it remains in the ward-wide segment repository.</li>
+<li><code>Assignment</code> &#8594; <code>Depot</code> &#8212; The assignment records the departure depot origin of the dispatch leg.</li>
+<li><code>HospitalRisk</code> &#8594; <code>AccessStatus</code> &#8212; Each hospital's calculated accessibility is classified using the five-state <code>AccessStatus</code> enumeration (<code>cut-off</code>, <code>at-risk</code>, <code>watch</code>, <code>clear</code>, <code>unknown</code>).</li>
+</ul>
+
+<h3><span class="tg tg-d">DEPENDENCY</span> (- - &#9655; Dashed Arrow &#8212; Usage / "Uses" / Parameter)</h3>
+<ul>
+<li><code>ScoredSegment</code> &#8594; <code>RiskBand</code> &#8212; The scored segment categorizes computed flood probability into the <code>RiskBand</code> enum (<code>critical</code>, <code>high</code>, <code>moderate</code>, <code>low</code>).</li>
+<li><code>ScenarioOverrides</code> &#8594; <code>ScoredSegment</code> &#8212; The scoring engine function <code>scoreSegments(ward, overrides)</code> consumes scenario parameters (rainfall rate, pump status, drain clearances) to dynamically compute risk.</li>
+<li><code>DataPipeline</code> &#8594; <code>WardData</code> &#8212; The server data pipeline orchestrates OSM, SRTM elevation, OSRM distance matrices, and Open-Meteo forecasts to construct and return a unified <code>WardData</code> instance.</li>
+<li><code>DataPipeline</code> &#8594; <code>RainNow</code> &amp; <code>GeoUtils</code> &#8212; Pipeline delegates geodesy calculations (Haversine distances, path midpoints) to <code>GeoUtils</code> and yields real-time rainfall status via <code>RainNow</code>.</li>
+<li><code>JalNitiService</code> &#8594; <code>DataPipeline</code> &amp; <code>model</code> &#8212; Server actions delegate external fetching to <code>DataPipeline</code> and algorithmic calculations (VRP orienteering optimization, hospital risk joins) to the model layer.</li>
+<li><code>DashboardUI</code> &#8594; <code>JalNitiService</code> &#8212; The React UI invokes server endpoints via TanStack Query for reactive, real-time dashboard updates.</li>
+<li><code>DataSources (Python)</code> &#8594; <code>DiskCache</code> &amp; <code>Config</code> &#8212; Offline pipeline scripts query satellite and meteorological APIs according to <code>Config</code> parameters, routing all raw responses through deterministic disk caching.</li>
+</ul>
+
+<h2>&#128203; Summary for Presentation</h2>
+<p>This diagram covers the <b>four core modules</b> of JalNiti:</p>
+<ul>
+<li><b>Module 0 (Domain Data &amp; Types)</b> &#8212; 8 interfaces &amp; enums defining the system's foundational entities: ward boundary geometry, street segments, municipal depots, precipitation time series, and hospital infrastructure.</li>
+<li><b>Module 1 (Risk Scoring)</b> &#8212; Multi-criteria geospatial risk modeling incorporating elevation, slope, water body proximity, and road network density, dynamically tuned via <code>ScenarioOverrides</code>.</li>
+<li><b>Module 2 (Resource Allocation - VRP)</b> &#8212; Solves a Team Orienteering Vehicle Routing Problem (TOP-VRP) using value-density greedy construction and 2-opt/relocate local search heuristics to generate operational <code>Assignment</code>s.</li>
+<li><b>Modules 3 &amp; 4 (Pipeline, Service &amp; UI)</b> &#8212; Dual TypeScript/Python ingestion layers fetching from Overpass, OpenTopoData, Open-Meteo, OSRM, and IMD; coupled to a Next.js/React dashboard via clean server action interfaces.</li>
+</ul>
+</div>
+</body>
+</html>

@@ -14,6 +14,17 @@ dist-ssr
 .vinxi
 .tanstack/**
 .nitro
+# Environment and secret files
+.env
+.env.*
+!.env.example
+*.env
+*.pem
+*.key
+*.cert
+*.crt
+credentials.json
+
 *.local
 
 # Wrangler / Cloudflare
