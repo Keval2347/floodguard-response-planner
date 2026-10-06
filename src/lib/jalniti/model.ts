@@ -42,10 +42,7 @@ export interface ScenarioOverrides {
 
 export function defaultScenario(ward: WardData | undefined): ScenarioOverrides {
   return {
-    // The default map represents conditions already observed today. A future
-    // forecast remains available in the weather panel, but must not make a
-    // dry ward look flooded before that rain arrives.
-    rainMm: Math.max(0, Math.round((ward?.observedMm ?? 0) * 10) / 10),
+    rainMm: Math.max(10, Math.round((ward?.forecastMm || WARD.reference_rain_mm) / 5) * 5),
     drainsCleared: [],
     closed: [],
     trucksAvailable: (ward?.depots ?? []).reduce((n, d) => n + d.trucks, 0) || 10,
