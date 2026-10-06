@@ -20,6 +20,12 @@ import { DEPOTS, WARD, type StreetSegment, type WardData } from "./data";
 import snapshot from "./navrangpura.snapshot.json";
 import hospitalSnapshot from "./hospitals.snapshot.json";
 import type { Hospital } from "./hospitals";
+import {
+  parseStrict,
+  AllowedFetchUrlSchema,
+  LatLonArraySchema,
+  LatLonSchema,
+} from "./schema";
 
 const OVERPASS = [
   "https://overpass-api.de/api/interpreter",
@@ -50,6 +56,11 @@ interface Entry<T> {
 }
 const store = new Map<string, Entry<unknown>>();
 
+/** Keep diagnostics server-side; never return exception text to the browser. */
+function logServerError(context: string, error: unknown) {
+  console.error(`[JalNiti] ${context}`, error);
+}
+
 async function cached<T>(key: string, ttlMs: number, fn: () => Promise<T>): Promise<T> {
   const hit = store.get(key);
   if (hit && hit.expires > Date.now()) return hit.value as T;
@@ -59,6 +70,11 @@ async function cached<T>(key: string, ttlMs: number, fn: () => Promise<T>): Prom
 }
 
 async function getJson(url: string, init?: RequestInit, timeoutMs = 45000) {
+  // Reject any URL that is not in the explicit allowlist — even if the call
+  // originates from our own code, we never want to accidentally fetch from
+  // an unintended host (e.g. after a typo or a config injection).
+  parseStrict(AllowedFetchUrlSchema, url, "pipeline fetch URL");
+
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
@@ -126,6 +142,9 @@ async function fetchOsm(): Promise<OverpassWay[]> {
 
 /** Sample elevations in batches; OpenTopoData allows 100 locations per call. */
 async function fetchElevations(points: LatLon[]): Promise<{ values: number[]; source: string }> {
+  // Reject invalid or oversized point arrays before building the HTTP request.
+  parseStrict(LatLonArraySchema, points, "fetchElevations: points");
+
   const datasets = ["srtm30m", "gmted2010"];
   for (const ds of datasets) {
     try {
@@ -368,8 +387,15 @@ export async function fetchRainNow(): Promise<RainNow> {
     }
 
     const reason = errors.join(" | ") || "no weather provider answered";
-    if (lastGoodRain) return { ...lastGoodRain, stale: true, staleReason: reason };
-    throw new Error(`No weather provider answered: ${reason}`);
+    logServerError("all weather providers failed", reason);
+    if (lastGoodRain) {
+      return {
+        ...lastGoodRain,
+        stale: true,
+        staleReason: "The live weather feed is temporarily unavailable.",
+      };
+    }
+    throw new Error("The live weather feed is temporarily unavailable.");
   });
 }
 
@@ -383,6 +409,9 @@ async function fetchRain() {
 
 /** Real road-network duration matrix (minutes) between every pair of points. */
 async function fetchTravelMatrix(points: LatLon[]): Promise<number[][]> {
+  // Validate coordinate ranges and array size before building the OSRM URL.
+  parseStrict(LatLonArraySchema, points, "fetchTravelMatrix: points");
+
   const coords = points.map(([la, lo]) => `${lo.toFixed(6)},${la.toFixed(6)}`).join(";");
   const data = await getJson(`${OSRM}/table/v1/driving/${coords}?annotations=duration`);
   if (data.code !== "Ok") throw new Error(`OSRM table: ${data.code}`);
@@ -393,6 +422,10 @@ async function fetchTravelMatrix(points: LatLon[]): Promise<number[][]> {
 
 /** The actual driving path between two points, as [lat, lon] vertices. */
 export async function fetchRouteGeometry(from: LatLon, to: LatLon) {
+  // Validate both endpoints before building the cache key or the OSRM URL.
+  parseStrict(LatLonSchema, from, "fetchRouteGeometry: from");
+  parseStrict(LatLonSchema, to,   "fetchRouteGeometry: to");
+
   const key = `route:${from.join(",")}->${to.join(",")}`;
   return cached(key, 24 * 3600_000, async () => {
     const c = `${from[1].toFixed(6)},${from[0].toFixed(6)};${to[1].toFixed(6)},${to[0].toFixed(6)}`;
@@ -474,10 +507,11 @@ export async function buildWardData(
     ]);
   } catch (err) {
     if (!allowSnapshot) throw err;
+    logServerError("live ward refresh failed; using snapshot", err);
     const snap = snapshot as unknown as WardData;
     const notes = [
       ...snap.notes,
-      `Live refresh unavailable (${(err as Error).message}) — street geometry and terrain replayed from the OSM/SRTM/OSRM capture of ${new Date(snap.fetchedAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST (roads and elevation do not change day to day)`,
+      `Live refresh unavailable — street geometry and terrain replayed from the OSM/SRTM/OSRM capture of ${new Date(snap.fetchedAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })} IST (roads and elevation do not change day to day)`,
     ];
     let rain = {
       rainSeries: snap.rainSeries,
@@ -489,7 +523,8 @@ export async function buildWardData(
       notes.push(
         `Rainfall refreshed live: ${rain.observedMm} mm observed in the last 24 h, ${rain.forecastMm} mm forecast for the next 24 h`,
       );
-    } catch {
+    } catch (err) {
+      logServerError("rainfall refresh failed while using ward snapshot", err);
       notes.push("Rainfall feed unavailable — snapshot rainfall shown");
     }
     return {
@@ -746,12 +781,13 @@ export async function fetchHospitals(
       };
     } catch (err) {
       if (!allowSnapshot) throw err;
+      logServerError("hospital refresh failed; using snapshot", err);
       const snap = hospitalSnapshot as { fetchedAt: string; source: string; hospitals: Hospital[] };
       return {
         hospitals: snap.hospitals,
         fetchedAt: snap.fetchedAt,
         live: false,
-        note: `Overpass unavailable (${(err as Error).message}) — using the committed OSM hospital capture (${snap.hospitals.length} facilities, ${snap.source})`,
+        note: `Live hospital data unavailable — using the committed OSM hospital capture (${snap.hospitals.length} facilities, ${snap.source})`,
       };
     }
   });

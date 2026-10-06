@@ -116,12 +116,9 @@ function Dashboard() {
   });
   const rain = rainQuery.data;
   /** Plain-English reason the readout is not fresh, or null when all is well. */
-  const rainProblem = rainQuery.isError
-    ? rainQuery.error instanceof Error
-      ? rainQuery.error.message
-      : String(rainQuery.error)
-    : rain?.stale
-      ? (rain.staleReason ?? "the weather service did not answer")
+  const rainProblem =
+    rainQuery.isError || rain?.stale
+      ? "The live weather feed is temporarily unavailable."
       : null;
 
   /**
@@ -225,18 +222,17 @@ function Dashboard() {
 
 
   /**
-   * Live 24 h rainfall load driving the risk map: what has already fallen in
-   * the last 24 h, plus the next hour of nowcast, compared against the 24 h
-   * forecast total. Planning has to use the wetter of "what has fallen" and
-   * "what is still coming" — otherwise a dry morning with a wet forecast
-   * repaints the whole ward green and hides the roads that will flood.
+   * Live rainfall load driving the current-risk map: what has already fallen
+   * in the last 24 h, plus the next hour of nowcast. The 24 h forecast is
+   * intentionally not included here: a future shower must not make a currently
+   * dry ward look flooded. The forecast remains visible for what-if planning.
    */
   const liveRainMm = (() => {
     const round = (v: number) => Math.max(0, Math.round(v * 10) / 10);
-    if (rain) return round(Math.max(rain.observedMm + rain.next60Mm, rain.forecastMm));
+    if (rain) return round(rain.observedMm + rain.next60Mm);
     // Rainfall poll is failing: fall back to the totals that came with the ward
     // feed, so "follow live" and "reset" stay usable.
-    if (ward) return round(Math.max(ward.observedMm, ward.forecastMm));
+    if (ward) return round(ward.observedMm);
     return undefined;
   })();
 
@@ -404,7 +400,8 @@ function Dashboard() {
       await queryClient.invalidateQueries({ queryKey: ["rain-now"] });
       await queryClient.invalidateQueries({ queryKey: ["routes"] });
     } catch (error) {
-      setSourceError(error instanceof Error ? error.message : "Live sources did not answer");
+      console.error("[JalNiti] refresh feeds failed", error);
+      setSourceError("Live data is temporarily unavailable. Please try again.");
     } finally {
       setRefreshing(false);
     }
@@ -510,7 +507,7 @@ function Dashboard() {
         <div className="flex items-center gap-3 border-b border-destructive/40 bg-destructive/10 px-5 py-2 text-xs text-destructive">
           <TriangleAlert className="size-4 shrink-0" />
           <span className="flex-1">
-             Live data fetch failed: {sourceError ?? (wardQuery.error as Error).message}. Risk and
+             Live data fetch failed. Risk and
              allocation outputs are paused until all required sources answer.
           </span>
           <Button size="sm" variant="outline" className="h-7" onClick={refreshFeeds}>
