@@ -46,7 +46,7 @@ export const LatLonSchema = z
  */
 export const SegmentIdSchema = z
   .string()
-  .regex(/^S\d{2}$/, "segment id must match S\\d{2} (e.g. S01, S12)");
+  .regex(/^S\d{2,5}$/, "segment id must match S followed by 2-5 digits (e.g. S01, S337)");
 
 /* ------------------------------------------------------ server functions */
 
@@ -121,14 +121,14 @@ export const ScenarioOverridesSchema = z
 
     drainsCleared: z
       .array(SegmentIdSchema)
-      .max(220, "drainsCleared cannot exceed the number of ward segments")
+      .max(1000, "drainsCleared cannot exceed the number of ward segments")
       .refine((arr) => new Set(arr).size === arr.length, {
         message: "drainsCleared must not contain duplicate segment ids",
       }),
 
     closed: z
       .array(SegmentIdSchema)
-      .max(220, "closed cannot exceed the number of ward segments")
+      .max(1000, "closed cannot exceed the number of ward segments")
       .refine((arr) => new Set(arr).size === arr.length, {
         message: "closed must not contain duplicate segment ids",
       }),
@@ -162,7 +162,7 @@ export const LatLonArraySchema = z
   .max(500, "point array too large (max 500 points)");
 
 /**
- * A URL that may only point to the four external hosts the pipeline is
+ * A URL that may only point to the approved external hosts (ALLOWED_HOSTS) the pipeline is
  * allowed to call. Anything else is rejected before fetch() is called.
  */
 const ALLOWED_HOSTS = [

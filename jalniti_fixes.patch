@@ -1,0 +1,56 @@
+diff --git a/src/lib/jalniti/pipeline.server.ts b/src/lib/jalniti/pipeline.server.ts
+index 9e0c390..0c05530 100644
+--- a/src/lib/jalniti/pipeline.server.ts
++++ b/src/lib/jalniti/pipeline.server.ts
+@@ -307,6 +307,12 @@ async function fetchMetNo(lat: number, lon: number): Promise<RainNow> {
+     observedAt: istLabel(series[0].time),
+     fetchedAt: new Date().toISOString(),
+     source: "MET Norway locationforecast",
++    // MET Norway has no measured past rainfall. observedMm / last60Mm / rainSeries
++    // above are carried over from the last good reading (or 0 if there is none),
++    // so this reading must never look "fresh" — otherwise a failed primary feed
++    // silently paints the whole ward green as if it were dry.
++    stale: true,
++    staleReason: "The live weather feed is temporarily unavailable.",
+   };
+ }
+ 
+diff --git a/src/lib/jalniti/schema.ts b/src/lib/jalniti/schema.ts
+index 6d159da..add61dd 100644
+--- a/src/lib/jalniti/schema.ts
++++ b/src/lib/jalniti/schema.ts
+@@ -46,7 +46,7 @@ export const LatLonSchema = z
+  */
+ export const SegmentIdSchema = z
+   .string()
+-  .regex(/^S\d{2}$/, "segment id must match S\\d{2} (e.g. S01, S12)");
++  .regex(/^S\d{2,5}$/, "segment id must match S followed by 2-5 digits (e.g. S01, S337)");
+ 
+ /* ------------------------------------------------------ server functions */
+ 
+@@ -121,14 +121,14 @@ export const ScenarioOverridesSchema = z
+ 
+     drainsCleared: z
+       .array(SegmentIdSchema)
+-      .max(220, "drainsCleared cannot exceed the number of ward segments")
++      .max(1000, "drainsCleared cannot exceed the number of ward segments")
+       .refine((arr) => new Set(arr).size === arr.length, {
+         message: "drainsCleared must not contain duplicate segment ids",
+       }),
+ 
+     closed: z
+       .array(SegmentIdSchema)
+-      .max(220, "closed cannot exceed the number of ward segments")
++      .max(1000, "closed cannot exceed the number of ward segments")
+       .refine((arr) => new Set(arr).size === arr.length, {
+         message: "closed must not contain duplicate segment ids",
+       }),
+@@ -162,7 +162,7 @@ export const LatLonArraySchema = z
+   .max(500, "point array too large (max 500 points)");
+ 
+ /**
+- * A URL that may only point to the four external hosts the pipeline is
++ * A URL that may only point to the approved external hosts (ALLOWED_HOSTS) the pipeline is
+  * allowed to call. Anything else is rejected before fetch() is called.
+  */
+ const ALLOWED_HOSTS = [

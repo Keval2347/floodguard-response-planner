@@ -307,6 +307,12 @@ async function fetchMetNo(lat: number, lon: number): Promise<RainNow> {
     observedAt: istLabel(series[0].time),
     fetchedAt: new Date().toISOString(),
     source: "MET Norway locationforecast",
+    // MET Norway has no measured past rainfall. observedMm / last60Mm / rainSeries
+    // above are carried over from the last good reading (or 0 if there is none),
+    // so this reading must never look "fresh" — otherwise a failed primary feed
+    // silently paints the whole ward green as if it were dry.
+    stale: true,
+    staleReason: "The live weather feed is temporarily unavailable.",
   };
 }
 
