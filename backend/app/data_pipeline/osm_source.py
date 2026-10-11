@@ -11,7 +11,6 @@ pass --refresh) to force a re-download.
 """
 
 from __future__ import annotations
-
 from pathlib import Path
 
 import geopandas as gpd

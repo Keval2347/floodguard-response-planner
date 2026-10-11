@@ -90,11 +90,11 @@ class FleetConfigSchema(BaseModel):
 
 class WardConfigSchema(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
-
+            
     place_name: str = Field(
         min_length=5,
         max_length=200,
-        description="Nominatim place name — must contain at least city and country",
+        description="Nominatim place name - must contain at least city and country",
     )
     short_name: str = Field(
         min_length=1,

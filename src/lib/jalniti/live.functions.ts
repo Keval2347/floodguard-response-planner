@@ -55,7 +55,7 @@ export const getRainNow = createServerFn({ method: "GET" }).handler(
     try {
       return await fetchRainNow();
     } catch (error) {
-      console.error("[JalNiti] live rainfall request failed", error);
+      console.warn("[JalNiti] live rainfall request failed", error);
       throw new Error("Live rainfall data is temporarily unavailable.");
     }
   },

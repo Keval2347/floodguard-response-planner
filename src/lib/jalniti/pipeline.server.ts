@@ -57,8 +57,8 @@ interface Entry<T> {
 const store = new Map<string, Entry<unknown>>();
 
 /** Keep diagnostics server-side; never return exception text to the browser. */
-function logServerError(context: string, error: unknown) {
-  console.error(`[JalNiti] ${context}`, error);
+function logServerDiagnostic(level: "warn" | "error", context: string, error: unknown) {
+  console[level](`[JalNiti] ${context}`, error);
 }
 
 async function cached<T>(key: string, ttlMs: number, fn: () => Promise<T>): Promise<T> {
@@ -387,7 +387,7 @@ export async function fetchRainNow(): Promise<RainNow> {
     }
 
     const reason = errors.join(" | ") || "no weather provider answered";
-    logServerError("all weather providers failed", reason);
+    logServerDiagnostic("warn", "all weather providers failed; using last good reading", reason);
     if (lastGoodRain) {
       return {
         ...lastGoodRain,
@@ -507,7 +507,7 @@ export async function buildWardData(
     ]);
   } catch (err) {
     if (!allowSnapshot) throw err;
-    logServerError("live ward refresh failed; using snapshot", err);
+    logServerDiagnostic("warn", "live ward refresh failed; using snapshot", err);
     const snap = snapshot as unknown as WardData;
     const notes = [
       ...snap.notes,
@@ -524,7 +524,7 @@ export async function buildWardData(
         `Rainfall refreshed live: ${rain.observedMm} mm observed in the last 24 h, ${rain.forecastMm} mm forecast for the next 24 h`,
       );
     } catch (err) {
-      logServerError("rainfall refresh failed while using ward snapshot", err);
+      logServerDiagnostic("warn", "rainfall refresh failed while using ward snapshot", err);
       notes.push("Rainfall feed unavailable — snapshot rainfall shown");
     }
     return {
@@ -781,7 +781,7 @@ export async function fetchHospitals(
       };
     } catch (err) {
       if (!allowSnapshot) throw err;
-      logServerError("hospital refresh failed; using snapshot", err);
+      logServerDiagnostic("warn", "hospital refresh failed; using snapshot", err);
       const snap = hospitalSnapshot as { fetchedAt: string; source: string; hospitals: Hospital[] };
       return {
         hospitals: snap.hospitals,

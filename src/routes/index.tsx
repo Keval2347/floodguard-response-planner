@@ -403,6 +403,8 @@ function Dashboard() {
       await queryClient.invalidateQueries({ queryKey: ["rain-now"] });
       await queryClient.invalidateQueries({ queryKey: ["routes"] });
     } catch (error) {
+      // This is a critical data-path failure: the map is intentionally paused
+      // and the safe, generic message is shown in the dashboard banner.
       console.error("[JalNiti] refresh feeds failed", error);
       setSourceError("Live data is temporarily unavailable. Please try again.");
     } finally {
@@ -510,7 +512,7 @@ function Dashboard() {
         <div className="flex items-center gap-3 border-b border-destructive/40 bg-destructive/10 px-5 py-2 text-xs text-destructive">
           <TriangleAlert className="size-4 shrink-0" />
           <span className="flex-1">
-             Live data fetch failed. Risk and
+             Critical: live ward data is unavailable. Risk and
              allocation outputs are paused until all required sources answer.
           </span>
           <Button size="sm" variant="outline" className="h-7" onClick={refreshFeeds}>
