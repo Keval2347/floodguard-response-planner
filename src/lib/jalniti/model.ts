@@ -352,7 +352,8 @@ export function allocate(
 
   if (trucks.length === 0 || tasks.length === 0) {
     return {
-      assignments: [],
+      assignments: 
+        [],
       unserved: tasks,
       coveredExposure: 0,
       totalExposure,

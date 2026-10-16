@@ -18,7 +18,7 @@ crashing -- so you can keep developing the OSM half of the pipeline.
 
 from __future__ import annotations
 
-import urllib.request
+import requests
 from pathlib import Path
 
 from app.config import get_config
@@ -82,7 +82,14 @@ def _write_dem(dest: Path) -> None:
             "crs": "EPSG:4326",
         }
     )
-    urllib.request.urlretrieve(url, dest)
+    # Validate scheme before downloading to prevent SSRF via file:// etc.
+    if not url.startswith("https://"):
+        raise ValueError(f"Unexpected DEM download URL scheme (expected https://): {url!r}")
+    response = requests.get(url, stream=True, timeout=120)
+    response.raise_for_status()
+    with dest.open("wb") as fh:
+        for chunk in response.iter_content(chunk_size=1 << 20):  # 1 MB chunks
+            fh.write(chunk)
 
 
 def fetch_dem(refresh: bool = False) -> Path | None:
