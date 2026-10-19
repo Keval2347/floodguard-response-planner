@@ -126,7 +126,7 @@ export const SOURCES: SourceRef[] = [
   {
     label: "Open-Meteo (IMD-compatible obs + forecast)",
     detail:
-      "Hourly observed rainfall for the last 12 h and the 24 h forecast total at the ward centroid. IMD Ahmedabad publishes HTML pages only, no machine-readable feed.",
+      "Hourly observed rainfall, 24 h totals, and optional peak rolling 1 h / 3 h totals at the ward centroid. IMD Ahmedabad publishes HTML pages only, no machine-readable feed.",
     url: "https://open-meteo.com/",
   },
 ];

@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep rainfall window calculations in a pure `rainfall.ts` helper so provider parsing and risk scoring share testable, backwards-compatible intensity semantics.

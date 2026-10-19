@@ -1015,7 +1015,8 @@ function Dashboard() {
                          }}
                        />
                       <span className="text-muted-foreground">
-                        Follow live feed{liveRainMm !== undefined ? ` (${liveRainMm} mm)` : ""}
+                        Follow live feed{liveRainMm !== undefined ? ` (${liveRainMm} mm / 24 h` : ""}
+                        {liveRainMm !== undefined && liveRain3hMm !== undefined ? ` · ${liveRain3hMm} mm / 3 h)` : liveRainMm !== undefined ? ")" : ""}
                       </span>
                     </label>
                     <Slider
@@ -1183,7 +1184,11 @@ function Dashboard() {
                       // total, then to whatever is on the slider, if the rainfall
                       // poll is failing.
                       const base = defaultScenario(ward);
-                      setScenario({ ...base, rainMm: liveRainMm ?? base.rainMm });
+                      setScenario({
+                        ...base,
+                        rainMm: liveRainMm ?? base.rainMm,
+                        rain3hMm: liveRain3hMm ?? base.rain3hMm ?? 0,
+                      });
                       setFollowLive(true);
                       void rainQuery.refetch();
                     }}
@@ -1254,7 +1259,8 @@ function Dashboard() {
                     Assumptions: depot truck counts, 30 min pumping time per street, 30% de-silting benefit,
                     and the 30 mm / 3 h intensity reference. The intensity reference is a placeholder to
                     validate against ground-truth data. Closed streets are excluded from pumping targets;
-                    OSRM routes do not avoid closed streets.
+                    OSRM routes do not avoid closed streets. Travel times are free-flow OSRM measurements;
+                    flooded-road slowdowns are not modelled.
                   </p>
                 </div>
               </ScrollArea>
