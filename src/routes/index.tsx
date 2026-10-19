@@ -693,7 +693,7 @@ function Dashboard() {
                   className="h-7 flex-1 text-xs"
                   onClick={() => toggleIn("closed", selected.id)}
                 >
-                  Close street
+                  Exclude from pumping
                 </Button>
               </div>
             </Card>
@@ -998,7 +998,7 @@ function Dashboard() {
 
                   <Field
                     label="Rainfall driving the map"
-                    value={`${scenario.rainMm} mm / 24 h`}
+                    value={`${scenario.rainMm} mm / 24 h · ${scenario.rain3hMm ?? 0} mm / 3 h`}
                     hint={
                       followLive
                         ? "Following the live feed: observed last 24 h + the next hour's nowcast. When the rain stops, the map recolours on the next poll."
@@ -1027,6 +1027,28 @@ function Dashboard() {
                       onValueChange={([v]) => {
                         setFollowLive(false);
                         set({ rainMm: v });
+                      }}
+                    />
+                  </Field>
+
+                  <Field
+                    label="Peak rainfall intensity"
+                    value={`${scenario.rain3hMm ?? 0} mm / 3 h`}
+                    hint={
+                      followLive
+                        ? `Live rolling 3-hour peak from the weather feed${liveRain3hMm !== undefined ? `: ${liveRain3hMm} mm` : ". Older readings may not include this value"}.`
+                        : "What-if peak 3-hour rainfall total. The 30 mm reference is an unvalidated assumption, pending ground-truth backtesting."
+                    }
+                  >
+                    <Slider
+                      aria-label="Peak rainfall in mm per 3 hours"
+                      min={0}
+                      max={150}
+                      step={1}
+                      value={[scenario.rain3hMm ?? 0]}
+                      onValueChange={([v]) => {
+                        setFollowLive(false);
+                        set({ rain3hMm: v });
                       }}
                     />
                   </Field>
@@ -1229,8 +1251,10 @@ function Dashboard() {
 
                   <p className="flex gap-2 rounded-md bg-muted p-3 text-xs text-muted-foreground">
                     <Info className="mt-0.5 size-4 shrink-0" />
-                    Remaining assumptions: depot truck counts, 30 min pumping time per street and the
-                    30% de-silting benefit. Everything else on this screen is measured data.
+                    Assumptions: depot truck counts, 30 min pumping time per street, 30% de-silting benefit,
+                    and the 30 mm / 3 h intensity reference. The intensity reference is a placeholder to
+                    validate against ground-truth data. Closed streets are excluded from pumping targets;
+                    OSRM routes do not avoid closed streets.
                   </p>
                 </div>
               </ScrollArea>
