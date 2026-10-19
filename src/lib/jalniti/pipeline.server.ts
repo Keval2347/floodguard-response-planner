@@ -17,6 +17,7 @@
 
 import { haversineM, midOf, pathLengthM, type LatLon } from "./geo";
 import { DEPOTS, WARD, type StreetSegment, type WardData } from "./data";
+import { calculateRainPeaks } from "./rainfall";
 import snapshot from "./navrangpura.snapshot.json";
 import hospitalSnapshot from "./hospitals.snapshot.json";
 import type { Hospital } from "./hospitals";
@@ -184,6 +185,9 @@ export interface RainNow {
   observedMm: number;
   /** Forecast total, next 24 h. */
   forecastMm: number;
+  /** Peak rolling 1 h / 3 h totals where supplied by the weather provider. */
+  peak1hMm?: number;
+  peak3hMm?: number;
   /** Hourly observed rainfall for the last 12 h. */
   rainSeries: { hour: string; mm: number }[];
   /** 15-minute nowcast buckets for the next 2 h. */
@@ -241,11 +245,19 @@ function parseOpenMeteo(data: any, source: string): RainNow {
 
   const observedMm = sumMm(mm.slice(Math.max(0, nowIdx - 24), nowIdx));
   const forecastMm = sumMm(mm.slice(nowIdx, nowIdx + 24));
+  // Hourly time T is the total for the preceding hour. Include the last 24
+  // observed hours plus only the next 3 forecast hours for a current-load map.
+  const peakHourMm = [
+    ...mm.slice(Math.max(0, nowIdx - 24), nowIdx),
+    ...mm.slice(nowIdx, nowIdx + 3),
+  ].map((value) => Number(value ?? 0));
 
   const qTimes: string[] = data.minutely_15?.time ?? [];
   const qMm: number[] = data.minutely_15?.precipitation ?? [];
   let qIdx = qTimes.findIndex((t) => istMs(t) > now);
   if (qIdx < 0) qIdx = qTimes.length;
+  const peakQuarterHourMm = qMm.slice(qIdx, qIdx + 12).map((value) => Number(value ?? 0));
+  const peaks = calculateRainPeaks(peakHourMm, peakQuarterHourMm);
   const last60Mm = qTimes.length
     ? sumMm(qMm.slice(Math.max(0, qIdx - 4), qIdx))
     : Number(mm[Math.max(0, nowIdx - 1)] ?? 0);
@@ -265,6 +277,7 @@ function parseOpenMeteo(data: any, source: string): RainNow {
     next60Mm,
     observedMm,
     forecastMm,
+    ...peaks,
     rainSeries,
     nowcast,
     observedAt: String(data.current?.time ?? times[Math.max(0, nowIdx - 1)] ?? "").replace("T", " "),
@@ -294,6 +307,8 @@ async function fetchMetNo(lat: number, lon: number): Promise<RainNow> {
 
   const next24 = series.slice(0, 24);
   const nowMmPerHr = Math.round(hourMm(series[0]) * 10) / 10;
+  const forecastHoursMm = next24.map(hourMm);
+  const forecastPeaks = calculateRainPeaks(forecastHoursMm, []);
   return {
     nowMmPerHr,
     raining: nowMmPerHr > 0,
@@ -302,6 +317,8 @@ async function fetchMetNo(lat: number, lon: number): Promise<RainNow> {
     // MET Norway is forecast-only; keep the last measured 24 h total if we have one.
     observedMm: lastGoodRain?.observedMm ?? 0,
     forecastMm: sumMm(next24.map(hourMm)),
+    peak1hMm: Math.max(lastGoodRain?.peak1hMm ?? 0, forecastPeaks.peak1hMm ?? 0),
+    peak3hMm: Math.max(lastGoodRain?.peak3hMm ?? 0, forecastPeaks.peak3hMm ?? 0),
     rainSeries: lastGoodRain?.rainSeries ?? [],
     nowcast: series.slice(0, 8).map((e) => ({ time: istLabel(e.time), mm: hourMm(e) })),
     observedAt: istLabel(series[0].time),
@@ -340,6 +357,12 @@ async function fetchImd(lat: number, lon: number): Promise<RainNow> {
     next60Mm: Number(data?.nowcast_mm ?? 0),
     observedMm: Number(data?.rainfall_24h ?? lastGoodRain?.observedMm ?? 0),
     forecastMm: Number(data?.forecast_24h ?? lastGoodRain?.forecastMm ?? 0),
+    peak1hMm: Number.isFinite(Number(data?.peak_1h_mm ?? data?.rain_1h_mm))
+      ? Number(data?.peak_1h_mm ?? data?.rain_1h_mm)
+      : lastGoodRain?.peak1hMm,
+    peak3hMm: Number.isFinite(Number(data?.peak_3h_mm ?? data?.rain_3h_mm))
+      ? Number(data?.peak_3h_mm ?? data?.rain_3h_mm)
+      : lastGoodRain?.peak3hMm,
     rainSeries: lastGoodRain?.rainSeries ?? [],
     nowcast: [],
     observedAt: String(data?.time ?? new Date().toISOString()).replace("T", " "),
@@ -407,7 +430,13 @@ export async function fetchRainNow(): Promise<RainNow> {
 
 async function fetchRain() {
   const r = await fetchRainNow();
-  return { rainSeries: r.rainSeries, observedMm: r.observedMm, forecastMm: r.forecastMm };
+  return {
+    rainSeries: r.rainSeries,
+    observedMm: r.observedMm,
+    forecastMm: r.forecastMm,
+    peak1hMm: r.peak1hMm,
+    peak3hMm: r.peak3hMm,
+  };
 }
 
 
@@ -523,6 +552,8 @@ export async function buildWardData(
       rainSeries: snap.rainSeries,
       observedMm: snap.observedMm,
       forecastMm: snap.forecastMm,
+      peak1hMm: snap.peak1hMm,
+      peak3hMm: snap.peak3hMm,
     };
     try {
       rain = await fetchRain();
@@ -715,6 +746,8 @@ async function buildLiveWardData(): Promise<WardData> {
       rainSeries: rain.rainSeries,
       forecastMm: rain.forecastMm,
       observedMm: rain.observedMm,
+      peak1hMm: rain.peak1hMm,
+      peak3hMm: rain.peak3hMm,
       travelMin,
       fetchedAt: new Date().toISOString(),
       notes,

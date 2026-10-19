@@ -119,6 +119,14 @@ export const ScenarioOverridesSchema = z
       .min(0, "rainMm must be ≥ 0")
       .max(600, "rainMm must be ≤ 600"),
 
+    // Optional for compatibility with scenarios saved before intensity scoring.
+    rain3hMm: z
+      .number({ invalid_type_error: "rain3hMm must be a number" })
+      .finite("rain3hMm must be finite")
+      .min(0, "rain3hMm must be ≥ 0")
+      .max(300, "rain3hMm must be ≤ 300")
+      .optional(),
+
     drainsCleared: z
       .array(SegmentIdSchema)
       .max(1000, "drainsCleared cannot exceed the number of ward segments")

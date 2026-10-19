@@ -235,6 +235,7 @@ function Dashboard() {
     if (ward) return round(ward.observedMm);
     return undefined;
   })();
+  const liveRain3hMm = rain?.peak3hMm ?? ward?.peak3hMm;
 
 
   // Once real data lands, start from the actual observed rainfall + full fleet.
@@ -243,17 +244,25 @@ function Dashboard() {
       // Same rainfall load as "Reset to the live feed", so opening the app and
       // resetting always show the identical map.
       const base = defaultScenario(ward);
-      setScenario({ ...base, rainMm: liveRainMm ?? base.rainMm });
+      setScenario({
+        ...base,
+        rainMm: liveRainMm ?? base.rainMm,
+        rain3hMm: liveRain3hMm ?? base.rain3hMm ?? 0,
+      });
       setInitialised(true);
     }
   }, [ward, initialised, liveRainMm]);
 
   // Live mode: every poll pushes the measured rainfall into the risk model.
   useEffect(() => {
-    if (followLive && liveRainMm !== undefined) {
-      setScenario((s) => (s.rainMm === liveRainMm ? s : { ...s, rainMm: liveRainMm }));
+    if (followLive && (liveRainMm !== undefined || liveRain3hMm !== undefined)) {
+      setScenario((s) => ({
+        ...s,
+        ...(liveRainMm !== undefined ? { rainMm: liveRainMm } : {}),
+        ...(liveRain3hMm !== undefined ? { rain3hMm: liveRain3hMm } : {}),
+      }));
     }
-  }, [followLive, liveRainMm]);
+  }, [followLive, liveRainMm, liveRain3hMm]);
 
   /**
    * Scoring 220 segments and re-running the allocator on every slider pixel
@@ -361,8 +370,9 @@ function Dashboard() {
     () => ({
       ...defaultScenario(ward),
       rainMm: liveRainMm ?? defaultScenario(ward).rainMm,
+      rain3hMm: liveRain3hMm ?? defaultScenario(ward).rain3hMm ?? 0,
     }),
-    [ward, liveRainMm],
+    [ward, liveRainMm, liveRain3hMm],
   );
   const liveScored = useMemo(
     () => (ward ? scoreSegments(ward, liveScenario) : []),

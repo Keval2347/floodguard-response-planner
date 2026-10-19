@@ -30,6 +30,8 @@ import { parseStrict, ScenarioOverridesSchema } from "./schema";
 export interface ScenarioOverrides {
   /** Forecast rainfall in mm/24h. Drives the whole risk map. */
   rainMm: number;
+  /** Peak rainfall intensity in any rolling 3 h window, mm; optional for old scenarios. */
+  rain3hMm?: number;
   /** Segment ids whose storm drains were de-silted before the monsoon. */
   drainsCleared: string[];
   /** Segment ids closed to traffic (still flood, but not worth pumping). */
@@ -42,7 +44,9 @@ export interface ScenarioOverrides {
 
 export function defaultScenario(ward: WardData | undefined): ScenarioOverrides {
   return {
-    rainMm: Math.max(10, Math.round((ward?.forecastMm || WARD.reference_rain_mm) / 5) * 5),
+    // Start from observed rainfall, never a forecast or an invented storm floor.
+    rainMm: Math.max(0, Math.round((ward?.observedMm ?? 0) * 10) / 10),
+    rain3hMm: Math.max(0, Math.round((ward?.peak3hMm ?? 0) * 10) / 10),
     drainsCleared: [],
     closed: [],
     trucksAvailable: (ward?.depots ?? []).reduce((n, d) => n + d.trucks, 0) || 10,
@@ -76,7 +80,10 @@ export function scoreSegments(ward: WardData, o: ScenarioOverrides): ScoredSegme
   // Reject invalid scenario overrides before running any computation.
   parseStrict(ScenarioOverridesSchema, o, "scoreSegments: scenario overrides");
 
-  const rainFactor = Math.log1p(o.rainMm) / Math.log1p(WARD.reference_rain_mm);
+  const rain24hFactor = Math.log1p(o.rainMm) / Math.log1p(WARD.reference_rain_mm);
+  const peak3hMm = o.rain3hMm ?? ward.peak3hMm ?? 0;
+  const rain3hFactor = Math.log1p(peak3hMm) / Math.log1p(WARD.reference_rain_3h_mm);
+  const rainFactor = Math.max(rain24hFactor, rain3hFactor);
   const depotCount = ward.depots.length;
 
   return ward.segments

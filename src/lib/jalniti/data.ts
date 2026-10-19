@@ -55,6 +55,10 @@ export interface WardData {
   forecastMm: number;
   /** Observed rainfall total in the last 24 h, mm. */
   observedMm: number;
+  /** Peak rolling 1 h rainfall, when provided by the upstream weather feed. */
+  peak1hMm?: number;
+  /** Peak rolling 3 h rainfall, when provided by the upstream weather feed. */
+  peak3hMm?: number;
   /**
    * Real road-network travel times in minutes from OSRM.
    * Index space: 0..depots.length-1 are depots, then segments in order.
@@ -87,6 +91,11 @@ export const WARD = {
   bbox: [23.0225, 72.5375, 23.0565, 72.5805] as [number, number, number, number],
   /** Rainfall (mm/24h) the risk curve is calibrated at — IMD heavy-rain threshold. */
   reference_rain_mm: 65,
+  /**
+   * ASSUMPTION: placeholder 3 h intensity reference until Task 1 backtesting
+   * can tune it against labelled waterlogging observations.
+   */
+  reference_rain_3h_mm: 30,
 };
 
 export interface SourceRef {

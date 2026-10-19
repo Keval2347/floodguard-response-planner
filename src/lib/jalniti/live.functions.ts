@@ -32,6 +32,8 @@ export interface RainNowDTO {
   next60Mm: number;
   observedMm: number;
   forecastMm: number;
+  peak1hMm?: number;
+  peak3hMm?: number;
   rainSeries: { hour: string; mm: number }[];
   nowcast: { time: string; mm: number }[];
   observedAt: string;
