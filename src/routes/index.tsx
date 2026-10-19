@@ -235,6 +235,7 @@ function Dashboard() {
     if (ward) return round(ward.observedMm);
     return undefined;
   })();
+  const liveRain3hMm = rain?.peak3hMm ?? ward?.peak3hMm;
 
 
   // Once real data lands, start from the actual observed rainfall + full fleet.
@@ -243,17 +244,25 @@ function Dashboard() {
       // Same rainfall load as "Reset to the live feed", so opening the app and
       // resetting always show the identical map.
       const base = defaultScenario(ward);
-      setScenario({ ...base, rainMm: liveRainMm ?? base.rainMm });
+      setScenario({
+        ...base,
+        rainMm: liveRainMm ?? base.rainMm,
+        rain3hMm: liveRain3hMm ?? base.rain3hMm ?? 0,
+      });
       setInitialised(true);
     }
   }, [ward, initialised, liveRainMm]);
 
   // Live mode: every poll pushes the measured rainfall into the risk model.
   useEffect(() => {
-    if (followLive && liveRainMm !== undefined) {
-      setScenario((s) => (s.rainMm === liveRainMm ? s : { ...s, rainMm: liveRainMm }));
+    if (followLive && (liveRainMm !== undefined || liveRain3hMm !== undefined)) {
+      setScenario((s) => ({
+        ...s,
+        ...(liveRainMm !== undefined ? { rainMm: liveRainMm } : {}),
+        ...(liveRain3hMm !== undefined ? { rain3hMm: liveRain3hMm } : {}),
+      }));
     }
-  }, [followLive, liveRainMm]);
+  }, [followLive, liveRainMm, liveRain3hMm]);
 
   /**
    * Scoring 220 segments and re-running the allocator on every slider pixel
@@ -361,8 +370,9 @@ function Dashboard() {
     () => ({
       ...defaultScenario(ward),
       rainMm: liveRainMm ?? defaultScenario(ward).rainMm,
+      rain3hMm: liveRain3hMm ?? defaultScenario(ward).rain3hMm ?? 0,
     }),
-    [ward, liveRainMm],
+    [ward, liveRainMm, liveRain3hMm],
   );
   const liveScored = useMemo(
     () => (ward ? scoreSegments(ward, liveScenario) : []),
@@ -683,7 +693,7 @@ function Dashboard() {
                   className="h-7 flex-1 text-xs"
                   onClick={() => toggleIn("closed", selected.id)}
                 >
-                  Close street
+                  Exclude from pumping
                 </Button>
               </div>
             </Card>
@@ -708,9 +718,11 @@ function Dashboard() {
                 <h2 className="sr-only">Per-street waterlogging risk</h2>
                 <p className="pb-2 text-xs text-muted-foreground">
                   {scored.length} real OSM street segments, ranked by a waterlogging{" "}
-                  <strong>risk index</strong> (0–100) at {scenario.rainMm} mm/24h. The index is a
-                  weighted score of measured terrain and network features — distance to water,
-                  slope, elevation and road density — not a validated probability. Read it as
+                  <strong>risk index</strong> (0–100) at {scenario.rainMm} mm/24h and a peak of{" "}
+                  {scenario.rain3hMm ?? 0} mm/3h. Rainfall uses the larger normalized 24-hour or
+                  3-hour signal; the 3-hour reference is an unvalidated assumption. Terrain and
+                  network features — distance to water, slope, elevation and road density — shape
+                  the relative street scores. This is not a validated probability. Read it as
                   "pump this street before that one", never as "this street will flood".
                 </p>
                 <div className="space-y-1.5">
@@ -988,7 +1000,7 @@ function Dashboard() {
 
                   <Field
                     label="Rainfall driving the map"
-                    value={`${scenario.rainMm} mm / 24 h`}
+                    value={`${scenario.rainMm} mm / 24 h · ${scenario.rain3hMm ?? 0} mm / 3 h`}
                     hint={
                       followLive
                         ? "Following the live feed: observed last 24 h + the next hour's nowcast. When the rain stops, the map recolours on the next poll."
@@ -1005,7 +1017,8 @@ function Dashboard() {
                          }}
                        />
                       <span className="text-muted-foreground">
-                        Follow live feed{liveRainMm !== undefined ? ` (${liveRainMm} mm)` : ""}
+                        Follow live feed{liveRainMm !== undefined ? ` (${liveRainMm} mm / 24 h` : ""}
+                        {liveRainMm !== undefined && liveRain3hMm !== undefined ? ` · ${liveRain3hMm} mm / 3 h)` : liveRainMm !== undefined ? ")" : ""}
                       </span>
                     </label>
                     <Slider
@@ -1017,6 +1030,28 @@ function Dashboard() {
                       onValueChange={([v]) => {
                         setFollowLive(false);
                         set({ rainMm: v });
+                      }}
+                    />
+                  </Field>
+
+                  <Field
+                    label="Peak rainfall intensity"
+                    value={`${scenario.rain3hMm ?? 0} mm / 3 h`}
+                    hint={
+                      followLive
+                        ? `Live rolling 3-hour peak from the weather feed${liveRain3hMm !== undefined ? `: ${liveRain3hMm} mm` : ". Older readings may not include this value"}.`
+                        : "What-if peak 3-hour rainfall total. The 30 mm reference is an unvalidated assumption, pending ground-truth backtesting."
+                    }
+                  >
+                    <Slider
+                      aria-label="Peak rainfall in mm per 3 hours"
+                      min={0}
+                      max={300}
+                      step={1}
+                      value={[scenario.rain3hMm ?? 0]}
+                      onValueChange={([v]) => {
+                        setFollowLive(false);
+                        set({ rain3hMm: v });
                       }}
                     />
                   </Field>
@@ -1114,6 +1149,11 @@ function Dashboard() {
 
                   <Card className="gap-2 p-3">
                     <p className="text-sm font-medium">Observed rainfall, last 12 h</p>
+                    {rain && (
+                      <p className="text-[10px] text-muted-foreground">
+                        Rolling peaks · 1 h: {rain.peak1hMm ?? "—"} mm · 3 h: {rain.peak3hMm ?? "—"} mm
+                      </p>
+                    )}
                     {rain && rain.rainSeries.length > 0 ? (
                       <>
                         <div className="flex h-16 items-end gap-1">
@@ -1151,7 +1191,11 @@ function Dashboard() {
                       // total, then to whatever is on the slider, if the rainfall
                       // poll is failing.
                       const base = defaultScenario(ward);
-                      setScenario({ ...base, rainMm: liveRainMm ?? base.rainMm });
+                      setScenario({
+                        ...base,
+                        rainMm: liveRainMm ?? base.rainMm,
+                        rain3hMm: liveRain3hMm ?? base.rain3hMm ?? 0,
+                      });
                       setFollowLive(true);
                       void rainQuery.refetch();
                     }}
@@ -1219,8 +1263,11 @@ function Dashboard() {
 
                   <p className="flex gap-2 rounded-md bg-muted p-3 text-xs text-muted-foreground">
                     <Info className="mt-0.5 size-4 shrink-0" />
-                    Remaining assumptions: depot truck counts, 30 min pumping time per street and the
-                    30% de-silting benefit. Everything else on this screen is measured data.
+                    Assumptions: depot truck counts, 30 min pumping time per street, 30% de-silting benefit,
+                    and the 30 mm / 3 h intensity reference. The intensity reference is a placeholder to
+                    validate against ground-truth data. Closed streets are excluded from pumping targets;
+                    OSRM routes do not avoid closed streets. Travel times are free-flow OSRM measurements;
+                    flooded-road slowdowns are not modelled.
                   </p>
                 </div>
               </ScrollArea>
