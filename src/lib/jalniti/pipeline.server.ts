@@ -308,7 +308,7 @@ async function fetchMetNo(lat: number, lon: number): Promise<RainNow> {
   const next24 = series.slice(0, 24);
   const nowMmPerHr = Math.round(hourMm(series[0]) * 10) / 10;
   const forecastHoursMm = next24.map(hourMm);
-  const forecastPeaks = calculateRainPeaks(forecastHoursMm, []);
+  const forecastPeaks = calculateRainPeaks(forecastHoursMm.slice(0, 3), []);
   return {
     nowMmPerHr,
     raining: nowMmPerHr > 0,

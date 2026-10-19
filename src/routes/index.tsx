@@ -719,9 +719,10 @@ function Dashboard() {
                 <p className="pb-2 text-xs text-muted-foreground">
                   {scored.length} real OSM street segments, ranked by a waterlogging{" "}
                   <strong>risk index</strong> (0–100) at {scenario.rainMm} mm/24h and a peak of{" "}
-                  {scenario.rain3hMm ?? 0} mm/3h. The index is a
-                  weighted score of measured terrain and network features — distance to water,
-                  slope, elevation and road density — not a validated probability. Read it as
+                  {scenario.rain3hMm ?? 0} mm/3h. Rainfall uses the larger normalized 24-hour or
+                  3-hour signal; the 3-hour reference is an unvalidated assumption. Terrain and
+                  network features — distance to water, slope, elevation and road density — shape
+                  the relative street scores. This is not a validated probability. Read it as
                   "pump this street before that one", never as "this street will flood".
                 </p>
                 <div className="space-y-1.5">
@@ -1045,7 +1046,7 @@ function Dashboard() {
                     <Slider
                       aria-label="Peak rainfall in mm per 3 hours"
                       min={0}
-                      max={150}
+                      max={300}
                       step={1}
                       value={[scenario.rain3hMm ?? 0]}
                       onValueChange={([v]) => {
