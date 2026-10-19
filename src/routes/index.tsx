@@ -718,7 +718,8 @@ function Dashboard() {
                 <h2 className="sr-only">Per-street waterlogging risk</h2>
                 <p className="pb-2 text-xs text-muted-foreground">
                   {scored.length} real OSM street segments, ranked by a waterlogging{" "}
-                  <strong>risk index</strong> (0–100) at {scenario.rainMm} mm/24h. The index is a
+                  <strong>risk index</strong> (0–100) at {scenario.rainMm} mm/24h and a peak of{" "}
+                  {scenario.rain3hMm ?? 0} mm/3h. The index is a
                   weighted score of measured terrain and network features — distance to water,
                   slope, elevation and road density — not a validated probability. Read it as
                   "pump this street before that one", never as "this street will flood".
@@ -1147,6 +1148,11 @@ function Dashboard() {
 
                   <Card className="gap-2 p-3">
                     <p className="text-sm font-medium">Observed rainfall, last 12 h</p>
+                    {rain && (
+                      <p className="text-[10px] text-muted-foreground">
+                        Rolling peaks · 1 h: {rain.peak1hMm ?? "—"} mm · 3 h: {rain.peak3hMm ?? "—"} mm
+                      </p>
+                    )}
                     {rain && rain.rainSeries.length > 0 ? (
                       <>
                         <div className="flex h-16 items-end gap-1">

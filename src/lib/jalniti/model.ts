@@ -28,7 +28,7 @@ import { midOf, type LatLon } from "./geo";
 import { parseStrict, ScenarioOverridesSchema } from "./schema";
 
 export interface ScenarioOverrides {
-  /** Forecast rainfall in mm/24h. Drives the whole risk map. */
+  /** Observed/scenario rainfall total in mm/24 h. */
   rainMm: number;
   /** Peak rainfall intensity in any rolling 3 h window, mm; optional for old scenarios. */
   rain3hMm?: number;
@@ -72,9 +72,9 @@ export interface ScoredSegment extends StreetSegment {
 }
 
 /**
- * Rainfall response curve. Gridded rainfall products (IMD 0.25 deg, Open-Meteo
- * ~11 km) cover the whole ward with one value, so rainfall moves every street
- * together; spatial contrast comes from terrain + network features.
+ * Rainfall response curve. The larger normalized 24 h and 3 h signal drives
+ * ward-wide rainfall loading; spatial contrast comes from terrain + network
+ * features. The 3 h reference is an unvalidated assumption pending backtesting.
  */
 export function scoreSegments(ward: WardData, o: ScenarioOverrides): ScoredSegment[] {
   // Reject invalid scenario overrides before running any computation.
