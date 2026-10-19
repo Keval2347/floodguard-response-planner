@@ -53,7 +53,7 @@ describe("rainfall intensity scoring", () => {
   });
 
   it("scores a 40 mm hourly burst above 40 mm spread across 24 hours", () => {
-    const burst = calculateRainPeaks([40]);
+    const burst = calculateRainPeaks([40, 0, 0]);
     const spread = calculateRainPeaks(Array.from({ length: 24 }, () => 40 / 24));
     expect(burst.peak1hMm).toBe(40);
     expect(burst.peak3hMm).toBe(40);
