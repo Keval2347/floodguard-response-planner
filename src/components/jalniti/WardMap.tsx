@@ -139,7 +139,7 @@ function WardMap({
                 {closed && (
                   <>
                     <br />
-                    closed to traffic — not pumped
+                    excluded from pumping; truck routes may still pass
                   </>
                 )}
               </Tooltip>
