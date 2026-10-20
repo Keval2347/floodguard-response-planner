@@ -46,7 +46,6 @@ git clone <this-repository-url>
 cd <repository-name>
 npm install
 npm run dev        # starts the dev server
-npm run build      # production build
 ```
 
 Copy `.env.example` to `.env` if you want to set optional values. No API key is required.

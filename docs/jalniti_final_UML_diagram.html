@@ -1,0 +1,267 @@
+<style>
+    body{
+        background-color: #f5f7fa;
+    }
+#cd svg .node rect { rx: 8px; }
+#cd { overflow-x: auto; }
+</style>
+<div id="cd"></div>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const themeMode = document.documentElement.dataset.mode;
+const dark = themeMode ? themeMode === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: "mermaid",
+  fontFamily: '"anthropic-sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '13px',
+    fontFamily: '"anthropic-sans", sans-serif',
+    lineColor: dark ? '#007b5f' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+  },
+});
+const def = `classDiagram
+    direction TB
+
+    namespace WardModel {
+        class WardData {
+            <<interface>>
+            +StreetSegment[] segments
+            +Depot[] depots
+            +RainPoint[] rainSeries
+            +number forecastMm
+            +number observedMm
+            +number[][] travelMin
+            +string fetchedAt
+            +string geometryCapturedAt
+            +string[] notes
+        }
+        class StreetSegment {
+            <<interface>>
+            +string id
+            +string name
+            +number osm_id
+            +LatLon[] path
+            +number length_m
+            +number elevation_m
+            +number slope_pct
+            +number dist_to_water_m
+            +number road_density
+            +number base_risk
+            +string highway
+        }
+        class Depot {
+            <<interface>>
+            +string id
+            +string name
+            +number lat
+            +number lon
+            +number trucks
+        }
+        class RainPoint {
+            <<interface>>
+            +string hour
+            +number mm
+        }
+        class NowcastPoint {
+            <<interface>>
+            +string time
+            +number mm
+        }
+    }
+
+    namespace RiskOutput {
+        class ScoredSegment {
+            <<interface>>
+            +number risk
+            +RiskBand band
+            +number exposure
+            +number matrixIndex
+            +LatLon mid
+            +Confidence confidence
+        }
+        class RiskEngine {
+            <<module>>
+            +scoreSegments(ward, overrides) ScoredSegment[]
+        }
+        class ScenarioOverrides {
+            <<interface>>
+            +number rainMm
+            +string[] drainsCleared
+            +string[] closed
+            +number trucksAvailable
+            +number shiftMinutes
+        }
+    }
+
+    namespace AllocationOutput {
+        class AllocationEngine {
+            <<module>>
+            +allocate(ward, scored, overrides) AllocationResult
+            +insertionPhase() void
+            +localSearch() number
+            +greedyPlan() number
+        }
+        class Truck {
+            <<interface>>
+            +string id
+            +number depotIndex
+            +number[] seq
+        }
+        class Assignment {
+            <<interface>>
+            +string truck
+            +Depot depot
+            +ScoredSegment segment
+            +number travelMin
+            +number arriveMin
+            +number fromIndex
+            +LatLon fromPoint
+            +number leg
+        }
+        class AllocationResult {
+            <<interface>>
+            +Assignment[] assignments
+            +ScoredSegment[] unserved
+            +number coveredExposure
+            +number totalExposure
+            +number greedyExposure
+            +number improvements
+            +string method
+        }
+    }
+
+    namespace HospitalsModel {
+        class Hospital {
+            <<interface>>
+            +string id
+            +string name
+            +number lat
+            +number lon
+            +boolean emergency
+            +number beds
+            +string operator
+            +string healthcare
+        }
+        class HospitalRisk {
+            <<interface>>
+            +number accessRisk
+            +number approachRoads
+            +string worstRoad
+            +number distanceToWardM
+            +AccessStatus status
+        }
+        class HospitalRiskEngine {
+            <<module>>
+            +assessHospitals(hospitals, segments, centre) HospitalRisk[]
+            +urgentHospitals(list) HospitalRisk[]
+        }
+    }
+
+    namespace ServerLayer {
+        class JalNitiServerFunctions {
+            <<module>>
+            +getWardData(refresh) WardData
+            +getRainNow() RainNow
+            +getRoutes(pairs) RoutePath[]
+            +getHospitals(refresh) HospitalsPayload
+        }
+        class RainNow {
+            <<interface>>
+            +number nowMmPerHr
+            +boolean raining
+            +number last60Mm
+            +number next60Mm
+            +number observedMm
+            +number forecastMm
+            +RainPoint[] rainSeries
+            +NowcastPoint[] nowcast
+            +string observedAt
+            +string fetchedAt
+            +boolean stale
+            +string staleReason
+            +string source
+        }
+        class RoutePath {
+            <<interface>>
+            +string key
+            +LatLon[] path
+            +number distanceKm
+            +number durationMin
+        }
+        class HospitalsPayload {
+            <<interface>>
+            +Hospital[] hospitals
+            +string fetchedAt
+            +boolean live
+            +string note
+        }
+    }
+
+    namespace Types {
+        class RiskBand {
+            <<enumeration>>
+            low
+            moderate
+            high
+            critical
+        }
+        class Confidence {
+            <<enumeration>>
+            measured
+            indicative
+        }
+        class AccessStatus {
+            <<enumeration>>
+            cut-off
+            at-risk
+            watch
+            clear
+            unknown
+        }
+    }
+
+    StreetSegment <|-- ScoredSegment
+    Hospital <|-- HospitalRisk
+
+    WardData "1" *-- "1..*" StreetSegment : segments
+    WardData "1" *-- "1..*" Depot : depots
+    WardData "1" *-- "0..*" RainPoint : rainSeries
+    RainNow "1" *-- "0..*" RainPoint : contains
+    RainNow "1" *-- "0..*" NowcastPoint : forecasts
+
+    AllocationResult "1" *-- "0..*" Assignment : assignments
+    AllocationResult "1" o-- "0..*" ScoredSegment : unserved
+    Assignment "1" o-- "1" ScoredSegment : segment
+
+    Truck "0..*" --> "1" Depot : depot
+    Assignment "0..*" --> "1" Depot : depot
+    HospitalsPayload "1" *-- "0..*" Hospital : hospitals
+
+    ScoredSegment "0..*" --> "1" RiskBand : classified as
+    ScoredSegment "0..*" --> "1" Confidence : reports
+    HospitalRisk "0..*" --> "1" AccessStatus : classified as
+
+    RiskEngine ..> WardData : reads
+    RiskEngine ..> ScenarioOverrides : reads
+    RiskEngine ..> ScoredSegment : creates
+
+    AllocationEngine ..> ScoredSegment : reads
+    AllocationEngine ..> ScenarioOverrides : reads
+    AllocationEngine ..> Truck : creates
+    AllocationEngine ..> AllocationResult : creates
+
+    HospitalRiskEngine ..> Hospital : reads
+    HospitalRiskEngine ..> ScoredSegment : reads
+    HospitalRiskEngine ..> HospitalRisk : creates
+
+    JalNitiServerFunctions ..> WardData : returns
+    JalNitiServerFunctions ..> RainNow : returns
+    JalNitiServerFunctions ..> RoutePath : returns
+    JalNitiServerFunctions ..> HospitalsPayload : returns`;
+const { svg } = await mermaid.render('cd-svg4', def);
+document.getElementById('cd').innerHTML = svg;
+</script>
