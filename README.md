@@ -4,7 +4,6 @@ JalNiti is a ward-level **flood decision-support tool**. It does not forecast fl
 
 Pilot ward: **Navrangpura, Ahmedabad**. Capstone Project I, GLS University (B.Tech CS&E, Semester V).
 
-Live demo: https://floodguard-response-planner.lovable.app
 
 ## What it does
 
